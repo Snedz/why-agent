@@ -20,6 +20,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+        with:
+          # Without this, configure-pages only *reads* the Pages settings and
+          # fails with 'Get Pages site failed' on a repo where Pages has never
+          # been enabled. This is what turns Pages on for the repository.
+          enablement: true
       - name: Assemble the site
         run: |
           mkdir -p _site
