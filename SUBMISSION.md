@@ -171,19 +171,27 @@ https://hackathon.genai.works/event/open-agent-hackathon-2026 — the "Rules"
 panel, 10 sections. The short version:
 
 - **01** 16+, worldwide; one account per participant (the founder registered one).
-- **04** build window Oct 22 00:00 UTC → Oct 27 23:45 UTC; work committed before
-  the window opened is ineligible **except clearly declared pre-existing components**.
-- **05** every submission must integrate **Zetaris and Meterless**; Cursor is
-  optional; "Integrate NVIDIA technology wherever it contributes"; and
-  "**Generated code is allowed and expected, you own the result and are
-  accountable for it.**"
-- **06** four things: a demo video of 1–4 minutes; a slide deck; "a GitHub
-  repository with all source code and a README covering setup, usage and
-  dependencies"; and a clear explanation of how Zetaris and Meterless were
-  integrated, how Cursor was used, where NVIDIA technology contributes, and
-  what was unique about the use of the sponsor technologies. (No visibility
-  requirement is named in the rules; the repository is published publicly
-  anyway, so a judge can open it.)
+Read again from the rules panel on 2026-10-27, expanded on the event page:
+
+- **4.1** the build window ends **27 October 2026 at 23:45 UTC**. The same
+  page's banner says submissions close at 23:59 UTC. Submit before 23:45.
+- **4.2** work from before the window is ineligible except clearly declared
+  pre-existing components.
+- **5.1** every submission must integrate Zetaris and Meterless. Cursor is
+  optional.
+- **5.4** pre-existing product code must be declared on the form.
+- **5.5** generated code is allowed and expected; you own the result.
+- **6.1** a demo video of 1–4 minutes that shows the workflow, the challenge,
+  the key features, and how Zetaris and Meterless are integrated.
+- **6.2** a slide deck covering the problem, the users, the solution, the
+  workflow, the stack, how Zetaris and Meterless were used, and what was
+  unique about that use.
+- **6.3** a GitHub repository with the source and a README covering setup,
+  usage and dependencies.
+- **6.4** a written explanation of the Zetaris and Meterless integrations,
+  how Cursor was used if it was used, where NVIDIA contributes, and what was
+  unique about the sponsor technologies.
+- **08** Track 02 prizes $1,600 / $1,200 / $900.
 - **07** scored out of 100: **Impact 30, Technical 20, Innovation 15, Demo 15,
   Product & UX 10, Sponsor tech 10.** Ties resolve on Impact, then on timestamp.
 - **08** Track 02 prizes $1,600 / $1,200 / $900. In-kind: a DGX Spark for best
