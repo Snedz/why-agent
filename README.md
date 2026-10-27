@@ -41,6 +41,17 @@ cited.**
 **UNKNOWN is never 0.** An aspect nobody reported is a gap in the evidence, and
 it is reported as a gap — not as a pass, and not as a plausible explanation.
 
+## Watch it
+
+The demo video and the deck are published with this repository:
+
+- **Demo:** https://snedz.github.io/why-agent/
+- **Video (MP4, 2:28):** https://snedz.github.io/why-agent/why-agent-demo.mp4
+- **Deck (PDF, 13 pages):** https://snedz.github.io/why-agent/why-agent-deck.pdf
+
+No upload step and no third-party account: GitHub Pages serves it from this
+repository.
+
 ## Install and run
 
 No dependency. Python 3.10+.
