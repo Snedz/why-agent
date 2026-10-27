@@ -65,7 +65,7 @@ The reconciliation is a Python function with tests that assert its behaviour:
 - **every claim in the report carries a citation**;
 - an item nobody wrote about gets `NO EVIDENCE`, not a plausible explanation.
 
-**27 tests. Offline. No third-party dependency.** A prompt cannot be tested
+**34 tests. Offline. No third-party dependency.** A prompt cannot be tested
 like that. This can, and is.
 
 ---

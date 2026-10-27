@@ -43,7 +43,7 @@ it is reported as a gap — not as a pass, and not as a plausible explanation.
 
 ## Install and run
 
-No dependency. Python 3.9+.
+No dependency. Python 3.10+.
 
 ```
 git clone <this repo> && cd why-agent
