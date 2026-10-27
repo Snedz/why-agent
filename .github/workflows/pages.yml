@@ -1,0 +1,40 @@
+name: publish-the-demo
+
+# Publishes the demo video and the deck on GitHub Pages, so both have a public
+# URL that needs no third-party account and no upload step. The rules ask for
+# a demo video; a judge should be able to open it and watch it.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - name: Assemble the site
+        run: |
+          mkdir -p _site
+          cp why-agent-demo.mp4 _site/
+          cp why-agent-deck.pdf _site/
+          cp demo.html _site/index.html
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

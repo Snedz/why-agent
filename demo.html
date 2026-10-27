@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>why-agent — demo</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin:0; background:#0b0f14; color:#d7e0ea;
+         font:16px/1.5 -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 40px 24px 64px; }
+  h1 { font-size:30px; margin:0 0 6px; letter-spacing:-.4px; }
+  h1 span { color:#7ee787; }
+  p.sub { color:#8b97a6; margin:0 0 26px; }
+  video { width:100%; border:1px solid #26303c; border-radius:10px; background:#000; display:block; }
+  .row { margin-top:26px; display:flex; gap:18px; flex-wrap:wrap; }
+  a { color:#7ee787; }
+  .note { color:#6e7b8b; font-size:14px; margin-top:22px; }
+  code { background:#111820; padding:2px 6px; border-radius:4px; font-size:14px; }
+</style>
+</head>
+<body>
+<main>
+  <h1><span>why-agent</span> — an agent that answers why, and cites every sentence</h1>
+  <p class="sub">Open Agent Hackathon 2026 · Track 02: The Agent That Can Explain Why · Mission Winning</p>
+
+  <video controls preload="metadata" poster="">
+    <source src="why-agent-demo.mp4" type="video/mp4">
+    Your browser cannot play this video. Download it: <a href="why-agent-demo.mp4">why-agent-demo.mp4</a>
+  </video>
+
+  <div class="row">
+    <a href="why-agent-demo.mp4">Download the video (MP4, 2:28)</a>
+    <a href="why-agent-deck.pdf">The slide deck (PDF, 13 pages)</a>
+    <a href="https://github.com/Snedz/why-agent">The repository</a>
+  </div>
+
+  <p class="note">Synthetic data only — no real card, customer or identifier. The
+  reconciliation is deterministic Python; the model writes the prose and is checked
+  against the evidence. Run it yourself: <code>python3 demo.py</code>.</p>
+</main>
+</body>
+</html>
