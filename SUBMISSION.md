@@ -171,7 +171,8 @@ https://hackathon.genai.works/event/open-agent-hackathon-2026 — the "Rules"
 panel, 10 sections. The short version:
 
 - **01** 16+, worldwide; one account per participant (the founder registered one).
-Read again from the rules panel on 2026-10-27, expanded on the event page:
+
+Read again from the rules panel on 2026-10-27, with every section expanded:
 
 - **4.1** the build window ends **27 October 2026 at 23:45 UTC**. The same
   page's banner says submissions close at 23:59 UTC. Submit before 23:45.
@@ -191,7 +192,6 @@ Read again from the rules panel on 2026-10-27, expanded on the event page:
 - **6.4** a written explanation of the Zetaris and Meterless integrations,
   how Cursor was used if it was used, where NVIDIA contributes, and what was
   unique about the sponsor technologies.
-- **08** Track 02 prizes $1,600 / $1,200 / $900.
 - **07** scored out of 100: **Impact 30, Technical 20, Innovation 15, Demo 15,
   Product & UX 10, Sponsor tech 10.** Ties resolve on Impact, then on timestamp.
 - **08** Track 02 prizes $1,600 / $1,200 / $900. In-kind: a DGX Spark for best
