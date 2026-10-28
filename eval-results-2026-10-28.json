@@ -1,0 +1,137 @@
+{
+  "summary": {
+    "items": 4,
+    "total_cost_usd": 0.0071,
+    "retries": 0,
+    "tier_agreement": {
+      "fast": "2/4",
+      "deep": "3/4"
+    },
+    "narration_checks": {
+      "FAILED": 3,
+      "PASSED": 1
+    }
+  },
+  "results": [
+    {
+      "item": "why-alpha",
+      "deterministic": "CONFLICTED",
+      "tiers": {
+        "fast": {
+          "verdict": "PARTIAL",
+          "agrees_with_deterministic": false,
+          "cost_usd": 0.000278,
+          "tokens": [
+            234,
+            1100
+          ]
+        },
+        "deep": {
+          "verdict": "CONFLICTED",
+          "agrees_with_deterministic": true,
+          "cost_usd": 0.001464,
+          "tokens": [
+            234,
+            410
+          ]
+        }
+      },
+      "narration": {
+        "check": "FAILED",
+        "unsupported_values": [
+          "UNKNOWN"
+        ]
+      }
+    },
+    {
+      "item": "why-beta",
+      "deterministic": "PARTIAL",
+      "tiers": {
+        "fast": {
+          "verdict": "CORROBORATED",
+          "agrees_with_deterministic": false,
+          "cost_usd": 0.000101,
+          "tokens": [
+            257,
+            356
+          ]
+        },
+        "deep": {
+          "verdict": "CORROBORATED",
+          "agrees_with_deterministic": false,
+          "cost_usd": 0.00152,
+          "tokens": [
+            257,
+            421
+          ]
+        }
+      },
+      "narration": {
+        "check": "FAILED",
+        "unsupported_values": [
+          "UNKNOWN",
+          "gate/beta"
+        ]
+      }
+    },
+    {
+      "item": "why-delta",
+      "deterministic": "CORROBORATED",
+      "tiers": {
+        "fast": {
+          "verdict": "CORROBORATED",
+          "agrees_with_deterministic": true,
+          "cost_usd": 0.000115,
+          "tokens": [
+            248,
+            416
+          ]
+        },
+        "deep": {
+          "verdict": "CORROBORATED",
+          "agrees_with_deterministic": true,
+          "cost_usd": 0.001247,
+          "tokens": [
+            248,
+            333
+          ]
+        }
+      },
+      "narration": {
+        "check": "PASSED",
+        "unsupported_values": []
+      }
+    },
+    {
+      "item": "why-gamma",
+      "deterministic": "PARTIAL",
+      "tiers": {
+        "fast": {
+          "verdict": "PARTIAL",
+          "agrees_with_deterministic": true,
+          "cost_usd": 0.000221,
+          "tokens": [
+            170,
+            877
+          ]
+        },
+        "deep": {
+          "verdict": "PARTIAL",
+          "agrees_with_deterministic": true,
+          "cost_usd": 0.002141,
+          "tokens": [
+            170,
+            657
+          ]
+        }
+      },
+      "narration": {
+        "check": "FAILED",
+        "unsupported_values": [
+          "gamma",
+          "UNKNOWN"
+        ]
+      }
+    }
+  ]
+}

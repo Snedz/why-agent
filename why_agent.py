@@ -33,6 +33,7 @@ from typing import Sequence
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+import providers  # noqa: E402
 from narrate import (  # noqa: E402
     DEFAULT_BASE_URL,
     DEFAULT_MODEL,
@@ -215,17 +216,35 @@ def cmd_explain(args: argparse.Namespace) -> int:
     items, claims = _load(args)
     result = explain(items, claims, args.item_id)
     if getattr(args, "narrate", False):
-        try:
-            api_key, source = resolve_narrate_token(args.narrate_key)
-        except NarrateTokenError as exc:
-            print(f"narrate token source: {exc.source}", file=sys.stderr)
-            print(f"narrate token rejected: {exc}", file=sys.stderr)
-            return 2
-        print(f"narrate token source: {source}", file=sys.stderr)
+        provider = getattr(args, "provider", None)
+        if provider:
+            # A named provider profile supplies endpoint, model and key
+            # together; the per-flag overrides below are for endpoints
+            # that have no profile.
+            try:
+                prof = providers.resolve(provider)
+            except providers.ProviderError as exc:
+                print(f"provider rejected: {exc}", file=sys.stderr)
+                return 2
+            base_url = prof["base_url"]
+            model = prof["models"]["standard"]
+            api_key = prof["api_key"]
+            print(f"provider: {prof['label']} (tier: standard, model: {model})",
+                  file=sys.stderr)
+        else:
+            try:
+                api_key, source = resolve_narrate_token(args.narrate_key)
+            except NarrateTokenError as exc:
+                print(f"narrate token source: {exc.source}", file=sys.stderr)
+                print(f"narrate token rejected: {exc}", file=sys.stderr)
+                return 2
+            print(f"narrate token source: {source}", file=sys.stderr)
+            base_url = args.narrate_base
+            model = args.narrate_model
         try:
             outcome = narrate(result,
-                              base_url=args.narrate_base,
-                              model=args.narrate_model,
+                              base_url=base_url,
+                              model=model,
                               api_key=api_key,
                               app_id=args.narrate_app)
         except NarrationOutage as exc:
@@ -274,6 +293,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     p.add_argument("--json", action="store_true")
     p.add_argument("--narrate", action="store_true",
                    help="write the prose with a model, then CHECK it against the evidence")
+    p.add_argument("--provider", default=None,
+                   help="named provider profile for narration (see providers.py); "
+                        "overrides --narrate-base/--narrate-model/--narrate-key")
     p.add_argument("--narrate-base", default=DEFAULT_BASE_URL,
                    help="OpenAI-compatible base URL (default: the local Meterless runtime)")
     p.add_argument("--narrate-model", default=DEFAULT_MODEL,

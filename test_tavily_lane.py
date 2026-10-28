@@ -1,0 +1,122 @@
+"""Offline tests for the Tavily live-evidence lane.
+
+    python3 -m unittest test_tavily_lane -v
+
+No network, no third-party package, no real API key: the HTTP call is behind
+a transport seam, and every test stubs it with canned Tavily JSON.
+"""
+import dataclasses
+import json
+import os
+import sys
+import tempfile
+import unittest
+from unittest import mock
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, HERE)
+
+import evidence as ev  # noqa: E402
+import tavily_lane as tl  # noqa: E402
+
+RETRIEVED_AT = "2026-10-28T18:00:00Z"
+
+CANNED_BODY = {
+    "query": "Nebius hackathon submission deadline",
+    "results": [
+        {
+            "title": "Nebius x NVIDIA Global AI Hackathon",
+            "url": "https://nebiusglobalaihackathon.devpost.com/",
+            "content": "Submissions close Oct 30 at 1:00 PM EDT. Build on "
+                       "Nebius Token Factory with NVIDIA Nemotron.",
+            "score": 0.91,
+        },
+        {
+            "title": "A roundup of October hackathons",
+            "url": "https://example.invalid/roundup",
+            "content": "Dozens of events this month, from game jams to "
+                       "climate challenges, most of them online.",
+            "score": 0.42,
+        },
+    ],
+}
+
+
+def stub_transport(captured):
+    """A transport that records what it was sent and answers canned JSON."""
+    def send(url, payload, timeout):
+        captured["url"] = url
+        captured["payload"] = payload
+        return CANNED_BODY
+    return send
+
+
+class TavilyLaneTests(unittest.TestCase):
+    def test_search_returns_the_raw_results(self):
+        captured = {}
+        with mock.patch.dict(os.environ, {"TAVILY_API_KEY": "test-key"}):
+            results = tl.search_claims("when does it close?",
+                                       transport=stub_transport(captured))
+        self.assertEqual(results, CANNED_BODY["results"])
+        # The lane asks for pages, never for Tavily's generated answer: the
+        # answer is a model's summary, and a summary is not evidence.
+        self.assertEqual(captured["payload"]["search_depth"], "advanced")
+        self.assertIs(captured["payload"]["include_answer"], False)
+        self.assertEqual(captured["payload"]["max_results"], 5)
+        self.assertEqual(captured["url"], tl.SEARCH_URL)
+
+    def test_a_page_containing_the_claimed_value_supports_it(self):
+        rows = tl.results_to_evidence("why-tavily", CANNED_BODY["results"],
+                                      "Oct 30", RETRIEVED_AT)
+        hit = rows[0]
+        # The value appears literally in the page text, so the row may carry
+        # it, with the page itself as the citation.
+        self.assertEqual(hit.value, "Oct 30")
+        self.assertEqual(hit.locator,
+                         "https://nebiusglobalaihackathon.devpost.com/")
+        self.assertEqual(hit.kind, "web")
+        self.assertEqual(hit.source, "tavily")
+        self.assertEqual(hit.observed_at, RETRIEVED_AT)
+        # A web row speaks about state unless a row says otherwise.
+        self.assertEqual(hit.aspect_name, "state")
+
+    def test_a_page_without_the_claimed_value_is_a_recorded_non_match(self):
+        rows = tl.results_to_evidence("why-tavily", CANNED_BODY["results"],
+                                      "Oct 30", RETRIEVED_AT)
+        miss = rows[1]
+        # Not dropped and not credited: an empty value, and a statement that
+        # says plainly the value was not found on this page.
+        self.assertEqual(miss.value, "")
+        self.assertIn("not found", miss.statement)
+        self.assertEqual(miss.locator, "https://example.invalid/roundup")
+
+    def test_a_missing_api_key_is_an_error_not_a_default(self):
+        def forbidden_transport(url, payload, timeout):
+            raise AssertionError("no request may be sent without a key")
+
+        # clear=True so a key in the real environment cannot leak into the
+        # test and mask the missing-key path.
+        with mock.patch.dict(os.environ, {}, clear=True):
+            with self.assertRaises(tl.TavilyKeyError):
+                tl.search_claims("anything", transport=forbidden_transport)
+
+    def test_web_rows_round_trip_through_the_jsonl_loaders(self):
+        rows = tl.results_to_evidence("why-tavily", CANNED_BODY["results"],
+                                      "Oct 30", RETRIEVED_AT)
+        card = {"item_id": "why-tavily", "kind": "card",
+                "title": "Is the deadline Oct 30?", "value": "OPEN"}
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "items.jsonl")
+            with open(path, "w", encoding="utf-8") as fh:
+                fh.write(json.dumps(card) + "\n")
+                for row in rows:
+                    fh.write(json.dumps(dataclasses.asdict(row)) + "\n")
+            items = ev.load_items(path)
+            loaded = ev.load_evidence(path)
+        self.assertIn("why-tavily", items)
+        web = [c for c in loaded if c.kind == "web"]
+        self.assertEqual(web, rows)
+
+
+if __name__ == "__main__":
+    unittest.main()

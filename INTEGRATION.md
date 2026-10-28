@@ -264,3 +264,35 @@ Files touched:
 - `DECK.pdf`
 - `DRILLS-2026-10-27.md`
 - `RECEIPT-2026-10-27.md`
+
+---
+
+## Tavily live-evidence lane (Nebius build)
+
+`tavily_lane.py` checks a claim against the live web and records what it
+finds as evidence. A Tavily search result becomes an ordinary `Evidence` row
+with `kind="web"` and `source="tavily"`: the row's locator is the result URL,
+its statement is the page's title (or the start of its text), and its
+`observed_at` is when the page was retrieved. From that point on a web row is
+a claim like any other source — the card, the receipt, the commit — and
+reconciliation treats it the same way: it can corroborate a state, and it can
+conflict with one, stated plainly rather than smoothed over.
+
+The guard is deterministic: a row carries the claimed value **only if that
+value literally appears in the page's content** (case-insensitive). A page
+that does not contain the value still produces a row — with an empty value
+and a statement saying the value was not found there. A recorded non-match is
+evidence too; dropping it would let a caller shop for the one page that
+agrees and hide the rest. And Tavily's own generated `answer` is never
+evidence: it is a model's summary of the pages, exactly the kind of
+uncheckable assertion this tool exists to catch, so the lane does not even
+request it (`include_answer` is off).
+
+The key comes from the `TAVILY_API_KEY` environment variable only; with no
+key set, the lane raises instead of running.
+
+This lane is the significant update for the Nebius x NVIDIA Global AI
+Hackathon (Best Apps and Agents track): it takes why-agent from reconciling
+only local artefacts to checking claims against fresh web sources, and the
+Best Use of Tavily bonus requires a functional, runtime call to the Tavily
+API, which `search_claims` is.

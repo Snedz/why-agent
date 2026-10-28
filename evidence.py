@@ -26,7 +26,7 @@ from typing import Any, Iterable, Sequence
 
 # The kinds of source that can make a claim. Order matters: the report prints
 # them in this order so the same question always reads the same way.
-KINDS = ("card", "receipt", "commit", "check", "verdict")
+KINDS = ("card", "receipt", "commit", "check", "verdict", "web")
 
 # An ASPECT is a property of the item, not of the source. Two sources that
 # speak about different aspects never contradict each other: a receipt about
@@ -43,6 +43,7 @@ DEFAULT_ASPECT = {
     "check": "state",
     "receipt": "outcome",
     "verdict": "outcome",
+    "web": "state",
 }
 
 # The aspects a reader expects to be covered. An aspect nobody spoke about is
