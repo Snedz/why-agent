@@ -14,6 +14,47 @@ $ python3 demo.py
 
 ---
 
+## Nebius × NVIDIA build (submission period, Oct 2026)
+
+The reconciler above is deterministic and calls no model. Everything in
+this section is new: the same kernel, now fed by model, image, and live-web
+lanes running on **Nebius Token Factory** — with every lane output entering
+as a *claim*, never a verdict, because any integration can be poisoned.
+
+| Lane | Model (pinned from the account) | What it contributes |
+|---|---|---|
+| Narration | `nvidia/nemotron-3-super-120b-a12b` | The explanation — then machine-checked twice; a value not literally in the evidence **fails the check** |
+| Reviewer, fast | `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` | An independent verdict, appended as a cited evidence row |
+| Reviewer, deep | `nvidia/Nemotron-3-Ultra-550b-a55b` | Same, deeper — disagreements with the fast lane are preserved, never averaged |
+| Vision | `nvidia/Nemotron-3.5-Super-VL` | Receipt/screenshot fields (amount, date, counterparty, status) as checkable claims |
+| Live evidence | Tavily (via `tavily_lane.py`) | Web pages as claims — a page counts only if the claimed value literally appears in it; the generated answer is never evidence |
+
+**Measured, 2026-10-28** (receipts in `docs/`): on a 14-case adversarial
+corpus the deterministic gate scored **14/14 with zero false approvals**;
+the Ultra lane scored 9/14 (one false approval), the Nano lane 6/14 (two —
+including believing a card that claimed a failed deploy had shipped). The
+lanes advise; the gate decides. Reviewer cost for 17 judged items: Nano
+$0.0028, Ultra $0.0373. Narration checker: 17 flagged values across 13
+corpus narrations, zero invented facts on classification.
+
+- Full results and named misses: `docs/BENCHMARK_RESULTS_2026-10-28.md`
+- Cost/latency ledger and its gaps: `docs/TIER_LEDGER.md`
+- Every submission claim mapped to its proof: `docs/CLAIM_MAP.md`
+- Why raw checker pass rates mislead: `docs/NARRATION_CHECK_ANALYSIS_2026-10-28.md`
+
+Run the lanes (keys from the environment only):
+
+```
+export NEBIUS_API_KEY=...        # Token Factory
+export TAVILY_API_KEY=...        # live-evidence lane only
+python3 smoke.py --provider nebius
+python3 why_agent.py explain why-alpha --evidence evidence/items.jsonl --provider nebius --narrate
+python3 batch_eval.py --provider nebius --evidence benchmark/cases.jsonl --tiers fast,deep --narrate --budget 0.50
+python3 benchmark/score.py --eval-results benchmark/eval-benchmark-2026-10-28.json
+```
+
+---
+
 ## The problem it is for
 
 In a busy engineering system the answer to "why did this happen?" is scattered
