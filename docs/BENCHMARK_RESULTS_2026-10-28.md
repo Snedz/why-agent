@@ -2,7 +2,8 @@
 
 Corpus: `benchmark/cases.jsonl`, 14 items, 51 claim rows, planted truth in
 `benchmark/truth.json`. Scorer: `benchmark/score.py`. Raw lane output:
-`benchmark/eval-benchmark-2026-10-28.json`. Total lane cost: **$0.033**,
+`benchmark/eval-benchmark-2026-10-28.json`. Reviewer-lane cost: **$0.033**
+(narration is unmetered by the harness — see `docs/TIER_LEDGER.md`),
 zero retries. Reproduce: `python3 benchmark/score.py --eval-results
 benchmark/eval-benchmark-2026-10-28.json` (the lane scores below are what
 it prints; its exit code is 1 by design — see the gate note).
