@@ -1,0 +1,16 @@
+{
+ "bm-clean-ship": "CORROBORATED",
+ "bm-card-lies": "CONFLICTED",
+ "bm-green-check-wrong-scope": "PARTIAL",
+ "bm-no-evidence": "NO EVIDENCE",
+ "bm-missing-cause": "PARTIAL",
+ "bm-reviewer-split": "CONFLICTED",
+ "bm-web-contradicts": "CONFLICTED",
+ "bm-web-confirms": "CORROBORATED",
+ "bm-receipt-mismatch": "CONFLICTED",
+ "bm-stale-card": "CONFLICTED",
+ "bm-unexpected-aspect": "CORROBORATED",
+ "bm-forged-aspect": "PARTIAL",
+ "bm-vl-receipt": "CORROBORATED",
+ "bm-web-nonmatch": "CONFLICTED"
+}

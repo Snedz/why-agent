@@ -1,0 +1,408 @@
+{
+  "summary": {
+    "items": 13,
+    "total_cost_usd": 0.033,
+    "retries": 0,
+    "tier_agreement": {
+      "fast": "6/13",
+      "deep": "9/13"
+    },
+    "narration_checks": {
+      "FAILED": 10,
+      "PASSED": 3
+    }
+  },
+  "results": [
+    {
+      "item": "bm-card-lies",
+      "deterministic": "CONFLICTED",
+      "tiers": {
+        "fast": {
+          "verdict": "CORROBORATED",
+          "agrees_with_deterministic": false,
+          "cost_usd": 0.000218,
+          "tokens": [
+            196,
+            861
+          ]
+        },
+        "deep": {
+          "verdict": "CONFLICTED",
+          "agrees_with_deterministic": true,
+          "cost_usd": 0.001768,
+          "tokens": [
+            196,
+            524
+          ]
+        }
+      },
+      "narration": {
+        "check": "FAILED",
+        "unsupported_values": [
+          "UNKNOWN",
+          "CI"
+        ]
+      }
+    },
+    {
+      "item": "bm-clean-ship",
+      "deterministic": "CORROBORATED",
+      "tiers": {
+        "fast": {
+          "verdict": "CONFLICTED",
+          "agrees_with_deterministic": false,
+          "cost_usd": 0.00015,
+          "tokens": [
+            242,
+            563
+          ]
+        },
+        "deep": {
+          "verdict": "CORROBORATED",
+          "agrees_with_deterministic": true,
+          "cost_usd": 0.001427,
+          "tokens": [
+            242,
+            395
+          ]
+        }
+      },
+      "narration": {
+        "check": "FAILED",
+        "unsupported_values": [
+          "CI"
+        ]
+      }
+    },
+    {
+      "item": "bm-forged-aspect",
+      "deterministic": "PARTIAL",
+      "tiers": {
+        "fast": {
+          "verdict": "CONFLICTED",
+          "agrees_with_deterministic": false,
+          "cost_usd": 0.0003,
+          "tokens": [
+            229,
+            1192
+          ]
+        },
+        "deep": {
+          "verdict": "UNPARSEABLE",
+          "agrees_with_deterministic": false,
+          "cost_usd": 0.012517,
+          "tokens": [
+            229,
+            4096
+          ]
+        }
+      },
+      "narration": {
+        "check": "FAILED",
+        "unsupported_values": [
+          "UNKNOWN"
+        ]
+      }
+    },
+    {
+      "item": "bm-green-check-wrong-scope",
+      "deterministic": "PARTIAL",
+      "tiers": {
+        "fast": {
+          "verdict": "PARTIAL",
+          "agrees_with_deterministic": true,
+          "cost_usd": 0.000184,
+          "tokens": [
+            206,
+            716
+          ]
+        },
+        "deep": {
+          "verdict": "CONFLICTED",
+          "agrees_with_deterministic": false,
+          "cost_usd": 0.001073,
+          "tokens": [
+            206,
+            289
+          ]
+        }
+      },
+      "narration": {
+        "check": "FAILED",
+        "unsupported_values": [
+          "UNKNOWN",
+          "bench/cards/bm-green-check-wrong-scope.md",
+          "CI"
+        ]
+      }
+    },
+    {
+      "item": "bm-missing-cause",
+      "deterministic": "PARTIAL",
+      "tiers": {
+        "fast": {
+          "verdict": "CORROBORATED",
+          "agrees_with_deterministic": false,
+          "cost_usd": 5.1e-05,
+          "tokens": [
+            196,
+            163
+          ]
+        },
+        "deep": {
+          "verdict": "CORROBORATED",
+          "agrees_with_deterministic": false,
+          "cost_usd": 0.001153,
+          "tokens": [
+            196,
+            319
+          ]
+        }
+      },
+      "narration": {
+        "check": "FAILED",
+        "unsupported_values": [
+          "UNKNOWN"
+        ]
+      }
+    },
+    {
+      "item": "bm-receipt-mismatch",
+      "deterministic": "CONFLICTED",
+      "tiers": {
+        "fast": {
+          "verdict": "CONFLICTED",
+          "agrees_with_deterministic": true,
+          "cost_usd": 0.000103,
+          "tokens": [
+            234,
+            372
+          ]
+        },
+        "deep": {
+          "verdict": "CONFLICTED",
+          "agrees_with_deterministic": true,
+          "cost_usd": 0.001347,
+          "tokens": [
+            234,
+            371
+          ]
+        }
+      },
+      "narration": {
+        "check": "FAILED",
+        "unsupported_values": [
+          "UNKNOWN"
+        ]
+      }
+    },
+    {
+      "item": "bm-reviewer-split",
+      "deterministic": "CONFLICTED",
+      "tiers": {
+        "fast": {
+          "verdict": "CONFLICTED",
+          "agrees_with_deterministic": true,
+          "cost_usd": 0.00012,
+          "tokens": [
+            275,
+            432
+          ]
+        },
+        "deep": {
+          "verdict": "CONFLICTED",
+          "agrees_with_deterministic": true,
+          "cost_usd": 0.001865,
+          "tokens": [
+            275,
+            530
+          ]
+        }
+      },
+      "narration": {
+        "check": "PASSED",
+        "unsupported_values": []
+      }
+    },
+    {
+      "item": "bm-stale-card",
+      "deterministic": "CONFLICTED",
+      "tiers": {
+        "fast": {
+          "verdict": "PARTIAL",
+          "agrees_with_deterministic": false,
+          "cost_usd": 0.000133,
+          "tokens": [
+            198,
+            506
+          ]
+        },
+        "deep": {
+          "verdict": "CONFLICTED",
+          "agrees_with_deterministic": true,
+          "cost_usd": 0.001086,
+          "tokens": [
+            198,
+            296
+          ]
+        }
+      },
+      "narration": {
+        "check": "FAILED",
+        "unsupported_values": [
+          "CONFLICT",
+          "UNKNOWN",
+          "CI"
+        ]
+      }
+    },
+    {
+      "item": "bm-unexpected-aspect",
+      "deterministic": "CORROBORATED",
+      "tiers": {
+        "fast": {
+          "verdict": "PARTIAL",
+          "agrees_with_deterministic": false,
+          "cost_usd": 0.000218,
+          "tokens": [
+            247,
+            846
+          ]
+        },
+        "deep": {
+          "verdict": "PARTIAL",
+          "agrees_with_deterministic": false,
+          "cost_usd": 0.001744,
+          "tokens": [
+            247,
+            499
+          ]
+        }
+      },
+      "narration": {
+        "check": "PASSED",
+        "unsupported_values": []
+      }
+    },
+    {
+      "item": "bm-vl-receipt",
+      "deterministic": "CORROBORATED",
+      "tiers": {
+        "fast": {
+          "verdict": "PARTIAL",
+          "agrees_with_deterministic": false,
+          "cost_usd": 0.000302,
+          "tokens": [
+            240,
+            1198
+          ]
+        },
+        "deep": {
+          "verdict": "CORROBORATED",
+          "agrees_with_deterministic": true,
+          "cost_usd": 0.002781,
+          "tokens": [
+            240,
+            847
+          ]
+        }
+      },
+      "narration": {
+        "check": "PASSED",
+        "unsupported_values": []
+      }
+    },
+    {
+      "item": "bm-web-confirms",
+      "deterministic": "CORROBORATED",
+      "tiers": {
+        "fast": {
+          "verdict": "CORROBORATED",
+          "agrees_with_deterministic": true,
+          "cost_usd": 0.000131,
+          "tokens": [
+            228,
+            488
+          ]
+        },
+        "deep": {
+          "verdict": "CORROBORATED",
+          "agrees_with_deterministic": true,
+          "cost_usd": 0.001596,
+          "tokens": [
+            228,
+            456
+          ]
+        }
+      },
+      "narration": {
+        "check": "FAILED",
+        "unsupported_values": [
+          "status.example.com/ok"
+        ]
+      }
+    },
+    {
+      "item": "bm-web-contradicts",
+      "deterministic": "CONFLICTED",
+      "tiers": {
+        "fast": {
+          "verdict": "CONFLICTED",
+          "agrees_with_deterministic": true,
+          "cost_usd": 8.9e-05,
+          "tokens": [
+            209,
+            318
+          ]
+        },
+        "deep": {
+          "verdict": "CONFLICTED",
+          "agrees_with_deterministic": true,
+          "cost_usd": 0.00131,
+          "tokens": [
+            209,
+            367
+          ]
+        }
+      },
+      "narration": {
+        "check": "FAILED",
+        "unsupported_values": [
+          "UNKNOWN"
+        ]
+      }
+    },
+    {
+      "item": "bm-web-nonmatch",
+      "deterministic": "CONFLICTED",
+      "tiers": {
+        "fast": {
+          "verdict": "CONFLICTED",
+          "agrees_with_deterministic": true,
+          "cost_usd": 0.000128,
+          "tokens": [
+            224,
+            477
+          ]
+        },
+        "deep": {
+          "verdict": "CONFLICTED",
+          "agrees_with_deterministic": true,
+          "cost_usd": 0.001235,
+          "tokens": [
+            224,
+            337
+          ]
+        }
+      },
+      "narration": {
+        "check": "FAILED",
+        "unsupported_values": [
+          "\"\"",
+          "example.com/other",
+          "UNKNOWN"
+        ]
+      }
+    }
+  ]
+}
