@@ -6,7 +6,9 @@ Corpus: `benchmark/cases.jsonl`, 14 items, 51 claim rows, planted truth in
 (narration is unmetered by the harness — see `docs/TIER_LEDGER.md`),
 zero retries. Reproduce: `python3 benchmark/score.py --eval-results
 benchmark/eval-benchmark-2026-10-28.json` (the lane scores below are what
-it prints; its exit code is 1 by design — see the gate note).
+it prints; its exit code is 1 by design — see the gate note). Every number in
+this document is one the runner prints, and a test says so: it extracts every
+figure from this file and fails if the runner's output does not contain it.
 
 ## Scores
 
