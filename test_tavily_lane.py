@@ -118,5 +118,81 @@ class TavilyLaneTests(unittest.TestCase):
         self.assertEqual(web, rows)
 
 
+class TavilyCliTests(unittest.TestCase):
+    """The CLI: main() against the stub transport, rows read back with the loader.
+
+    The lane call is stubbed where the CLI reaches it — `search_claims` — so
+    the CLI's own behaviour (argument handling, the append, the literal-
+    appearance guard) is what is under test, and no socket is ever opened.
+    """
+
+    def _run_cli(self, tmp, claimed="Oct 30"):
+        out = os.path.join(tmp, "web-rows.jsonl")
+        with mock.patch.object(tl, "search_claims",
+                               return_value=CANNED_BODY["results"]) as called:
+            rc = tl.main(["--item", "why-tavily", "--query", "deadline",
+                          "--claim", claimed, "--out", out])
+        self.assertEqual(rc, 0)
+        self.assertTrue(called.called, "the CLI must go through the lane")
+        return out
+
+    def test_the_cli_appends_web_rows_that_read_back(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = self._run_cli(tmp)
+            loaded = ev.load_evidence(out)
+
+        web = [r for r in loaded if r.kind == "web"]
+        self.assertEqual(len(web), 2, "one row per page Tavily returned")
+        for row in web:
+            self.assertEqual(row.source, "tavily")
+            self.assertEqual(row.item_id, "why-tavily")
+
+    def test_the_literal_appearance_guard_holds_through_the_cli(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = self._run_cli(tmp)
+            loaded = ev.load_evidence(out)
+
+        web = {r.locator: r for r in loaded if r.kind == "web"}
+        hit = web["https://nebiusglobalaihackathon.devpost.com/"]
+        # The value appears literally in the page text, so the row carries it.
+        self.assertEqual(hit.value, "Oct 30")
+        miss = web["https://example.invalid/roundup"]
+        # The page does not contain the value: an EMPTY value and a statement
+        # that says so. Not dropped, and not credited.
+        self.assertEqual(miss.value, "")
+        self.assertIn("not found", miss.statement)
+
+    def test_a_claimed_value_no_page_contains_leaves_every_row_empty(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = self._run_cli(tmp, claimed="a value on no page")
+            loaded = ev.load_evidence(out)
+
+        web = [r for r in loaded if r.kind == "web"]
+        self.assertEqual(len(web), 2)
+        for row in web:
+            self.assertEqual(row.value, "", "no page carried the value")
+            self.assertIn("not found", row.statement)
+
+    def test_the_cli_appends_rather_than_truncating(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = self._run_cli(tmp)
+            first = len(ev.load_evidence(out))
+            self._run_cli(tmp)
+            second = len(ev.load_evidence(out))
+        self.assertEqual(first, 2)
+        self.assertEqual(second, 4, "a second run appends; it does not overwrite")
+
+    def test_a_failed_lane_writes_no_rows(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = os.path.join(tmp, "web-rows.jsonl")
+            with mock.patch.object(tl, "search_claims",
+                                   side_effect=tl.TavilyError("no key")):
+                rc = tl.main(["--item", "why-tavily", "--query", "deadline",
+                              "--claim", "Oct 30", "--out", out])
+            self.assertEqual(rc, 1)
+            self.assertFalse(os.path.exists(out),
+                             "a lane that failed must not leave evidence rows behind")
+
+
 if __name__ == "__main__":
     unittest.main()
