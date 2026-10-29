@@ -448,10 +448,19 @@ class HardeningTests(unittest.TestCase):
 
         class Handler(BaseHTTPRequestHandler):
             def do_POST(self):
+                # Content-Length is not decoration: without it the client has
+                # to read until the connection closes, and the server can
+                # close with the body still unread. That race showed up as
+                # "narration endpoint unreachable" instead of the malformed
+                # body this test is about -- 5 failures in 25 runs (measured
+                # 2026-10-29). With a length, the client reads exactly the
+                # body and the response cannot be truncated.
+                body = b'{"choices": []}'
                 self.send_response(200)
                 self.send_header("Content-Type", "application/json")
+                self.send_header("Content-Length", str(len(body)))
                 self.end_headers()
-                self.wfile.write(b'{"choices": []}')
+                self.wfile.write(body)
 
             def log_message(self, fmt, *args):
                 return
