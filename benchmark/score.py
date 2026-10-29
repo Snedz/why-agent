@@ -24,16 +24,35 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import evidence as ev  # noqa: E402
 
 
-def score_verdicts(got: dict[str, str], truth: dict[str, str], label: str) -> int:
-    false_approvals = []
+def score_counts(got: dict[str, str], truth: dict[str, str]) -> dict:
+    """Score verdicts against the planted truth, and COUNT what happened.
+
+    The rule lives here, once: an item counts as correct when the verdict is the
+    planted one, and a false approval is an item the truth does not call
+    CORROBORATED that was called CORROBORATED. `score_verdicts` prints this;
+    the tier ledger reads it, so the two can never score differently.
+    """
     misses = []
+    false_approvals = []
     for item_id, expected in sorted(truth.items()):
         actual = got.get(item_id, "MISSING")
         if actual != expected:
             misses.append((item_id, expected, actual))
             if actual == "CORROBORATED":
                 false_approvals.append(item_id)
-    print(f"[{label}] {len(truth) - len(misses)}/{len(truth)} correct")
+    return {
+        "correct": len(truth) - len(misses),
+        "total": len(truth),
+        "misses": misses,
+        "false_approvals": false_approvals,
+    }
+
+
+def score_verdicts(got: dict[str, str], truth: dict[str, str], label: str) -> int:
+    counts = score_counts(got, truth)
+    false_approvals = counts["false_approvals"]
+    misses = counts["misses"]
+    print(f"[{label}] {counts['correct']}/{counts['total']} correct")
     for item_id, expected, actual in misses:
         print(f"  MISS {item_id}: expected {expected}, got {actual}")
     if false_approvals:
