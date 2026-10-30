@@ -1,201 +1,429 @@
-# Submission checklist — Open Agent Hackathon 2026, Track 02
+# SUBMISSION — Nebius × NVIDIA Global AI Hackathon
 
-**Event:** https://hackathon.genai.works/event/open-agent-hackathon-2026
-**Track:** 02 — The Agent That Can Explain Why ($1,600 / $1,200 / $900)
-**Submissions close:** the event page, fetched 2026-10-27, says **23:59 UTC**.
-This file used to say 23:45 UTC. The founder submits against the earlier
-clock: 23:45 UTC, 7:45 PM Toronto.
-**Build window:** Oct 22 00:00 UTC → the close above (rule 04)
+**Event:** https://nebiusglobalaihackathon.devpost.com/
+**Track:** Best Apps and Agents
+**Submissions close:** **Friday 2026-10-30, 10:00 AM PT** (13:00 ET / 10:00 Toronto).
+The rules as read on 2026-10-29 are in `docs/NEBIUS_RULES_2026-10-29.md`.
 
-This file is the state of the entry as the lane left it, and the list of what
-the founder has to do. Nothing here is done on the founder's behalf: the
-submission is behind their account, and publishing is their call.
+Everything below is ready to paste. **Three things need the founder** — see
+§0. Nothing has been submitted, published to Devpost, or uploaded to YouTube
+by the build lane; those are behind the founder's accounts and their call.
 
 ---
 
-## What is DONE
+## 0. What only the founder can do
 
-| Deliverable | Where | State |
+1. **Check eligibility.** The rules exclude entrants resident in Quebec, Brazil,
+   Russia, Crimea, Cuba, Iran, North Korea, and anyone subject to OFAC
+   sanctions. Confirm the residence before submitting. If the founder is a
+   Quebec resident, do not submit.
+2. **Upload the video to YouTube** and make it **publicly visible** (the rules
+   say publicly visible; unlisted is not the same thing). The file to upload
+   is `why-agent-nebius-demo.mp4` at the repository root — 87.54 seconds, under
+   the three-minute limit. Step-by-step in §6.
+3. **Paste the form** and submit. Every field answer is §1–§5. Join the
+   challenge from the founder's account first, or the Submit button will not
+   appear.
+
+Nothing in this repository spends money, needs an account, or sends anything.
+The Nebius key stays in the environment; it is never committed.
+
+---
+
+## 1. The form fields, in order
+
+### 1.1 Name of your Project
+
+```
+why-agent
+```
+
+### 1.2 URL to a working demo, hosted app, or test build
+
+```
+https://snedz.github.io/why-agent/
+```
+
+This is a working demo, not a screenshot: the agent, the adversarial benchmark
+and the Case Lab all run. The **Case Lab** — seven cases with every claim, lane
+receipt, model id, token count and cost — is at
+`https://snedz.github.io/why-agent/demo_lab/`.
+
+### 1.3 Text description explaining features and functionality
+
+```
+why-agent answers "why did this happen?" about a work item, and cites every
+sentence of the answer.
+
+Cards, commits, check runs, deploy receipts, web pages and model reviews all
+make claims about a work item. One deterministic reconciler groups the claims
+by aspect and returns one of four verdicts — CORROBORATED, PARTIAL, CONFLICTED
+or NO EVIDENCE — with a citation on every line. When sources disagree it does
+not pick a winner: it shows every side, cited, and refuses to average them.
+An aspect nobody reported is reported as a gap, never as a pass, and never as a
+plausible explanation.
+
+The Nebius build feeds it five lanes that run on Nebius Token Factory:
+
+  - NVIDIA Nemotron 3 Super writes the reader-facing explanation, and then it
+    is machine-checked: every value the narrative states must already exist in
+    the evidence. A value that does not is reported, not removed.
+  - Nemotron 3 Nano and Nemotron 3 Ultra each produce an independent reviewer
+    verdict over the same claims, appended as cited evidence rows. When they
+    disagree, both are kept and the disagreement is the finding.
+  - Nemotron 3.5 Super VL reads receipt and screenshot images into checkable
+    claims — amount, date, counterparty, status.
+  - A Tavily live-evidence lane fetches web pages, and a page counts only if
+    the claimed value literally appears in it; a page that misses becomes a
+    recorded miss, not a dropped row.
+
+Every lane output enters as a claim, never as a verdict, because any
+integration can be poisoned. The model may write the prose; it may not add a
+fact.
+
+On an adversarial corpus of 14 planted-claim work items, with a truth file the
+lanes never see: the deterministic gate scored 14/14 with zero false
+approvals. Nemotron 3 Ultra scored 9/14 with one false approval, and Nemotron 3
+Nano scored 6/14 with two — the fast lane believed a card that claimed a failed
+deploy had shipped. That gap is the architecture, not a bug: the lanes advise,
+and the deterministic reconciler decides.
+
+The Case Lab shows seven cases with every claim, every lane receipt, every
+model id, token count and cost. Two of the cases are lane-dependent, and a
+script proves it by re-reading the original rows and calling the same
+reconciler with and without the lane rows.
+
+No dependency. Python 3.10+. Three commands run it with no key and no network:
+python3 demo.py, python3 benchmark/score.py --eval-results
+benchmark/eval-benchmark-2026-10-28.json, and python3 demo_lab/flip_check.py.
+```
+
+### 1.4 URL to the public code repository
+
+```
+https://github.com/Snedz/why-agent
+```
+
+Public, Apache-2.0 (visible in the repository's About section), all source,
+assets and instructions in the tree. The README carries the setup instructions
+and a "try it first" block of three commands.
+
+### 1.5 Demonstration video URL
+
+```
+PASTE THE YOUTUBE LINK HERE
+```
+
+See §6 for the upload. The rules: under three minutes, footage showing the
+project functioning, uploaded to and publicly visible on YouTube.
+
+### 1.6 Track
+
+```
+Best Apps and Agents
+```
+
+The track says: *"Build any app or agent someone would actually use… Power it
+with Nemotron models on Nebius through Token Factory. Reach for Nemotron 3
+Ultra when you need serious reasoning, and let Nano or Super handle the fast,
+everyday calls, so your app stays responsive and your credits stretch
+further."* — that is literally the shape of this build: one agent someone would
+use, Nemotron 3 Ultra on the contested items, Nano and Super on the everyday
+ones.
+
+The other two are plausible and weaker: *Coding and Agentic Engineering* is
+fair, but the build is an evidence agent rather than a code-writing agent;
+*Personal AI* does not fit — this is a work-item reconciler, not a personal
+assistant.
+
+### 1.6a Which awards this entry can be eligible for
+
+| Award | Eligible here? | Why |
 |---|---|---|
-| The agent | `why_agent.py`, `evidence.py`, `narrate.py` | working, 34 tests green, no third-party dependency |
-| The demo | `demo.py` → five cases, one command | working |
-| Tests | `test_why_agent.py` | 34 tests, offline, no network |
-| Synthetic dataset | `evidence/items.jsonl` | synthetic only — no real card, customer or identifier |
-| README | `README.md` | written, states what the agent does and how to run it |
-| Integration doc | `INTEGRATION.md` | Zetaris + Meterless, with verified and unverified separated |
-| Slide deck | `DECK.md` | 10 slides plus a title page, rendered to an 11-page PDF |
-| Publication steps | this file, §1 | exact command, ready to run |
-| This checklist | `SUBMISSION.md` | — |
+| Overall (Grand / 2nd / 3rd) | yes | the entry is scored on the four criteria, not on track |
+| Best Apps and Agents Track Award — NVIDIA Jetson Orin Nano | yes | this is the track submitted |
+| **Best Use of Tavily — $3,000** | **yes** | the live-evidence lane makes a functional runtime call to the Tavily API as part of the solution, which is the eligibility wording verbatim |
+| City Winner — $500 | only if the founder attends a Builders & Brews city event | Toronto is one of the 20 listed cities |
+| Most Valuable Feedback — $100 + swag | yes, if the feedback field is filled in properly | it is also one of the four equally weighted stage-two criteria |
 
-## What the FOUNDER has to do (in this order)
+**Each Project is eligible for one Overall Award OR one Track Award, and one
+Bonus Award** — so this entry can be eligible for three prizes at once.
 
-### 1. Publish the repo — public, under the brand identity
+### 1.6b The four equally weighted judging criteria, and where the entry answers each
 
-The private repos (`Snedz/mission-ops`, `Snedz/program-67`) stay private.
-Rule 06 requires "a GitHub repository with all source code and a README
-covering setup, usage and dependencies", so the entry is published as its own
-repository, built from this directory only. The rules name no visibility
-requirement — it is published **publicly** anyway, because a judge has to be
-able to open it.
+The stage-two criteria are equally weighted, so it is worth being deliberate
+about all four. This table is for the founder's own use, not for pasting.
 
-Exact command: `gh repo create Snedz/why-agent --public --source=. --remote=origin --push`, then push this directory as its root.
-
-- [ ] `gh repo create Snedz/why-agent --public --description "..." --license apache-2.0`
-- [ ] push this directory as its root
-- [ ] confirm the public repo contains no private-repo file: no `memory/`,
-      no customer data, no credential
-- [ ] public text says "Snedz" / "Mission Winning" only — never a real name
-
-### 2. AI-assisted work is explicitly allowed — no decision needed here
-
-**Checked against the live rules on 2026-10-26.** §05 says, in full:
-*"Generated code is allowed and expected, you own the result and are
-accountable for it."* §06 lists what a submission must contain and says
-nothing about how the code was written. §10 covers schedule changes, the
-finality of disqualification decisions, and where to send questions.
-
-An earlier version of this file read that sentence as a disqualification risk
-and listed withdrawing the entry as the alternative. **That reading was wrong,
-and it is withdrawn.** The rules contain exactly one sentence about generated
-work, and it permits it.
-
-The condition the rules do impose — "you own the result and are accountable
-for it" — is satisfied: the reconciliation is deterministic code rather than
-a prompt, the 34 tests are real and offline, and every claim in the report
-carries a citation. **Declare the pre-existing components (§04) and submit.**
-
-### 3. Stand up the Zetaris harness (optional but rule 05 wants it)
-
-- [ ] the Mini cluster `why-agent-mini` was **not Active** on 2026-10-27.
-      AWS credentials were not available, and no JDBC host was on disk.
-- [ ] the designed path is a CSV in the stack bucket, a filestore table, and
-      a reconciliation `SELECT`. There is no MCP endpoint on that path.
-- [ ] if the cluster is later Active: run the statements in `INTEGRATION.md`
-      and replace the "no live result" section with the real output
-
-The agent does not depend on this. The local DuckDB path is the same rows read
-the same way.
-
-### 4. Run the Meterless runtime locally (optional, no account)
-
-- [x] Nightshift M1-M4 0.92.7 installed. `GET http://[::1]:8088/v1/models`
-      returned 200 with `meterless/*` ids. The token came from the app's
-      runtime-token file and was not printed.
-- [x] `python3 why_agent.py explain why-alpha --narrate --narrate-base
-      http://[::1]:8088/v1` returned **HTTP 502** (`model_load_failed` on the
-      routed WebLLM lane). CHECK PASSED was not observed. See `INTEGRATION.md`.
-      The token is resolved automatically. `rt-local` is rejected.
-
-If the runtime is not installed, the entry still works: the deterministic
-report is the part that decides what is true, and the demo does not need a
-model.
-
-### 5. Publish the demo video (1–4 minutes, rule 06)
-
-**Recorded: 1:24, 1600×900, silent.** The times below are frame-measured from
-the render — the renderer reports the exact start of every shot, and each one
-was checked against the frame at that second.
-
-| # | Shot | What it shows | At |
-|---|---|---|---|
-| 1 | Title card | what it is, in one line | 0:00 |
-| 2 | Terminal | `python3 -m unittest test_why_agent` → 27 passed | 0:05 |
-| 3 | Terminal | `python3 demo.py` → the five items, and the four kinds of answer | 0:10 |
-| 4 | Terminal | the **conflicted** case: four sources, four answers, no winner picked | 0:23 |
-| 5 | Terminal | the **unknown** case: an aspect nobody reported is named as a gap | 0:33 |
-| 6 | Terminal | `python3 why_agent.py explain why-alpha --narrate` → the narrative + `CHECK PASSED` | 0:48 |
-| 7 | Terminal | `--narrate` with a model that invents a fact → `CHECK FAILED` | 1:02 |
-| 8 | Title card | the thesis, in one line | 1:19 |
-
-The strongest stretch is shot 7, from 1:02: the agent catching a model
-inventing a fact, and refusing to publish it as fact. That is the whole
-thesis in one moment.
-
-Shots 6 and 7 in the 1:24 cut were a **local stub** on `127.0.0.1:8088`, not
-the Meterless runtime. The live runtime, on `[::1]:8088`, returned HTTP 502
-for `why-alpha --narrate`. A submission video that shows CHECK PASSED from
-that stub is not a live Meterless run. The D3 beat (CHECK FAILED against an
-inventing stub) is real and is in `DRILLS-2026-10-27.md`.
-
-- [ ] upload it to a public host and paste the URL into the form
-
-### 6. Turn the deck into a PDF
-
-- [x] `DECK.md` is the deck — 10 slides plus a title page, and it is in this
-      repository. A PDF render is what the founder uploads (rule 06 accepts a
-      PDF, a deck, or Google Slides).
-
-### 7. Submit (before Oct 27 23:45 UTC)
-
-- [ ] public repo URL
-- [ ] demo video URL
-- [ ] slide deck URL
-- [ ] team info (one person: the founder — rule 01/02 allow 1–5)
-- [ ] the explanation of how Zetaris / Meterless / Cursor / NVIDIA were used —
-      `INTEGRATION.md` carries the wording
-- [ ] **declare the pre-existing components (rule 04)**: the receipt-and-verdict
-      discipline, the card/commit/receipt vocabulary and the model-verdict
-      ledger all pre-date the build window and are declared as pre-existing.
-      The **entry** — the agent, the reconciliation, the check — was built
-      inside the window.
-- [ ] the brand identity only: "Snedz" / "Mission Winning"
-
-## Time budget
-
-| When | What |
+| Criterion | What in the entry answers it |
 |---|---|
-| now → Oct 27 09:00 ET | founder steps 1–4 (publish, decide, accounts) |
-| Oct 27 09:00–13:00 ET | record the video (step 5), turn the deck (step 6) |
-| Oct 27 13:00–19:45 ET | slack, submit early — **the form is behind the founder's account and the platform may need the founder present** |
+| **Technological Implementation** | four pinned NVIDIA Nemotron models behind one OpenAI-compatible Token Factory endpoint; the measured comparison (gate 14/14, Ultra 9/14, Nano 6/14); the cost ledger ($0.033, 0 retries); the MCP surface; the tests that can fail |
+| **Design** | a coherent product, not a demo: the four verdicts, the citations, the Case Lab, the MCP server, a README a reader can run — and the honest-labels rule the whole project is built on |
+| **Potential Impact** | a real problem for a real audience: "why did this happen?" is answered wrongly, confidently, by single-source agents; the answer shows both sides and cites them |
+| **Quality of the Idea** | the non-obvious move: the model lanes are kept and *scored*, and their failures are what keeps them advisory. The idea is that the honest architecture is the one that measures its own model and finds it wanting |
 
-Submit early. The deadline is 23:45 UTC and the platform's own failure modes
-are unknown to us.
+### 1.7 Other links, if the form has a field for them
 
-## What was NOT done, and why
+```
+Case Lab:      https://snedz.github.io/why-agent/demo_lab/
+Claim map:     https://github.com/Snedz/why-agent/blob/main/docs/CLAIM_MAP.md
+Benchmark:     https://github.com/Snedz/why-agent/blob/main/docs/BENCHMARK_RESULTS_2026-10-28.md
+Significant update: https://github.com/Snedz/why-agent/blob/main/docs/SIGNIFICANT_UPDATE.md
+```
 
-- **The submission itself.** It is behind the founder's account; an agent
-  cannot submit, and rule 01 says one account per participant.
-- **Publishing.** "Publishing a product" is a founder decision in this repo's
-  own rules; the lane prepared everything and stopped there.
-- **A real Zetaris query.** The filestore path is designed. The cluster was
-  not Active, and the statements were not run.
-- **The demo video is recorded** (1:24, silent). What is missing is a public
-  host for it and the URL in the form.
-- **A public repo.** For the same reason as publishing — and because the
-  private repos stay private for good reason.
+### 1.8 Anything else the form asks that is not covered above
 
-## The rules, in one place
+- **Team / organisation** — fill in with the founder's own details. Do not put
+  a personal name in the repository; the form is the place for it.
+- **"Have you used this technology before?"** and similar — answer truthfully.
+  The Nebius Token Factory account was opened for this entry; no Nebius AI
+  Cloud compute was used.
+- **Prize eligibility / country** — the founder's own details.
 
-Re-read from the official page on 2026-10-26 —
-https://hackathon.genai.works/event/open-agent-hackathon-2026 — the "Rules"
-panel, 10 sections. The short version:
+---
 
-- **01** 16+, worldwide; one account per participant (the founder registered one).
+## 2. The rules-required field: how the NVIDIA models and Token Factory were used
 
-Read again from the rules panel on 2026-10-27, with every section expanded:
+This is the field the rules single out — *"Highlight how you've used NVIDIA
+Nemotron or other NVIDIA open source models and where Token Factory accelerated
+your workflow and any other Nebius Tools/Services used."* Paste this.
 
-- **4.1** the build window ends **27 October 2026 at 23:45 UTC**. The same
-  page's banner says submissions close at 23:59 UTC. Submit before 23:45.
-- **4.2** work from before the window is ineligible except clearly declared
-  pre-existing components.
-- **5.1** every submission must integrate Zetaris and Meterless. Cursor is
-  optional.
-- **5.4** pre-existing product code must be declared on the form.
-- **5.5** generated code is allowed and expected; you own the result.
-- **6.1** a demo video of 1–4 minutes that shows the workflow, the challenge,
-  the key features, and how Zetaris and Meterless are integrated.
-- **6.2** a slide deck covering the problem, the users, the solution, the
-  workflow, the stack, how Zetaris and Meterless were used, and what was
-  unique about that use.
-- **6.3** a GitHub repository with the source and a README covering setup,
-  usage and dependencies.
-- **6.4** a written explanation of the Zetaris and Meterless integrations,
-  how Cursor was used if it was used, where NVIDIA contributes, and what was
-  unique about the sponsor technologies.
-- **07** scored out of 100: **Impact 30, Technical 20, Innovation 15, Demo 15,
-  Product & UX 10, Sponsor tech 10.** Ties resolve on Impact, then on timestamp.
-- **08** Track 02 prizes $1,600 / $1,200 / $900. In-kind: a DGX Spark for best
-  use of NVIDIA Nemotron.
-- **09** we keep all IP rights; a promotional licence is granted.
-- **10** the organiser may adjust the schedule for technical reasons;
-  disqualification decisions are final and come with a reason.
+```
+Every model call went to Nebius Token Factory at
+https://api.tokenfactory.nebius.com/v1/ — one OpenAI-compatible endpoint, with
+four NVIDIA open-source models behind it and no per-model glue.
+
+Which NVIDIA model, and what each one was for:
+
+  - nvidia/nemotron-3-super-120b-a12b (Nemotron 3 Super) — writes the
+    reader-facing explanation. The prose is the part a model is actually good
+    at, and it is the part a checker can catch it getting wrong: every value the
+    narrative states is verified against the evidence afterwards, in two passes
+    (quoted spans, then every token that looks like a value).
+  - nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B (Nemotron 3 Nano) — the fast reviewer
+    lane: an independent verdict over the same claims, appended as a cited
+    evidence row. This is the everyday call.
+  - nvidia/Nemotron-3-Ultra-550b-a55b (Nemotron 3 Ultra) — the deep reviewer
+    lane, for the contested items where a cheap answer is not enough. On the
+    corpus Ultra and Nano disagreed, and we preserved the disagreement rather
+    than averaging it away.
+  - nvidia/Nemotron-3.5-Super-VL (Nemotron 3.5 Super VL) — reads receipt and
+    screenshot images into checkable claims (amount, date, counterparty,
+    status). A null field produces no row at all, and a non-JSON answer raises
+    instead of guessing.
+
+Where Token Factory accelerated the workflow:
+
+  - One endpoint, four models, one code path. A tier is a model id, not a
+    different integration, so adding the deep lane was a config change. That is
+    what made a two-tier review affordable to run on every change instead of
+    on a sample.
+  - Model ids are pinned to the account, so cost and latency are comparable
+    run to run and the ledger is a real measurement rather than an estimate.
+  - Per-request billing made the whole adversarial benchmark cheap: 14 items,
+    two tiers, two runs, plus the narration checks, cost $0.033 of reviewer-lane
+    time with zero retries. The fast tier alone ran 17 reviews for $0.0028.
+    At that price we run every lane every time, and we can afford to publish
+    the lanes' misses.
+  - Cold model load is real: the first call after an idle period can stall. The
+    smoke preflight retries once and writes a machine-readable receipt, so a
+    stall becomes a receipt instead of a timeout nobody explains.
+
+Other Nebius services used: none. Token Factory only. We did not use Nebius AI
+Cloud compute, and we say so rather than implying it.
+```
+
+---
+
+## 3. The rules-required field: feedback on Token Factory, AI Cloud and the NVIDIA tools
+
+Paste this.
+
+```
+Token Factory had exactly the right shape for this project. One thing about it
+cost us real time, and it is worth writing down.
+
+What worked:
+
+  - One OpenAI-compatible base URL for four NVIDIA models. The fast lane and
+    the deep lane run the same code and differ only by model id.
+  - Per-request billing made a full adversarial benchmark cheap enough to run
+    on every change: $0.033 of reviewer-lane time, zero retries. That is what
+    let us publish the model lanes' failures instead of quoting a lucky run.
+  - The models are open source and their behaviour is scoreable. We can put a
+    number on them — 9/14 for Ultra, 6/14 for Nano — instead of a feeling, and
+    that number is what decided the architecture.
+
+What was hard:
+
+  - Cold model load. The first call after idle can stall for seconds. We now
+    retry once in the preflight and write a machine-readable receipt, so a stall
+    shows up as a receipt rather than as a timeout nobody explains. A health
+    signal on the model endpoint would have saved that work.
+  - Model ids are long and account-specific, and the naming is not uniform
+    across tiers (nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B next to
+    nvidia/Nemotron-3-Ultra-550b-a55b). We pinned them in one provider profile
+    and print them on every lane receipt, which solved it for us; a stable
+    alias would have helped.
+  - The model response carries no confidence signal we could use to weight the
+    two reviewer tiers. So we do not weight them: we cite both and let the
+    deterministic gate decide. If Token Factory surfaced a quality or
+    confidence hint, that gap would close.
+
+We used Nebius Token Factory only. We did not use Nebius AI Cloud compute for
+this entry, so we have no opinion to offer on it.
+```
+
+---
+
+## 4. The rules-required field: significant update / pre-existing project
+
+The rules ask for this **only if the project existed before the submission
+period** (which opened 2026-08-26). This repository was created **2026-10-27**,
+inside the period — so the honest answer to "existed before?" is *no*. Answer
+that, and then answer the question the rule is really asking, because the
+capability underneath did pre-exist. The full document is
+`docs/SIGNIFICANT_UPDATE.md`; paste this summary.
+
+```
+This project was created inside the submission period: the repository and the
+build are both from 2026-10-27 onward, so it is a new entry rather than an
+update to an older one. The capability underneath it did pre-exist, so here is
+exactly what is new.
+
+What pre-existed (2026-10-27, the Open Agent Hackathon build): the
+evidence-and-verdict discipline, the card/commit/receipt/verdict vocabulary,
+the deterministic reconciler and its four verdicts, the claim-shape ledger, and
+the MCP surface. That build used a local runtime and two other integrations.
+
+What was added for this submission (2026-10-28 onward):
+
+  - 2026-10-28: the Nebius Token Factory provider profile and four pinned
+    NVIDIA Nemotron models; the fast and deep reviewer lanes; the Tavily
+    live-evidence lane; the Nemotron Super VL vision lane; the batch-eval
+    harness; the smoke preflight; the 14-item adversarial corpus with planted
+    truth; the recorded run outputs and the narration-check analysis.
+  - 2026-10-29: the MCP server the claim map points at; the generated tier
+    ledger; the benchmark gate that can fail; the machine-readable smoke
+    receipt; the offline test gaps closed; the Case Lab, generated from the
+    corpus with a scripted check proving which cases depend on which lanes;
+    this README, the claim map, and the claim-to-receipt table.
+
+The limits, stated plainly: the lanes are slower and less reliable than the
+gate (9/14 and 6/14 against 14/14), the narration checker is literal rather
+than semantic, and it flags restated system vocabulary alongside genuine
+inventions, so every flag is classified rather than hidden. There are no
+users, no revenue and no adoption, because there are none. The work item
+corpus is synthetic; the lanes ran against real Token Factory models.
+```
+
+---
+
+## 5. If the form asks for a one-line tagline
+
+```
+An agent that answers why, and cites every sentence — the model may write the
+prose, but it may not add a fact.
+```
+
+---
+
+## 6. Uploading the video to YouTube
+
+The file is `why-agent-nebius-demo.mp4` at the repository root, 87.54 seconds
+(measured, not estimated — `python3 demo_video/render.py` prints it and fails
+the build if it reaches three minutes).
+
+1. Open the founder's YouTube Studio → **Create → Upload videos**.
+2. Drag in `why-agent-nebius-demo.mp4`.
+3. **Visibility: Public.** The rules say publicly visible; `Unlisted` is not
+   enough, and a private link cannot be opened by a judge.
+4. Title: `why-agent — an agent that answers why, and cites every sentence`.
+5. Description (paste):
+
+```
+why-agent — Nebius × NVIDIA Global AI Hackathon, Best Apps and Agents track.
+
+An agent that answers "why did this happen?" about a work item, and cites every
+sentence of the answer. Cards, commits, check runs, deploy receipts, web pages
+and model reviews all make claims; one deterministic reconciler groups them by
+aspect and returns CORROBORATED, PARTIAL, CONFLICTED or NO EVIDENCE, and when
+the sources disagree it shows every side rather than picking a winner.
+
+Runs on Nebius Token Factory with NVIDIA Nemotron 3 Super, Nemotron 3 Nano,
+Nemotron 3 Ultra and Nemotron 3.5 Super VL, plus a Tavily live-evidence lane.
+Every lane output enters as a claim, never as a verdict.
+
+On an adversarial corpus of 14 planted-claim work items: the deterministic gate
+14/14 with zero false approvals; Nemotron 3 Ultra 9/14; Nemotron 3 Nano 6/14.
+That gap is the architecture — the lanes advise, the reconciler decides.
+
+Repo: https://github.com/Snedz/why-agent
+Demo: https://snedz.github.io/why-agent/
+Case Lab: https://snedz.github.io/why-agent/demo_lab/
+```
+
+6. Copy the watch URL and paste it into §1.5.
+7. Open the YouTube URL **in a logged-out browser** (or an incognito window) and
+   confirm it plays. A link that only plays for the uploader's account fails the
+   rule.
+
+The video is also published on GitHub Pages at
+`https://snedz.github.io/why-agent/why-agent-nebius-demo.mp4`, so there is a
+second URL if YouTube is slow. The rules ask for the YouTube link, so use
+YouTube.
+
+---
+
+## 7. What was checked, and what it proved
+
+Every number in the submission answers above is one the repository produced, and
+the repository checks that. Run these from a clean clone:
+
+| Command | What it proves |
+|---|---|
+| `python3 -m pytest -q` | 148 tests, 6 subtests — the suite passes offline |
+| `python3 benchmark/score.py --eval-results benchmark/eval-benchmark-2026-10-28.json` | the 14/14 gate, the 9/14 and 6/14 lanes, and the $0.033 |
+| `python3 demo_lab/flip_check.py` | two cases really do depend on their lanes |
+| `python3 demo_lab/build.py --check` | the Case Lab is generated from the corpus, not typed |
+| `python3 -m unittest test_claim_map -v` | every path the README names resolves, and every number it quotes is one the repo produced |
+
+The video is regenerated from the same tools, not edited by hand:
+`python3 demo_video/capture.py && python3 demo_video/render.py`.
+
+---
+
+## 8. The honest risks
+
+- **No live Token Factory call in the video.** This Mac has no Token Factory
+  key, so the video shows the *recorded* 2026-10-28 run — endpoint, model ids,
+  token counts and USD, read from the committed outputs — and the caption says
+  so. The committed run outputs are the receipt. If the founder adds
+  `NEBIUS_API_KEY` to the environment and re-runs
+  `python3 demo_video/capture.py && python3 demo_video/render.py`, the receipt
+  shot becomes a **live** call and the caption changes to match. That is the
+  only difference between the two videos.
+- **"GATE: FAIL" appears at the end of the benchmark output.** It is not the
+  deterministic gate failing — that line has zero false approvals. The scorer's
+  combined verdict counts the *lanes*' false approvals too, because the run
+  fails the criterion "no lane may falsely approve". The video shows the whole
+  output and the caption says what the line means.
+- **The work items are synthetic.** Every card, receipt, commit and check id is
+  invented. The lanes ran against real models; the claims did not come from a
+  real customer system. The README says so, and the Case Lab labels every case
+  `RECORDED` (the run) and `SYNTHETIC` (the claims).
+- **The project is new, not an update.** Answer §4 honestly; do not claim an
+  update that did not happen.
+- **The "financial or preferential support" clause.** The Sponsor is Nebius
+  B.V., and the rules exclude a project developed with financial or preferential
+  support from the Sponsor or the Administrator. The free Token Factory credits
+  every entrant is given through the contest's own Builder Program are not
+  funding, a contract, or a commercial licence — but the line has to hold:
+  **no paid Nebius account, no commercial licence, no development contract, no
+  investment**, and contest infrastructure only for the prize window. If the
+  founder has anything of that kind in place, it needs to be disclosed or
+  unwound before submitting.
+- **Availability.** The project must stay free of charge and unrestricted until
+  the Judging Period ends — **2026-12-23**. The GitHub Pages demo and the Case
+  Lab have no login, no analytics and no data collection, so this holds as long
+  as the repository and the Pages site stay public. Nothing in this repository
+  collects anything from a visitor.

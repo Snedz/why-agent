@@ -139,7 +139,7 @@ not a dependency for correctness.
 ## What the submission says about the two integrations
 
 The submission form asks how Zetaris, Meterless, Cursor and NVIDIA were used.
-The honest answer, which `SUBMISSION.md` carries verbatim:
+The honest answer, which `docs/OPEN_AGENT_HACKATHON_2026-10-27.md` carries verbatim:
 
 - **Meterless** — the narration client speaks the OpenAI-compatible runtime.
   On 2026-10-27 the free M1–M4 app was installed and `GET /v1/models` returned
@@ -259,7 +259,7 @@ Files touched:
 - `SECURITY.md`
 - `README.md`
 - `INTEGRATION.md`
-- `SUBMISSION.md`
+- `docs/OPEN_AGENT_HACKATHON_2026-10-27.md`
 - `DECK.md`
 - `DECK.pdf`
 - `DRILLS-2026-10-27.md`

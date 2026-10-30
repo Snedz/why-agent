@@ -330,7 +330,7 @@ the lanes did not — their misses are shown on the cases where they happened.
 endpoint and the cost.</div>""")
 
     for case in cases:
-        out.append('<section class="case">')
+        out.append(f'<section class="case" id="{e(case["case_id"])}">')
         out.append(f"<h2>{e(case['case_id'])} — <span class=\"verdict\">{e(case['verdict'])}</span></h2>")
         out.append(f"<p class=\"note\"><b>{e(case['headline'])}</b> {e(case['note'])}</p>")
         out.append(f"<p class=\"note\">Labels: <b>{e(case['labels']['provenance'])}</b> · "

@@ -25,6 +25,9 @@ and a Nemotron Super VL receipt lane.
 | **Repository** | https://github.com/Snedz/why-agent |
 | **Licence** | Apache-2.0 |
 
+Free of charge, unrestricted, no login and no data collection — including
+through the end of the judging period on 2026-12-23.
+
 **Try it first — three commands, no key, no network:**
 
 ```

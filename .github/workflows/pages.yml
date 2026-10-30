@@ -29,6 +29,7 @@ jobs:
         run: |
           mkdir -p _site
           cp why-agent-demo.mp4 _site/
+          cp why-agent-nebius-demo.mp4 _site/
           cp why-agent-deck.pdf _site/
           cp demo.html _site/index.html
           cp -r demo_lab _site/demo_lab

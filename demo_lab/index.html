@@ -28,7 +28,7 @@ known in advance: an adversarial corpus with planted truth, scored in the repo's
 the lanes did not — their misses are shown on the cases where they happened.
 <b>Every claim below carries its receipt</b>, and every lane receipt names the model, the
 endpoint and the cost.</div>
-<section class="case">
+<section class="case" id="bm-clean-ship">
 <h2>bm-clean-ship — <span class="verdict">CORROBORATED</span></h2>
 <p class="note"><b>The clean case — and a lane still disagreed.</b> Every source agrees, and they cover state, outcome and cause. The gate corroborates. The fast reviewer lane called it CONFLICTED anyway. Lanes err in both directions, which is exactly why they never decide.</p>
 <p class="note">Labels: <b>RECORDED</b> · <b>SYNTHETIC</b> claims · recorded 2026-10-28 · gate verdict <b>CORROBORATED</b> · planted truth <b>CORROBORATED</b>.</p>
@@ -45,7 +45,7 @@ endpoint and the cost.</div>
 </p>
 <p class="narr fail">Narration check: <b>FAILED</b> — flagged values: <code>CI</code>. Classification for every flag is in the repo (docs/NARRATION_CHECK_ANALYSIS_2026-10-28.md and docs/BENCHMARK_RESULTS_2026-10-28.md): across all 2026-10-28 runs, zero flagged values were invented facts.</p>
 </section>
-<section class="case">
+<section class="case" id="why-beta">
 <h2>why-beta — <span class="verdict">PARTIAL</span></h2>
 <p class="note"><b>Both model lanes over-approved this one.</b> The card is blocked and the gate agrees — but nobody stated a cause, so the gate says PARTIAL. Both Nemotron lanes said CORROBORATED. An unexplained outcome is not a verified one.</p>
 <p class="note">Labels: <b>RECORDED</b> · <b>SYNTHETIC</b> claims · recorded 2026-10-28 · gate verdict <b>PARTIAL</b>.</p>
@@ -61,7 +61,7 @@ endpoint and the cost.</div>
 </p>
 <p class="narr fail">Narration check: <b>FAILED</b> — flagged values: <code>UNKNOWN</code>, <code>gate/beta</code>. Classification for every flag is in the repo (docs/NARRATION_CHECK_ANALYSIS_2026-10-28.md and docs/BENCHMARK_RESULTS_2026-10-28.md): across all 2026-10-28 runs, zero flagged values were invented facts.</p>
 </section>
-<section class="case">
+<section class="case" id="bm-reviewer-split">
 <h2>bm-reviewer-split — <span class="verdict">CONFLICTED</span></h2>
 <p class="note"><b>The two Nemotron tiers disagree — and the disagreement is the finding.</b> The fast lane and the deep lane read the same claims and returned different verdicts. The gate keeps both, cites both, and refuses to average them. Remove the two reviewer rows and this item reads as a routine CORROBORATED — the disagreement is not visible anywhere else.</p>
 <p class="note">Labels: <b>RECORDED</b> · <b>SYNTHETIC</b> claims · recorded 2026-10-28 · gate verdict <b>CONFLICTED</b> · planted truth <b>CONFLICTED</b>.</p>
@@ -80,7 +80,7 @@ endpoint and the cost.</div>
 <div class="flip"><b>Lane-dependent:</b> the verdict above depends on the nemotron-deep, nemotron-fast lane row(s). Remove them and the same reconciler returns <b>CORROBORATED</b> instead of <b>CONFLICTED</b>. <code>python3 demo_lab/flip_check.py</code> proves it by calling the same reconciler.</div>
 <p class="narr ok">Narration check: <b>PASSED</b> — flagged values: none. Classification for every flag is in the repo (docs/NARRATION_CHECK_ANALYSIS_2026-10-28.md and docs/BENCHMARK_RESULTS_2026-10-28.md): across all 2026-10-28 runs, zero flagged values were invented facts.</p>
 </section>
-<section class="case">
+<section class="case" id="bm-web-nonmatch">
 <h2>bm-web-nonmatch — <span class="verdict">CONFLICTED</span></h2>
 <p class="note"><b>A live-evidence miss, recorded instead of dropped.</b> The Tavily lane fetched a page that does not contain the claimed value. That becomes a claim with an empty value — an honest miss — and it conflicts with the postal receipt. Remove the web row and the spoken aspects agree, and the item reads as a quiet PARTIAL.</p>
 <p class="note">Labels: <b>RECORDED</b> · <b>SYNTHETIC</b> claims · recorded 2026-10-28 · gate verdict <b>CONFLICTED</b> · planted truth <b>CONFLICTED</b>.</p>
@@ -98,7 +98,7 @@ endpoint and the cost.</div>
 <div class="flip"><b>Lane-dependent:</b> the verdict above depends on the tavily lane row(s). Remove them and the same reconciler returns <b>PARTIAL</b> instead of <b>CONFLICTED</b>. <code>python3 demo_lab/flip_check.py</code> proves it by calling the same reconciler.</div>
 <p class="narr fail">Narration check: <b>FAILED</b> — flagged values: <code>&quot;&quot;</code>, <code>example.com/other</code>, <code>UNKNOWN</code>. Classification for every flag is in the repo (docs/NARRATION_CHECK_ANALYSIS_2026-10-28.md and docs/BENCHMARK_RESULTS_2026-10-28.md): across all 2026-10-28 runs, zero flagged values were invented facts.</p>
 </section>
-<section class="case">
+<section class="case" id="bm-card-lies">
 <h2>bm-card-lies — <span class="verdict">CONFLICTED</span></h2>
 <p class="note"><b>The trap: a card that claims a failed deploy shipped.</b> The card says shipped; the check and the deploy receipt say failed and rolled back. The fast lane believed the card — a false approval. The gate and the deep lane held CONFLICTED.</p>
 <p class="note">Labels: <b>RECORDED</b> · <b>SYNTHETIC</b> claims · recorded 2026-10-28 · gate verdict <b>CONFLICTED</b> · planted truth <b>CONFLICTED</b>.</p>
@@ -113,14 +113,14 @@ endpoint and the cost.</div>
 </p>
 <p class="narr fail">Narration check: <b>FAILED</b> — flagged values: <code>UNKNOWN</code>, <code>CI</code>. Classification for every flag is in the repo (docs/NARRATION_CHECK_ANALYSIS_2026-10-28.md and docs/BENCHMARK_RESULTS_2026-10-28.md): across all 2026-10-28 runs, zero flagged values were invented facts.</p>
 </section>
-<section class="case">
+<section class="case" id="bm-no-evidence">
 <h2>bm-no-evidence — <span class="verdict">NO EVIDENCE</span></h2>
 <p class="note"><b>Nobody said anything.</b> This item exists in the corpus with zero claims. The gate&#x27;s answer is NO EVIDENCE — a first-class verdict, not an error. The lanes were not run: there is nothing to judge, and a model asked anyway would invent something to judge.</p>
 <p class="note">Labels: <b>RECORDED</b> · <b>SYNTHETIC</b> claims · recorded 2026-10-28 · gate verdict <b>NO EVIDENCE</b> · planted truth <b>NO EVIDENCE</b>.</p>
 <p class="note">No claims recorded for this item. That absence is the case.</p>
 <p class="lanes">Reviewer lanes: <b>not run</b> — see the case note.</p>
 </section>
-<section class="case">
+<section class="case" id="why-alpha">
 <h2>why-alpha — <span class="verdict">CONFLICTED</span></h2>
 <p class="note"><b>A real conflict, shown with both sides cited — and a narration that failed its check.</b> Sources disagree about the same aspect. The gate refuses to pick a winner. The deep lane matched the gate; the fast lane softened it to PARTIAL. The narration of this item also failed its check: the flagged value is listed below and classified.</p>
 <p class="note">Labels: <b>RECORDED</b> · <b>SYNTHETIC</b> claims · recorded 2026-10-28 · gate verdict <b>CONFLICTED</b>.</p>
