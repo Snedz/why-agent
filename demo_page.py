@@ -328,6 +328,12 @@ def build() -> str:
     rows = sum(1 for line in tier_ledger.CASES.read_text(encoding="utf-8").splitlines()
                if line.strip())
     items = len(truth)
+    # Counted from the corpus, not typed: how much of the evidence the live-web
+    # lane actually contributed. The entry claims the Tavily bonus, so the page
+    # a judge opens should show that the lane is real and what it added.
+    tavily = [r for r in _jsonl(tier_ledger.CASES) if r["source"] == "tavily"]
+    tavily_rows = len(tavily)
+    tavily_items = len({r["item_id"] for r in tavily})
     e = html.escape
 
     def lane_row(tier: str, label: str) -> str:
@@ -433,14 +439,20 @@ def build() -> str:
   {retries} retries. Reproduce it:
   <code>python3 benchmark/score.py --eval-results benchmark/eval-benchmark-2026-10-28.json</code></p>
 
-  <h2>The models, and what each one is for</h2>
+  <h2>The lanes, and what each one is for</h2>
   <table>
-    <tr><th>Lane</th><th>Model</th></tr>
+    <tr><th>Lane</th><th>What runs it</th></tr>
     <tr><td>Narration</td><td><code>{e(models['standard'])}</code></td></tr>
     <tr><td>Reviewer — fast (the everyday call)</td><td><code>{e(models['fast'])}</code></td></tr>
     <tr><td>Reviewer — deep (the contested items)</td><td><code>{e(models['deep'])}</code></td></tr>
     <tr><td>Vision — receipt images into claims</td><td><code>{e(models['vision'])}</code></td></tr>
+    <tr><td>Live evidence — the web, queried at run time</td>
+        <td>Tavily search API, via <code>tavily_lane.py</code></td></tr>
   </table>
+  <p class="note"><b>The live-web lane queries Tavily at run time</b>, and a page becomes
+  evidence only if the claimed value literally appears in it — {tavily_rows} rows across
+  {tavily_items} of the corpus items are Tavily's, and one of them records a <i>miss</i>
+  rather than dropping the row. A page that does not match cannot quietly become a pass.</p>
   <p class="note">Every lane output enters as a <b>claim</b>, never as a verdict,
   because any integration can be poisoned. The model may write the prose; it may not
   add a fact — every value a narration states is checked against the evidence, and a
