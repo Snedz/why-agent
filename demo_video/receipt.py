@@ -41,7 +41,7 @@ def main() -> int:
         print(f"  {label}  {models[tier]}")
 
     print()
-    print("measured reviewer-lane cost (ledger.py reads the run outputs):")
+    print("measured reviewer-lane cost (tier_ledger.py reads the run outputs):")
     rendered = ledger.render()
     for line in rendered.splitlines():
         if line.startswith("| deep ") or line.startswith("| fast "):

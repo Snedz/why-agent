@@ -144,7 +144,7 @@ which is why it cannot be lane-run and why the lanes score it MISSING.
 | A forged aspect cannot change a verdict | `evidence.reconcile()` routes an unknown aspect to `unexpected`: cited, ignored, never agreed |
 | A VL extraction becomes a claim, never a verdict | `vision_lane.py` — null fields produce no rows; a non-JSON answer raises |
 | A client can ask the agent for its verdict | `mcp_server.py` and `test_mcp_server.py` — the server calls no model, and a test forbids it |
-| Costs are measured, not estimated | `docs/TIER_LEDGER.md`, generated from the committed run outputs by `ledger.py` |
+| Costs are measured, not estimated | `docs/TIER_LEDGER.md`, generated from the committed run outputs by `tier_ledger.py` |
 | What pre-existed, and what was added | `docs/SIGNIFICANT_UPDATE.md` |
 
 Every row above has a command a reader can run; `docs/CLAIM_MAP.md` is the full

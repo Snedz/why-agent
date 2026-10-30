@@ -137,13 +137,13 @@ class Gate2NumbersTests(unittest.TestCase):
             capture_output=True, text=True, cwd=str(HERE))
         blob.append(scorer.stdout)
         ledger = subprocess.run(
-            [sys.executable, str(HERE / "ledger.py"), "--check"],
+            [sys.executable, str(HERE / "tier_ledger.py"), "--check"],
             capture_output=True, text=True, cwd=str(HERE))
         blob.append(ledger.stdout)
         blob.append(ledger.stderr)
         # The ledger's own rendered output is where the per-tier costs live.
         sys.path.insert(0, str(HERE))
-        import ledger as ledger_module
+        import tier_ledger as ledger_module
         blob.append(ledger_module.render())
         return "\n".join(blob)
 
@@ -177,7 +177,7 @@ class Gate3CommandTests(unittest.TestCase):
         self.assertIn("[lane:fast] 6/14 correct", proc.stdout)
 
     def test_the_cited_ledger_command_matches_the_committed_doc(self):
-        proc = subprocess.run([sys.executable, "ledger.py", "--check"],
+        proc = subprocess.run([sys.executable, "tier_ledger.py", "--check"],
                               capture_output=True, text=True, cwd=str(HERE))
         self.assertEqual(proc.returncode, 0, proc.stdout + proc.stderr)
 
