@@ -195,6 +195,17 @@ Significant update: https://github.com/Snedz/why-agent/blob/main/docs/SIGNIFICAN
 
 ### 1.8 Anything else the form asks that is not covered above
 
+- **Cover image / thumbnail** — `why-agent-nebius-thumbnail.png` (1280×720), in the
+  repository root and published at
+  `https://snedz.github.io/why-agent/why-agent-nebius-thumbnail.png`.
+- **Is the project open source?** — Yes. Apache-2.0, in `LICENSE`, detected by
+  GitHub and visible in the repository's About section.
+- **Did you use a template, starter code, or an existing project?** — No. The
+  reconciliation, the corpus, the lanes and the Case Lab are original work in
+  this repository. The repository does carry two earlier adapters (a Zetaris
+  lane and a Meterless/Nightshift narration client) from the October build; they
+  are declared in `docs/SIGNIFICANT_UPDATE.md` and `INTEGRATION.md`, and the
+  Nebius build does not depend on either.
 - **Team / organisation** — fill in with the founder's own details. Do not put
   a personal name in the repository; the form is the place for it.
 - **"Have you used this technology before?"** and similar — answer truthfully.
