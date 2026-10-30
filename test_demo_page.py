@@ -111,6 +111,12 @@ class PageTests(unittest.TestCase):
         self.assertTrue(poster.exists(), f"{poster.name} is missing")
         self.assertIn(f'poster="{poster.name}"', self.page)
 
+    def test_the_thumbnail_exists_and_is_the_right_shape(self):
+        thumb = demo_page.PAGE.parent / "why-agent-nebius-thumbnail.png"
+        self.assertTrue(thumb.exists(), f"{thumb.name} is missing")
+        from PIL import Image
+        self.assertEqual(Image.open(thumb).size, (1280, 720))
+
     def test_the_page_makes_no_network_request(self):
         self.assertNotIn("<script", self.page)
         self.assertNotIn('src="http', self.page)
