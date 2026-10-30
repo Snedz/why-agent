@@ -126,6 +126,13 @@ Case Lab is a second surface, the agent is exposed over MCP so a client can ask
 it for a verdict (and a verdict-shaped submission is refused at the boundary),
 and the production path reads its evidence from a DuckDB file.
 
+The demo page itself runs the reconciler in the browser: edit a claim and the
+verdict is recomputed from what is on screen, and on a lane-dependent case one
+button removes the model-lane rows to show CONFLICTED become CORROBORATED. The
+JavaScript is a port of the Python, and a test runs both over every corpus item
+and compares the answers, so the page cannot show a verdict the repository does
+not return.
+
 No dependency. Python 3.10+. Three commands run it with no key and no network:
 python3 demo.py, python3 benchmark/score.py --eval-results
 benchmark/eval-benchmark-2026-10-28.json, and python3 demo_lab/flip_check.py.

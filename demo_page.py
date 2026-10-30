@@ -183,8 +183,11 @@ WORKBENCH_CSS = """
   .wb { display:grid; grid-template-columns:1.45fr 1fr; gap:16px; align-items:start;
         margin-top:8px; }
   @media (max-width:900px) { .wb { grid-template-columns:1fr; } }
+  /* min-width:0 on a grid item: without it the item refuses to shrink below
+     its content's min-content width, and a wide table inside it widens the
+     whole page instead of scrolling. */
   .wb-panel { background:#0e141c; border:1px solid #26303c; border-radius:10px;
-              padding:14px 15px 12px; }
+              padding:14px 15px 12px; min-width:0; }
   .wb-picker { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:11px; }
   .wb-picker label { font-size:13px; color:#8b97a6; }
   .wb select, .wb input, .wb button { font:inherit; }
@@ -197,8 +200,14 @@ WORKBENCH_CSS = """
   .wb-meta { font-size:12px; color:#6e7b8b; margin:0 0 10px; }
   .wb-note { font-size:13px; color:#9fb0c3; background:#111820; border-left:3px solid #2c3a4a;
              padding:9px 11px; border-radius:0 7px 7px 0; margin:0 0 11px; }
+  /* Six columns will not fit a phone. Two things go wrong if the table is
+     allowed to decide: it pushes the page wide and every paragraph beside it
+     breaks, and if it is squeezed instead, the claims column collapses to one
+     word per line. So the table keeps a legible width and scrolls inside its
+     own box — nothing is hidden and nothing is squeezed. */
+  .wb-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; min-width:0; }
   .wb-table { border-collapse:collapse; width:100%; table-layout:fixed; font-size:12.5px;
-              margin:0; }
+              margin:0; min-width:560px; }
   .wb-table th { border:none; border-bottom:1px solid #26303c; color:#8b97a6; font-size:10.5px;
                  text-transform:uppercase; letter-spacing:.06em; padding:0 5px 6px;
                  text-align:left; }
@@ -265,6 +274,7 @@ WORKBENCH_HTML = """
       <p class="wb-headline" id="wb-headline"></p>
       <p class="wb-meta" id="wb-meta"></p>
       <p class="wb-note" id="wb-note" hidden></p>
+      <div class="wb-scroll">
       <table class="wb-table">
         <colgroup>
           <col style="width:24px"><col style="width:66px"><col style="width:88px">
@@ -276,6 +286,7 @@ WORKBENCH_HTML = """
         </tr></thead>
         <tbody id="wb-rows"></tbody>
       </table>
+      </div>
     </div>
     <div class="wb-panel">
       <p class="verdict" id="wb-verdict">&mdash;</p>
