@@ -161,7 +161,7 @@ def build() -> str:
     <span class="pill">synthetic claims, real model runs</span>
   </div>
 
-  <video controls preload="metadata" poster="">
+  <video controls preload="metadata" poster="why-agent-nebius-poster.png">
     <source src="{VIDEO}" type="video/mp4">
     Your browser cannot play this video. Download it: <a href="{VIDEO}">{VIDEO}</a>
   </video>
