@@ -40,12 +40,14 @@ figure from this file and fails if the runner's output does not contain it.
 
 ## Gate note
 
-`score.py` exits 1 on ANY false approval, including a lane's. The gate
-that ships is the deterministic one (zero false approvals); the lanes'
-false approvals are the published evidence for keeping them advisory.
-A combined exit code would hide exactly the distinction the benchmark
-exists to show, so the per-scorer table above is the result — not the
-exit code alone.
+`score.py` prints two verdicts on two lines, because they answer two different
+questions. `GATE:` is the deterministic reconciler's — zero false approvals,
+and the claim the project ships. `LANES:` is the advisory model tiers' —
+printed in full above, and not gating: a lane cannot raise a verdict, so its
+false approval is evidence about the model rather than a product failure. The
+default exit code follows the gate; `--strict-lanes` makes a lane false
+approval exit non-zero as well, for anyone who wants that criterion. The
+per-scorer table above is the result — neither line alone is.
 
 ## Narration checks on the corpus
 

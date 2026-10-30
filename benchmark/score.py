@@ -1,14 +1,25 @@
 """Score the benchmark corpus against its planted truth.
 
-The ship gate is zero false approvals: a case scored CORROBORATED whose
-planted truth is anything else fails the run, however the rest scored.
-Accuracy is reported per verdict and in full — a run that hides its
-failures has failed a second, worse way.
+Two different things are scored here, and they are reported on separate lines
+because they mean different things:
+
+  * THE GATE — the deterministic reconciler. Its ship rule is zero false
+    approvals: a case scored CORROBORATED whose planted truth is anything else
+    fails the run, however the rest scored. This is the product's claim.
+  * THE LANES — the model reviewer tiers, when --eval-results is given. They
+    are measured, not gating: a lane that falsely approves is a finding about
+    the model, printed in full. It does not fail the gate, because a lane
+    cannot raise a verdict — that is the architecture.
+
+`--strict-lanes` makes a lane false approval exit non-zero as well, for anyone
+who wants that criterion. Accuracy is reported per verdict and in full — a run
+that hides its failures has failed a second, worse way.
 
 Usage:
   python3 benchmark/score.py [--cases benchmark/cases.jsonl]
                              [--truth benchmark/truth.json]
                              [--eval-results eval-results.json]
+                             [--strict-lanes]
 
 With --eval-results (a batch_eval.py output file), lane verdicts for the
 same items are scored the same way, per tier, disagreements listed.
@@ -128,7 +139,7 @@ def score_verdicts(got: dict[str, str], truth: dict[str, str], label: str) -> in
     for item_id, expected, actual in misses:
         print(f"  MISS {item_id}: expected {expected}, got {actual}")
     if false_approvals:
-        print(f"  FALSE APPROVALS (gate failure): {', '.join(false_approvals)}")
+        print(f"  FALSE APPROVALS: {', '.join(false_approvals)}")
     return len(false_approvals)
 
 
@@ -138,6 +149,8 @@ def main() -> int:
     ap.add_argument("--cases", default=str(here / "cases.jsonl"))
     ap.add_argument("--truth", default=str(here / "truth.json"))
     ap.add_argument("--eval-results", default=None)
+    ap.add_argument("--strict-lanes", action="store_true",
+                    help="also exit non-zero when an advisory lane falsely approves")
     args = ap.parse_args()
 
     truth = json.loads(Path(args.truth).read_text())
@@ -145,7 +158,8 @@ def main() -> int:
     claims = ev.load_evidence(args.cases)
     got = {item_id: ev.explain(items, claims, item_id).confidence()
            for item_id in truth}
-    failures = score_verdicts(got, truth, "deterministic")
+    gate_failures = score_verdicts(got, truth, "deterministic")
+    lane_failures = 0
 
     if args.eval_results:
         data = json.loads(Path(args.eval_results).read_text())
@@ -160,12 +174,22 @@ def main() -> int:
                     for r in data["results"]
                     if r["item"] in truth and tier in r.get("tiers", {})}
             if lane:
-                failures += score_verdicts(lane, truth, f"lane:{tier}")
+                lane_failures += score_verdicts(lane, truth, f"lane:{tier}")
 
-    if failures:
-        print(f"GATE: FAIL — {failures} false approval(s)")
+    # The gate first, on its own line: it is the claim the project makes, and
+    # it is the only thing that gates. A lane cannot raise a verdict, so a lane
+    # that falsely approves is evidence about the model, not a product failure.
+    if gate_failures:
+        print(f"GATE: FAIL — {gate_failures} false approval(s)")
         return 1
     print("GATE: PASS — zero false approvals")
+
+    if lane_failures:
+        print(f"LANES: FAIL — {lane_failures} false approval(s) in the advisory "
+              f"lanes (the gate above is unaffected)")
+        return 1 if args.strict_lanes else 0
+    if args.eval_results:
+        print("LANES: PASS — zero false approvals")
     return 0
 
 

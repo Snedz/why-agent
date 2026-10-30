@@ -53,10 +53,21 @@ why-agent
 https://snedz.github.io/why-agent/
 ```
 
-This is a working demo, not a screenshot: the agent, the adversarial benchmark
-and the Case Lab all run. The **Case Lab** — seven cases with every claim, lane
-receipt, model id, token count and cost — is at
-`https://snedz.github.io/why-agent/demo_lab/`.
+This is a working demo, not a screenshot, and that is now literally true of the
+landing page: it runs the reconciler in the browser. Pick a case, untick a
+source, or type a different value into a claim, and the verdict is recomputed
+from the rows on screen. On the two lane-dependent cases one button removes the
+model-lane rows and shows CONFLICTED become CORROBORATED — the same flip
+`demo_lab/flip_check.py` proves in Python. No key, no server, no network.
+
+The page's JavaScript is a **port** of `evidence.reconcile()`, and the
+repository proves that rather than asserting it: `test_demo_app.py` runs
+`demo_lab/reconciler.js` under node and the Python under CPython over every
+item in both corpora plus edge cases built to break a careless translation, and
+fails if a verdict, conflict, agreement, gap or aspect order differs.
+
+The **Case Lab** — seven cases with every claim, lane receipt, model id, token
+count and cost — is at `https://snedz.github.io/why-agent/demo_lab/`.
 
 ### 1.3 Text description explaining features and functionality
 
@@ -457,11 +468,15 @@ The video is regenerated from the same tools, not edited by hand:
   `python3 demo_video/capture.py && python3 demo_video/render.py`, the receipt
   shot becomes a **live** call and the caption changes to match. That is the
   only difference between the two videos.
-- **"GATE: FAIL" appears at the end of the benchmark output.** It is not the
-  deterministic gate failing — that line has zero false approvals. The scorer's
-  combined verdict counts the *lanes*' false approvals too, because the run
-  fails the criterion "no lane may falsely approve". The video shows the whole
-  output and the caption says what the line means.
+- **The scorer prints two lines at the end, and they mean different things.**
+  `GATE: PASS — zero false approvals` is the deterministic reconciler: that is
+  the product's claim, and it is the only thing that gates. `LANES: FAIL — 3
+  false approval(s) in the advisory lanes` is the model tiers: three of the
+  items were falsely approved by a lane somewhere. Nothing is hidden — every
+  one is named line by line above that summary, and it is the published
+  evidence for keeping the lanes advisory. The exit code follows the gate;
+  `--strict-lanes` makes a lane false approval exit non-zero too, if that is
+  the criterion you want.
 - **The work items are synthetic.** Every card, receipt, commit and check id is
   invented. The lanes ran against real models; the claims did not come from a
   real customer system. The README says so, and the Case Lab labels every case

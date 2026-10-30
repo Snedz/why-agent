@@ -29,6 +29,71 @@
   .pill { display:inline-block; border:1px solid #2c3a4a; border-radius:999px;
            padding:2px 10px; font-size:13px; color:#9fb0c3; margin:0 6px 6px 0; }
   .good { color:#7ee787; }
+
+  /* The workbench: the reconciler, running in the reader's tab. */
+  .wb { display:grid; grid-template-columns:1.45fr 1fr; gap:16px; align-items:start;
+        margin-top:8px; }
+  @media (max-width:900px) { .wb { grid-template-columns:1fr; } }
+  .wb-panel { background:#0e141c; border:1px solid #26303c; border-radius:10px;
+              padding:14px 15px 12px; }
+  .wb-picker { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:11px; }
+  .wb-picker label { font-size:13px; color:#8b97a6; }
+  .wb select, .wb input, .wb button { font:inherit; }
+  .wb select { background:#111820; color:#cbd6e2; border:1px solid #26303c;
+               border-radius:7px; padding:5px 7px; max-width:100%; }
+  .wb button { background:#16202b; color:#cbd6e2; border:1px solid #2c3a4a;
+               border-radius:7px; padding:5px 10px; font-size:13px; cursor:pointer; }
+  .wb button:hover { background:#1d2a37; }
+  .wb-headline { font-size:15px; color:#eaf1f8; margin:0 0 3px; font-weight:600; }
+  .wb-meta { font-size:12px; color:#6e7b8b; margin:0 0 10px; }
+  .wb-note { font-size:13px; color:#9fb0c3; background:#111820; border-left:3px solid #2c3a4a;
+             padding:9px 11px; border-radius:0 7px 7px 0; margin:0 0 11px; }
+  .wb-table { border-collapse:collapse; width:100%; table-layout:fixed; font-size:12.5px;
+              margin:0; }
+  .wb-table th { border:none; border-bottom:1px solid #26303c; color:#8b97a6; font-size:10.5px;
+                 text-transform:uppercase; letter-spacing:.06em; padding:0 5px 6px;
+                 text-align:left; }
+  .wb-table td { border:none; border-bottom:1px solid #1a232d; padding:5px;
+                 vertical-align:top; color:#cbd6e2; }
+  .wb-table tr.off td { opacity:.36; }
+  .wb-table td.stmt { color:#9fb0c3; font-size:11.5px; }
+  .wb-table td.loc { color:#5f6b7a; font-size:10px; word-break:break-all; }
+  .wb-table .kind { color:#6e7b8b; font-size:10.5px; }
+  .wb-table .lane { color:#c8a2e0; font-weight:600; }
+  .wb-table input.val { width:100%; background:transparent; border:1px solid transparent;
+                        border-radius:5px; padding:2px 4px; color:#cbd6e2;
+                        font-family:ui-monospace, Menlo, Consolas, monospace; font-size:12.5px; }
+  .wb-table input.val:hover { border-color:#26303c; }
+  .wb-table input.val:focus { outline:none; border-color:#3d6b4e; background:#101a15; }
+  .wb-table select.asp { border:1px solid transparent; background:transparent; padding:1px 2px;
+                         font-size:12px; color:#cbd6e2; }
+  .wb-table select.asp:hover { border-color:#26303c; }
+  .wb-table select.asp.inherited { font-style:italic; color:#9fb0c3; }
+  .verdict { font-size:25px; font-weight:700; letter-spacing:-.4px; line-height:1.1;
+             margin:0 0 3px; font-family:ui-monospace, Menlo, Consolas, monospace; }
+  .v-CORROBORATED { color:#7ee787; }
+  .v-PARTIAL { color:#e3b341; }
+  .v-CONFLICTED { color:#ff7b72; }
+  .v-NOEVIDENCE { color:#9fb0c3; }
+  .wb-says { font-size:12.5px; color:#8b97a6; margin:0 0 13px; }
+  .wb-says b { color:#eaf1f8; }
+  .wb .quiet { color:#6e7b8b; font-size:11.5px; }
+  .wb .sec { border-top:1px solid #1f2833; padding-top:10px; margin-top:10px; }
+  .wb .sec:first-of-type { border-top:none; padding-top:0; margin-top:0; }
+  .wb .sech { font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:#8b97a6;
+              font-weight:650; margin:0 0 6px; }
+  .wb .grp { margin:0 0 9px; }
+  .wb .aspname { font-size:12px; font-weight:650; color:#cbd6e2; }
+  .wb .cl { font-size:11.5px; color:#9fb0c3; margin:2px 0 0 10px; }
+  .wb .cl .who { color:#eaf1f8; font-weight:600; }
+  .wb .val2 { background:#16202b; padding:0 4px; border-radius:4px;
+              font-family:ui-monospace, Menlo, Consolas, monospace; }
+  .wb .cite { color:#5f6b7a; font-size:10.5px; }
+  .wb .gap { font-size:11.5px; color:#e3b341; margin:2px 0; }
+  .wb-flip { margin-top:11px; padding:9px 11px; background:#101a24; border:1px solid #24405c;
+             border-radius:7px; font-size:12px; color:#9fb0c3; }
+  .wb-flip b { color:#8cc4f0; }
+
 </style>
 </head>
 <body>
@@ -55,6 +120,532 @@
     <a href="https://github.com/Snedz/why-agent">The repository</a>
     <a href="https://github.com/Snedz/why-agent/blob/main/SUBMISSION.md">The submission packet</a>
   </div>
+
+
+  <h2 id="workbench">Try it — the reconciler, running in this tab</h2>
+  <p class="note">Pick a case, untick a source, or type a different value into a claim.
+  The verdict on the right is recomputed from what is on screen: this is the reconciler
+  the Python runs, not a video of it. No key, no server, no network — the corpus and the
+  reconciler are both in this page. The JavaScript is a port of
+  <code>evidence.reconcile()</code>, and <code>test_demo_app.py</code> runs both over every
+  item in both corpora and fails if a verdict, a conflict, a gap or an aspect differs.</p>
+
+  <div class="wb">
+    <div class="wb-panel">
+      <div class="wb-picker">
+        <label for="wb-case">Case</label>
+        <select id="wb-case"></select>
+        <button id="wb-lanes" hidden></button>
+        <button id="wb-reset">Reset</button>
+        <button id="wb-add">Add a claim</button>
+      </div>
+      <p class="wb-headline" id="wb-headline"></p>
+      <p class="wb-meta" id="wb-meta"></p>
+      <p class="wb-note" id="wb-note" hidden></p>
+      <table class="wb-table">
+        <colgroup>
+          <col style="width:24px"><col style="width:66px"><col style="width:88px">
+          <col style="width:126px"><col><col style="width:88px">
+        </colgroup>
+        <thead><tr>
+          <th></th><th>Source</th><th>Aspect</th><th>Value</th>
+          <th>What it claims</th><th>Locator</th>
+        </tr></thead>
+        <tbody id="wb-rows"></tbody>
+      </table>
+    </div>
+    <div class="wb-panel">
+      <p class="verdict" id="wb-verdict">&mdash;</p>
+      <p class="wb-says" id="wb-says"></p>
+      <div class="sec" id="wb-conflict"></div>
+      <div class="sec" id="wb-agree"></div>
+      <div class="sec" id="wb-gap"></div>
+      <div class="sec" id="wb-unexp"></div>
+      <div class="wb-flip" id="wb-flip" hidden></div>
+    </div>
+  </div>
+
+  <noscript><p class="note">JavaScript is off, so the workbench cannot run. The
+  <a href="demo_lab/">Case Lab</a> is pre-rendered, shows the same cases with every
+  receipt, and needs no JavaScript.</p></noscript>
+
+  <script>window.__WHY_AGENT__ = {"items": [{"id": "bm-clean-ship", "corpus": "benchmark", "title": "Clean ship", "headline": "The clean case — and a lane still disagreed.", "note": "Every source agrees, and they cover state, outcome and cause. The gate corroborates. The fast reviewer lane called it CONFLICTED anyway. Lanes err in both directions, which is exactly why they never decide.", "rows": [{"item_id": "bm-clean-ship", "kind": "card", "source": "card", "locator": "bench/cards/bm-clean-ship.md:1", "statement": "the card says the release shipped", "value": "shipped", "aspect": ""}, {"item_id": "bm-clean-ship", "kind": "commit", "source": "git", "locator": "bench/git/1", "statement": "the merge commit records the release", "value": "shipped", "aspect": ""}, {"item_id": "bm-clean-ship", "kind": "check", "source": "ci", "locator": "bench/ci/1", "statement": "the release check passed on the shipped build", "value": "shipped", "aspect": ""}, {"item_id": "bm-clean-ship", "kind": "receipt", "source": "deploy", "locator": "bench/deploy/1", "statement": "the deploy receipt confirms delivery", "value": "delivered", "aspect": "outcome"}, {"item_id": "bm-clean-ship", "kind": "commit", "source": "git", "locator": "bench/git/1c", "statement": "the merge was approved through review", "value": "review-approved", "aspect": "cause"}]}, {"id": "bm-card-lies", "corpus": "benchmark", "title": "Card claims shipped", "headline": "The trap: a card that claims a failed deploy shipped.", "note": "The card says shipped; the check and the deploy receipt say failed and rolled back. The fast lane believed the card — a false approval. The gate and the deep lane held CONFLICTED.", "rows": [{"item_id": "bm-card-lies", "kind": "card", "source": "card", "locator": "bench/cards/bm-card-lies.md:1", "statement": "the card says it shipped", "value": "shipped", "aspect": ""}, {"item_id": "bm-card-lies", "kind": "check", "source": "ci", "locator": "bench/ci/2", "statement": "the release check failed", "value": "failed", "aspect": ""}, {"item_id": "bm-card-lies", "kind": "receipt", "source": "deploy", "locator": "bench/deploy/2", "statement": "the deploy rolled back", "value": "failed", "aspect": "outcome"}]}, {"id": "bm-green-check-wrong-scope", "corpus": "benchmark", "title": "Green check wrong scope", "headline": "", "note": "", "rows": [{"item_id": "bm-green-check-wrong-scope", "kind": "card", "source": "card", "locator": "bench/cards/bm-green-check-wrong-scope.md:1", "statement": "the card says merged", "value": "merged", "aspect": ""}, {"item_id": "bm-green-check-wrong-scope", "kind": "check", "source": "ci", "locator": "bench/ci/3", "statement": "the check ran the docs lint only and passed", "value": "merged", "aspect": ""}, {"item_id": "bm-green-check-wrong-scope", "kind": "receipt", "source": "deploy", "locator": "bench/deploy/3", "statement": "the change was reverted after deploy", "value": "reverted", "aspect": "outcome"}]}, {"id": "bm-missing-cause", "corpus": "benchmark", "title": "Missing cause", "headline": "", "note": "", "rows": [{"item_id": "bm-missing-cause", "kind": "card", "source": "card", "locator": "bench/cards/bm-missing-cause.md:1", "statement": "the card says done", "value": "done", "aspect": ""}, {"item_id": "bm-missing-cause", "kind": "commit", "source": "git", "locator": "bench/git/5", "statement": "the commit records completion", "value": "done", "aspect": ""}, {"item_id": "bm-missing-cause", "kind": "receipt", "source": "ops", "locator": "bench/ops/5", "statement": "the ops receipt confirms the outcome", "value": "done", "aspect": "outcome"}]}, {"id": "bm-reviewer-split", "corpus": "benchmark", "title": "Reviewer split", "headline": "The two Nemotron tiers disagree — and the disagreement is the finding.", "note": "The fast lane and the deep lane read the same claims and returned different verdicts. The gate keeps both, cites both, and refuses to average them. Remove the two reviewer rows and this item reads as a routine CORROBORATED — the disagreement is not visible anywhere else.", "rows": [{"item_id": "bm-reviewer-split", "kind": "card", "source": "card", "locator": "bench/cards/bm-reviewer-split.md:1", "statement": "the card says released", "value": "released", "aspect": ""}, {"item_id": "bm-reviewer-split", "kind": "commit", "source": "git", "locator": "bench/git/6", "statement": "the commit records the release", "value": "released", "aspect": ""}, {"item_id": "bm-reviewer-split", "kind": "receipt", "source": "deploy", "locator": "bench/deploy/6", "statement": "the deploy receipt confirms release", "value": "released", "aspect": "outcome"}, {"item_id": "bm-reviewer-split", "kind": "verdict", "source": "nemotron-fast", "locator": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B", "statement": "the fast reviewer judged the outcome released", "value": "released", "aspect": "outcome"}, {"item_id": "bm-reviewer-split", "kind": "verdict", "source": "nemotron-deep", "locator": "nvidia/Nemotron-3-Ultra-550b-a55b", "statement": "the deep reviewer judged the outcome withheld", "value": "withheld", "aspect": "outcome"}, {"item_id": "bm-reviewer-split", "kind": "verdict", "source": "audit", "locator": "bench/audit/6", "statement": "the audit attributes the release to the freeze exception", "value": "freeze-exception", "aspect": "cause"}]}, {"id": "bm-web-contradicts", "corpus": "benchmark", "title": "Web contradicts", "headline": "", "note": "", "rows": [{"item_id": "bm-web-contradicts", "kind": "card", "source": "card", "locator": "bench/cards/bm-web-contradicts.md:1", "statement": "the card says the service is live", "value": "live", "aspect": ""}, {"item_id": "bm-web-contradicts", "kind": "web", "source": "tavily", "locator": "https://status.example.com/incident", "statement": "the status page reports the service down", "value": "down", "aspect": ""}, {"item_id": "bm-web-contradicts", "kind": "receipt", "source": "monitor", "locator": "bench/mon/7", "statement": "the monitor recorded an outage outcome", "value": "outage", "aspect": "outcome"}]}, {"id": "bm-web-confirms", "corpus": "benchmark", "title": "Web confirms", "headline": "", "note": "", "rows": [{"item_id": "bm-web-confirms", "kind": "card", "source": "card", "locator": "bench/cards/bm-web-confirms.md:1", "statement": "the card says the service is live", "value": "live", "aspect": ""}, {"item_id": "bm-web-confirms", "kind": "web", "source": "tavily", "locator": "https://status.example.com/ok", "statement": "the status page reports the service live", "value": "live", "aspect": ""}, {"item_id": "bm-web-confirms", "kind": "receipt", "source": "monitor", "locator": "bench/mon/8", "statement": "the monitor recorded normal operation", "value": "normal", "aspect": "outcome"}, {"item_id": "bm-web-confirms", "kind": "check", "source": "ci", "locator": "bench/ci/8", "statement": "the uptime check attributes stability to the new region", "value": "new-region", "aspect": "cause"}]}, {"id": "bm-receipt-mismatch", "corpus": "benchmark", "title": "Receipt mismatch", "headline": "", "note": "", "rows": [{"item_id": "bm-receipt-mismatch", "kind": "card", "source": "card", "locator": "bench/cards/bm-receipt-mismatch.md:1", "statement": "the card says the invoice was paid", "value": "paid", "aspect": ""}, {"item_id": "bm-receipt-mismatch", "kind": "receipt", "source": "stripe", "locator": "bench/pay/9a", "statement": "the payment receipt shows the amount settled", "value": "paid-100", "aspect": "outcome"}, {"item_id": "bm-receipt-mismatch", "kind": "verdict", "source": "audit", "locator": "bench/audit/9", "statement": "the audit recorded a different settled amount", "value": "paid-90", "aspect": "outcome"}, {"item_id": "bm-receipt-mismatch", "kind": "commit", "source": "git", "locator": "bench/git/9", "statement": "the commit records the payment run", "value": "paid", "aspect": ""}]}, {"id": "bm-stale-card", "corpus": "benchmark", "title": "Stale card", "headline": "", "note": "", "rows": [{"item_id": "bm-stale-card", "kind": "card", "source": "card", "locator": "bench/cards/bm-stale-card.md:1", "statement": "the card still says open", "value": "open", "aspect": ""}, {"item_id": "bm-stale-card", "kind": "commit", "source": "git", "locator": "bench/git/10", "statement": "the commit closed the work", "value": "closed", "aspect": ""}, {"item_id": "bm-stale-card", "kind": "check", "source": "ci", "locator": "bench/ci/10", "statement": "the tracker check shows the work closed", "value": "closed", "aspect": ""}]}, {"id": "bm-unexpected-aspect", "corpus": "benchmark", "title": "Unexpected aspect", "headline": "", "note": "", "rows": [{"item_id": "bm-unexpected-aspect", "kind": "card", "source": "card", "locator": "bench/cards/bm-unexpected-aspect.md:1", "statement": "the card says verified", "value": "verified", "aspect": ""}, {"item_id": "bm-unexpected-aspect", "kind": "commit", "source": "git", "locator": "bench/git/11", "statement": "the commit records verification", "value": "verified", "aspect": ""}, {"item_id": "bm-unexpected-aspect", "kind": "receipt", "source": "qa", "locator": "bench/qa/11", "statement": "the QA receipt confirms the outcome", "value": "verified", "aspect": "outcome"}, {"item_id": "bm-unexpected-aspect", "kind": "verdict", "source": "reviewer-x", "locator": "bench/rev/11", "statement": "a reviewer recorded the cause as the checklist", "value": "checklist", "aspect": "cause"}, {"item_id": "bm-unexpected-aspect", "kind": "verdict", "source": "rogue-lane", "locator": "bench/rev/11b", "statement": "a rogue lane asserted a mood aspect", "value": "great", "aspect": "mood"}]}, {"id": "bm-forged-aspect", "corpus": "benchmark", "title": "Forged aspect", "headline": "", "note": "", "rows": [{"item_id": "bm-forged-aspect", "kind": "card", "source": "card", "locator": "bench/cards/bm-forged-aspect.md:1", "statement": "the card says done", "value": "done", "aspect": ""}, {"item_id": "bm-forged-aspect", "kind": "commit", "source": "git", "locator": "bench/git/12", "statement": "the commit records completion", "value": "done", "aspect": ""}, {"item_id": "bm-forged-aspect", "kind": "receipt", "source": "ops", "locator": "bench/ops/12", "statement": "the ops receipt confirms the outcome", "value": "done", "aspect": "outcome"}, {"item_id": "bm-forged-aspect", "kind": "verdict", "source": "rogue-lane", "locator": "bench/rev/12", "statement": "a rogue lane used a misspelled aspect to fake a cause", "value": "automation", "aspect": "causse"}]}, {"id": "bm-vl-receipt", "corpus": "benchmark", "title": "VL receipt", "headline": "", "note": "", "rows": [{"item_id": "bm-vl-receipt", "kind": "card", "source": "card", "locator": "bench/cards/bm-vl-receipt.md:1", "statement": "the card says the bill was paid", "value": "paid", "aspect": ""}, {"item_id": "bm-vl-receipt", "kind": "receipt", "source": "nemotron-vl", "locator": "receipt.png via nvidia/Nemotron-3.5-Super-VL", "statement": "the vision lane read the receipt amount", "value": "paid-100", "aspect": "outcome"}, {"item_id": "bm-vl-receipt", "kind": "receipt", "source": "bank", "locator": "bench/bank/13", "statement": "the bank receipt shows the same settlement", "value": "paid-100", "aspect": "outcome"}, {"item_id": "bm-vl-receipt", "kind": "verdict", "source": "audit", "locator": "bench/audit/13", "statement": "the audit attributes the payment to autopay", "value": "autopay", "aspect": "cause"}]}, {"id": "bm-web-nonmatch", "corpus": "benchmark", "title": "Web non-match", "headline": "A live-evidence miss, recorded instead of dropped.", "note": "The Tavily lane fetched a page that does not contain the claimed value. That becomes a claim with an empty value — an honest miss — and it conflicts with the postal receipt. Remove the web row and the spoken aspects agree, and the item reads as a quiet PARTIAL.", "rows": [{"item_id": "bm-web-nonmatch", "kind": "card", "source": "card", "locator": "bench/cards/bm-web-nonmatch.md:1", "statement": "the card says the notice shipped", "value": "shipped", "aspect": ""}, {"item_id": "bm-web-nonmatch", "kind": "commit", "source": "git", "locator": "bench/git/14", "statement": "the commit records the notice", "value": "shipped", "aspect": ""}, {"item_id": "bm-web-nonmatch", "kind": "web", "source": "tavily", "locator": "https://example.com/other", "statement": "the claimed value was not found on this page", "value": "", "aspect": "state"}, {"item_id": "bm-web-nonmatch", "kind": "receipt", "source": "post", "locator": "bench/post/14", "statement": "the postal receipt confirms the notice shipped", "value": "shipped", "aspect": "outcome"}]}, {"id": "why-alpha", "corpus": "demo", "title": "Ship the alpha release notes", "headline": "A real conflict, shown with both sides cited — and a narration that failed its check.", "note": "Sources disagree about the same aspect. The gate refuses to pick a winner. The deep lane matched the gate; the fast lane softened it to PARTIAL. The narration of this item also failed its check: the flagged value is listed below and classified.", "rows": [{"item_id": "why-alpha", "kind": "card", "source": "synthetic/cards/alpha.md", "locator": "synthetic/cards/alpha.md:9", "statement": "the card was marked DONE", "value": "DONE", "aspect": "state"}, {"item_id": "why-alpha", "kind": "commit", "source": "git", "locator": "0c4f1a9 (synthetic)", "statement": "a commit merged the fix", "value": "merged", "aspect": "state"}, {"item_id": "why-alpha", "kind": "check", "source": "ci", "locator": "synthetic://run/alpha/42", "statement": "the gate run is still red", "value": "failing", "aspect": "state"}, {"item_id": "why-alpha", "kind": "receipt", "source": "synthetic/notes/alpha.md", "locator": "synthetic/notes/alpha.md:4", "statement": "the burn-down receipt says nothing was claimed", "value": "not-claimed", "aspect": "outcome"}]}, {"id": "why-beta", "corpus": "demo", "title": "Fix the picker so it skips cards with no test path", "headline": "Both model lanes over-approved this one.", "note": "The card is blocked and the gate agrees — but nobody stated a cause, so the gate says PARTIAL. Both Nemotron lanes said CORROBORATED. An unexplained outcome is not a verified one.", "rows": [{"item_id": "why-beta", "kind": "card", "source": "synthetic/cards/beta.md", "locator": "synthetic/cards/beta.md:3", "statement": "the card is blocked, not open for work", "value": "blocked", "aspect": "state"}, {"item_id": "why-beta", "kind": "check", "source": "gate", "locator": "synthetic://gate/beta", "statement": "the picker gate says no card is claimable", "value": "blocked", "aspect": "state"}, {"item_id": "why-beta", "kind": "receipt", "source": "synthetic/notes/beta.md", "locator": "synthetic/notes/beta.md:6", "statement": "the run claimed 0 cards", "value": "claimed-0", "aspect": "outcome"}, {"item_id": "why-beta", "kind": "verdict", "source": "synthetic/audit/verdicts.jsonl", "locator": "synthetic/audit/verdicts.jsonl:12", "statement": "the review recorded the same block", "value": "claimed-0", "aspect": "outcome"}]}, {"id": "why-gamma", "corpus": "demo", "title": "A card nobody has looked at yet", "headline": "", "note": "", "rows": [{"item_id": "why-gamma", "kind": "card", "source": "synthetic/cards/gamma.md", "locator": "synthetic/cards/gamma.md:2", "statement": "the card exists and says nothing else", "value": "OPEN", "aspect": "state"}]}, {"id": "why-delta", "corpus": "demo", "title": "Give the clipper card a Files list", "headline": "", "note": "", "rows": [{"item_id": "why-delta", "kind": "card", "source": "synthetic/cards/delta.md", "locator": "synthetic/cards/delta.md:2", "statement": "the card was closed", "value": "done", "aspect": "state"}, {"item_id": "why-delta", "kind": "commit", "source": "git", "locator": "9ab77e2 (synthetic)", "statement": "the commit added the missing Files list", "value": "the missing Files list was added", "aspect": "cause"}, {"item_id": "why-delta", "kind": "receipt", "source": "synthetic/notes/delta.md", "locator": "synthetic/notes/delta.md:3", "statement": "the lane claimed it and shipped it", "value": "shipped", "aspect": "outcome"}, {"item_id": "why-delta", "kind": "verdict", "source": "synthetic/audit/verdicts.jsonl", "locator": "synthetic/audit/verdicts.jsonl:31", "statement": "two review families approved it", "value": "shipped", "aspect": "outcome"}]}], "corpora": [{"id": "benchmark", "label": "The adversarial corpus — 14 planted-claim items", "path": "benchmark/cases.jsonl"}, {"id": "demo", "label": "The five cases python3 demo.py prints", "path": "evidence/items.jsonl"}], "lane_sources": {"nemotron-fast": "reviewer-fast", "nemotron-deep": "reviewer-deep", "tavily": "live-evidence", "nemotron-vl": "vision"}, "item_count": 17, "row_count": 64};</script>
+  <script>/* The reconciler, ported to JavaScript so the demo page can run it in a tab.
+ *
+ * This is a PORT, not a reimplementation. It is kept honest by
+ * test_demo_app.py, which runs this file under node and evidence.reconcile()
+ * under Python over every item in both corpora and fails if any verdict,
+ * conflict, agreement, gap or unexpected aspect differs. A port with no
+ * parity test is a second implementation that will drift; the test is the
+ * only thing that makes the word "port" mean anything.
+ *
+ * Dual-use: inlined into demo.html by demo_lab/build_app.py (where `module`
+ * is undefined), and require()d by the test under node.
+ *
+ * The one semantic difference from the Python, stated rather than hidden:
+ * Python sorts aspect names with `sorted()` and JS sorts with the default
+ * comparator, which compares UTF-16 code units. For the ASCII aspect names
+ * this system uses ("state", "outcome", "cause") the two orders are
+ * identical, and the parity test compares the ordered lists rather than sets.
+ */
+'use strict';
+
+// The kinds of source that can make a claim.
+var KINDS = ['card', 'receipt', 'commit', 'check', 'verdict', 'web'];
+
+// An ASPECT is a property of the item, not of the source. Two sources that
+// speak about different aspects never contradict each other.
+var DEFAULT_ASPECT = {
+  card: 'state',
+  commit: 'state',
+  check: 'state',
+  receipt: 'outcome',
+  verdict: 'outcome',
+  web: 'state'
+};
+
+// An aspect nobody spoke about is an UNKNOWN, not a pass.
+var EXPECTED_ASPECTS = ['state', 'outcome', 'cause'];
+
+var UNKNOWN = 'UNKNOWN';
+
+function hasOwn(obj, key) {
+  return Object.prototype.hasOwnProperty.call(obj, key);
+}
+
+/* Mirrors Evidence.aspect_name: an explicit aspect wins, otherwise the kind's
+ * default, otherwise the kind itself. An empty string is falsy in both
+ * languages, which is the behaviour the Python `or` relies on. */
+function aspectName(claim) {
+  if (claim.aspect) {
+    return claim.aspect;
+  }
+  var kind = claim.kind || 'card';
+  return hasOwn(DEFAULT_ASPECT, kind) ? DEFAULT_ASPECT[kind] : kind;
+}
+
+/* Mirrors Evidence.citation(): a claim is never a bare assertion. */
+function citation(claim) {
+  return claim.locator ? claim.source + ' \u2014 ' + claim.locator : claim.source;
+}
+
+/* Mirrors evidence.reconcile(). Groups the claims by aspect, then says plainly
+ * where they disagree. A forged or unknown aspect is cited and then ignored by
+ * the verdict: it cannot agree its way into CORROBORATED and cannot stand in
+ * for state, outcome or cause. */
+function reconcile(item, claims) {
+  var byAspect = new Map();
+  var i, claim, aspect, group;
+
+  for (i = 0; i < claims.length; i++) {
+    claim = claims[i];
+    aspect = aspectName(claim);
+    if (!byAspect.has(aspect)) {
+      byAspect.set(aspect, []);
+    }
+    byAspect.get(aspect).push(claim);
+  }
+
+  var aspects = Array.from(byAspect.keys()).sort();
+  var conflicts = [];
+  var agreements = [];
+  var unexpected = [];
+
+  for (i = 0; i < aspects.length; i++) {
+    aspect = aspects[i];
+    group = byAspect.get(aspect);
+    if (EXPECTED_ASPECTS.indexOf(aspect) === -1) {
+      unexpected.push([aspect, group]);
+      continue;
+    }
+    var values = new Set();
+    for (var j = 0; j < group.length; j++) {
+      values.add(group[j].value);
+    }
+    if (values.size === 1) {
+      agreements.push([aspect, group]);
+    } else {
+      conflicts.push([aspect, group]);
+    }
+  }
+
+  var unknownAspects = [];
+  for (i = 0; i < EXPECTED_ASPECTS.length; i++) {
+    if (!byAspect.has(EXPECTED_ASPECTS[i])) {
+      unknownAspects.push(EXPECTED_ASPECTS[i]);
+    }
+  }
+
+  return {
+    item: item,
+    byAspect: byAspect,
+    conflicts: conflicts,
+    agreements: agreements,
+    unknown_aspects: unknownAspects,
+    unexpected: unexpected
+  };
+}
+
+/* Mirrors Reconciliation.confidence(): a word, not a number. A number here
+ * would be a number we did not measure. */
+function confidence(r) {
+  if (r.conflicts.length) {
+    return 'CONFLICTED';
+  }
+  if (r.byAspect.size === 0) {
+    return 'NO EVIDENCE';
+  }
+  if (r.unknown_aspects.length) {
+    return 'PARTIAL';
+  }
+  return 'CORROBORATED';
+}
+
+/* Mirrors evidence.explain(): an unknown item is an unknown, not an empty
+ * answer. */
+function explain(items, claims, itemId) {
+  var item = items[itemId] || { item_id: itemId, title: '', declared_status: '' };
+  var mine = claims.filter(function (c) { return c.item_id === itemId; });
+  return reconcile(item, mine);
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    KINDS: KINDS,
+    DEFAULT_ASPECT: DEFAULT_ASPECT,
+    EXPECTED_ASPECTS: EXPECTED_ASPECTS,
+    UNKNOWN: UNKNOWN,
+    aspectName: aspectName,
+    citation: citation,
+    reconcile: reconcile,
+    confidence: confidence,
+    explain: explain
+  };
+}
+</script>
+  <script>/* The workbench: the reconciler, driven by the reader.
+ *
+ * Inlined into demo.html by demo_page.py, after reconciler.js and after the
+ * corpus blob. No network, no key, no server: the claims are in the page, the
+ * reconciler is in the page, and every verdict on screen is computed by it.
+ *
+ * Three things it is built to show, because they are the three claims the
+ * submission makes and a reader should not have to take on trust:
+ *
+ *   1. edit a value -> the sources stop agreeing -> CONFLICTED, every side cited
+ *   2. invent an aspect -> it is cited and then ignored by the verdict
+ *   3. remove the model-lane rows -> the verdict flips, and only the lane rows
+ *      made the disagreement visible (the same flip flip_check.py proves)
+ */
+(function () {
+  'use strict';
+
+  var DATA = window.__WHY_AGENT__;
+  var EXPECTED = ['state', 'outcome', 'cause'];
+  var LANE = DATA.lane_sources;
+
+  var state = { itemId: null, rows: [] };
+
+  function $(id) { return document.getElementById(id); }
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function itemById(id) {
+    for (var i = 0; i < DATA.items.length; i++) {
+      if (DATA.items[i].id === id) { return DATA.items[i]; }
+    }
+    return null;
+  }
+
+  function isLane(row) {
+    return Object.prototype.hasOwnProperty.call(LANE, row.source);
+  }
+
+  function claimOf(row) {
+    return {
+      item_id: row.item_id, kind: row.kind, source: row.source,
+      locator: row.locator, statement: row.statement, value: row.value,
+      aspect: row.aspect
+    };
+  }
+
+  function verdictOf(rows) {
+    var claims = rows.filter(function (r) { return r.include; }).map(claimOf);
+    var r = reconcile({ item_id: state.itemId }, claims);
+    return { verdict: confidence(r), r: r, count: claims.length };
+  }
+
+  function load(id) {
+    var item = itemById(id);
+    state.itemId = id;
+    state.rows = item.rows.map(function (r) {
+      return {
+        item_id: r.item_id, kind: r.kind, source: r.source, locator: r.locator,
+        statement: r.statement, value: r.value, aspect: r.aspect, include: true
+      };
+    });
+    $('wb-case').value = id;
+    $('wb-headline').textContent = item.headline || item.id;
+    $('wb-meta').textContent = item.corpus + ' · ' + state.rows.length + ' claims' +
+      (item.note ? '' : '');
+    var note = $('wb-note');
+    if (item.note) { note.hidden = false; note.textContent = item.note; }
+    else { note.hidden = true; }
+    renderTable();
+    refresh();
+  }
+
+  function renderTable() {
+    var tb = $('wb-rows');
+    tb.innerHTML = '';
+    state.rows.forEach(function (row) {
+      var tr = document.createElement('tr');
+      if (!row.include) { tr.className = 'off'; }
+
+      var tdChk = document.createElement('td');
+      var chk = document.createElement('input');
+      chk.type = 'checkbox';
+      chk.checked = row.include;
+      chk.setAttribute('aria-label', 'include ' + row.source);
+      chk.addEventListener('change', function () {
+        row.include = chk.checked;
+        tr.className = row.include ? '' : 'off';
+        refresh();
+      });
+      tdChk.appendChild(chk);
+      tr.appendChild(tdChk);
+
+      var tdSrc = document.createElement('td');
+      tdSrc.className = 'src';
+      tdSrc.innerHTML = '<span class="' + (isLane(row) ? 'lane' : '') + '">' +
+        esc(row.source) + '</span><br><span class="kind">' + esc(row.kind) +
+        (isLane(row) ? ' · lane' : '') + '</span>';
+      tr.appendChild(tdSrc);
+
+      var tdAsp = document.createElement('td');
+      var sel = document.createElement('select');
+      sel.className = 'asp';
+      var opts = EXPECTED.slice();
+      if (row.aspect && EXPECTED.indexOf(row.aspect) === -1) { opts.push(row.aspect); }
+      opts.push('__other__');
+      opts.forEach(function (a) {
+        var o = document.createElement('option');
+        o.value = a;
+        o.textContent = a === '__other__' ? 'other…' : a;
+        if ((row.aspect || '') === a) { o.selected = true; }
+        sel.appendChild(o);
+      });
+      if (!row.aspect) {
+        // Show what the reconciler will actually use, and mark it inherited.
+        var d = document.createElement('option');
+        d.value = '';
+        d.textContent = aspectName(row);
+        d.title = 'no explicit aspect in the corpus — a ' + row.kind +
+                  ' defaults to ' + aspectName(row);
+        sel.insertBefore(d, sel.firstChild);
+        d.selected = true;
+        sel.className = 'asp inherited';
+      }
+      sel.addEventListener('change', function () {
+        if (sel.value === '__other__') {
+          var typed = window.prompt(
+            'Aspect name. state, outcome and cause are the aspects a reader ' +
+            'expects; anything else is cited and then ignored by the verdict.', '');
+          if (typed === null) { sel.value = row.aspect; return; }
+          row.aspect = typed.trim();
+        } else {
+          row.aspect = sel.value;
+        }
+        renderTable();
+        refresh();
+      });
+      tdAsp.appendChild(sel);
+      tr.appendChild(tdAsp);
+
+      var tdVal = document.createElement('td');
+      var inp = document.createElement('input');
+      inp.className = 'val';
+      inp.type = 'text';
+      inp.value = row.value;
+      inp.setAttribute('aria-label', 'value for ' + row.source);
+      inp.addEventListener('input', function () { row.value = inp.value; refresh(); });
+      tdVal.appendChild(inp);
+      tr.appendChild(tdVal);
+
+      var tdStmt = document.createElement('td');
+      tdStmt.className = 'stmt';
+      tdStmt.textContent = row.statement;
+      tr.appendChild(tdStmt);
+
+      var tdLoc = document.createElement('td');
+      tdLoc.className = 'loc';
+      tdLoc.textContent = row.locator;
+      tr.appendChild(tdLoc);
+
+      tb.appendChild(tr);
+    });
+  }
+
+  function refresh() {
+    var out = verdictOf(state.rows);
+    var r = out.r;
+    var v = out.verdict;
+
+    var el = $('wb-verdict');
+    el.textContent = v;
+    el.className = 'verdict v-' + v.replace(/ /g, '');
+
+    var card = null;
+    state.rows.forEach(function (row) {
+      if (row.include && row.kind === 'card') { card = row; }
+    });
+    var says = '';
+    if (card) {
+      says = 'The card says <b>' + esc(card.value) + '</b>. The reconciler says <b>' +
+             esc(v) + '</b>.';
+      if (v === 'CONFLICTED') {
+        says += ' The card is one of the sides — it does not win.';
+      } else if (v === 'PARTIAL') {
+        says += ' The sources agree where they speak; something a reader expects is unreported.';
+      } else if (v === 'NO EVIDENCE') {
+        says += ' Nothing else was written about this item, so nothing corroborates the card.';
+      }
+    } else {
+      says = 'No card row is included, so there is no declared status to compare against.';
+    }
+    says += ' <span class="quiet">' + out.count + ' claim' +
+            (out.count === 1 ? '' : 's') + ' considered.</span>';
+    $('wb-says').innerHTML = says;
+
+    var c = $('wb-conflict');
+    if (r.conflicts.length) {
+      var h = '<p class="sech">Conflicts — every side shown, none chosen</p>';
+      r.conflicts.forEach(function (pair) {
+        h += '<div class="grp"><div class="aspname">' + esc(pair[0]) + '</div>';
+        pair[1].forEach(function (cl) {
+          h += '<div class="cl"><span class="who">' + esc(cl.source) + '</span> says ' +
+               '<span class="val2">' + esc(cl.value) + '</span> ' +
+               '<span class="cite">— ' + esc(citation(cl)) + '</span></div>';
+        });
+        h += '</div>';
+      });
+      c.innerHTML = h;
+    } else { c.innerHTML = ''; }
+
+    var a = $('wb-agree');
+    if (r.agreements.length) {
+      var h2 = '<p class="sech">Agrees</p>';
+      r.agreements.forEach(function (pair) {
+        var n = pair[1].length;
+        h2 += '<div class="grp"><div class="aspname">' + esc(pair[0]) +
+              ' — <span class="val2">' + esc(pair[1][0].value) + '</span></div>' +
+              '<div class="cl">' + n + (n === 1 ? ' source' : ' sources') + ': ' +
+              pair[1].map(function (cl) { return esc(cl.source); }).join(', ') +
+              '</div></div>';
+      });
+      a.innerHTML = h2;
+    } else { a.innerHTML = ''; }
+
+    var g = $('wb-gap');
+    if (r.unknown_aspects.length) {
+      g.innerHTML = '<p class="sech">Gaps — nobody said</p>' +
+        r.unknown_aspects.map(function (x) {
+          return '<div class="gap">' + esc(x) + ' — no source made a claim about this</div>';
+        }).join('') +
+        '<p class="quiet">An aspect nobody reported is a gap. It is not a pass, and it ' +
+        'is not a plausible explanation.</p>';
+    } else { g.innerHTML = ''; }
+
+    var u = $('wb-unexp');
+    if (r.unexpected.length) {
+      u.innerHTML = '<p class="sech">Cited, then ignored by the verdict</p>' +
+        r.unexpected.map(function (pair) {
+          return '<div class="gap quiet">' + esc(pair[0]) + ' — ' +
+            pair[1].map(function (cl) {
+              return esc(cl.source) + ' says <span class="val2">' + esc(cl.value) + '</span>';
+            }).join(', ') + '</div>';
+        }).join('') +
+        '<p class="quiet">Not state, outcome or cause. A claim about an invented aspect ' +
+        'cannot agree its way into a CORROBORATED verdict.</p>';
+    } else { u.innerHTML = ''; }
+
+    var laneRows = state.rows.filter(isLane);
+    var btn = $('wb-lanes');
+    var flip = $('wb-flip');
+    if (laneRows.length) {
+      btn.hidden = false;
+      var anyIncluded = laneRows.some(function (x) { return x.include; });
+      btn.textContent = anyIncluded ? 'Remove the model-lane rows'
+                                    : 'Put the model-lane rows back';
+      var without = state.rows.map(function (x) {
+        return { include: isLane(x) ? false : x.include, row: x };
+      });
+      var flipped = verdictOf(without.map(function (w) {
+        return Object.assign({}, w.row, { include: w.include });
+      })).verdict;
+      if (anyIncluded && flipped !== v) {
+        flip.hidden = false;
+        flip.innerHTML = '<b>Lane-dependent.</b> Remove the ' + laneRows.length +
+          ' model-lane row' + (laneRows.length === 1 ? '' : 's') +
+          ' and this same reconciler returns <b>' + esc(flipped) + '</b> instead of <b>' +
+          esc(v) + '</b>. The disagreement was visible nowhere else. ' +
+          '<code>python3 demo_lab/flip_check.py</code> proves the same flip in Python.';
+      } else if (!anyIncluded) {
+        flip.hidden = false;
+        flip.innerHTML = '<b>Lane rows removed.</b> The verdict is <b>' + esc(v) +
+          '</b>. Put them back and it becomes <b>' +
+          esc(verdictOf(state.rows.map(function (x) {
+            return Object.assign({}, x, { include: isLane(x) ? true : x.include });
+          })).verdict) + '</b>.';
+      } else {
+        flip.hidden = true;
+      }
+    } else {
+      btn.hidden = true;
+      flip.hidden = true;
+    }
+  }
+
+  $('wb-lanes').addEventListener('click', function () {
+    var anyIncluded = state.rows.some(function (x) { return isLane(x) && x.include; });
+    state.rows.forEach(function (x) { if (isLane(x)) { x.include = !anyIncluded; } });
+    renderTable();
+    refresh();
+  });
+
+  $('wb-reset').addEventListener('click', function () { load(state.itemId); });
+
+  $('wb-add').addEventListener('click', function () {
+    state.rows.push({
+      item_id: state.itemId, kind: 'check', source: 'you',
+      locator: 'typed on this page', statement: 'a claim you just added',
+      value: 'shipped', aspect: 'state', include: true
+    });
+    renderTable();
+    refresh();
+  });
+
+  var picker = $('wb-case');
+  var html = '';
+  DATA.corpora.forEach(function (c) {
+    html += '<optgroup label="' + esc(c.label) + '">';
+    DATA.items.filter(function (i) { return i.corpus === c.id; }).forEach(function (i) {
+      html += '<option value="' + esc(i.id) + '">' + esc(i.id) +
+              (i.title ? ' — ' + esc(i.title) : '') + '</option>';
+    });
+    html += '</optgroup>';
+  });
+  picker.innerHTML = html;
+  picker.addEventListener('change', function () { load(picker.value); });
+
+  load(DATA.items[0].id);
+})();
+</script>
+
 
   <h2>What it does</h2>
   <p>Give it a work item. It reads what the card says, what the receipt says, what the

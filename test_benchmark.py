@@ -165,6 +165,49 @@ class ControlCaseTests(unittest.TestCase):
         self.assertIn("bm-clean-ship", proc.stdout)
 
 
+class GateVersusLanesTests(unittest.TestCase):
+    """The gate and the lanes are reported on separate lines, and mean
+    different things. A lane's false approval is a finding about the model; it
+    is not the gate failing, and the output must not conflate them."""
+
+    def _run(self, *extra):
+        return subprocess.run(
+            [sys.executable, os.path.join(BENCH, "score.py"),
+             "--cases", CASES, "--truth", TRUTH, "--eval-results", EVAL, *extra],
+            capture_output=True, text=True, cwd=HERE)
+
+    def test_the_committed_run_passes_the_gate_and_fails_the_lanes(self):
+        proc = self._run()
+        self.assertIn("GATE: PASS", proc.stdout)
+        self.assertIn("LANES: FAIL", proc.stdout)
+        # The lane failures are still named, one by one, above the summary.
+        self.assertIn("MISS bm-card-lies", proc.stdout)
+        self.assertIn("FALSE APPROVALS: bm-card-lies, bm-missing-cause", proc.stdout)
+
+    def test_the_exit_code_follows_the_gate_not_the_lanes(self):
+        self.assertEqual(self._run().returncode, 0,
+                         "a lane's false approval is a finding, not a gate failure")
+
+    def test_strict_lanes_opts_in_to_failing_on_a_lane_false_approval(self):
+        proc = self._run("--strict-lanes")
+        self.assertEqual(proc.returncode, 1)
+        self.assertIn("LANES: FAIL", proc.stdout)
+
+    def test_the_gate_line_does_not_move_when_the_lanes_misbehave(self):
+        proc = self._run()
+        gate_lines = [l for l in proc.stdout.splitlines() if l.startswith("GATE:")]
+        self.assertEqual(gate_lines, ["GATE: PASS — zero false approvals"])
+        lane_lines = [l for l in proc.stdout.splitlines() if l.startswith("LANES:")]
+        self.assertEqual(len(lane_lines), 1)
+        self.assertIn("3 false approval(s)", lane_lines[0])
+
+    def test_a_lane_failure_does_not_stop_the_gate_printing_pass(self):
+        """The gate's line is a statement about the gate, not about the run."""
+        proc = self._run("--strict-lanes")
+        self.assertIn("GATE: PASS", proc.stdout)
+        self.assertEqual(proc.returncode, 1, "strict mode still reports failure")
+
+
 class FlagClassTests(unittest.TestCase):
     """The narration flags are classified, and the classes account for all."""
 

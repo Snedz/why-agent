@@ -40,7 +40,7 @@ and a Nemotron Super VL receipt lane.
 
 | | |
 |---|---|
-| **Demo** | https://snedz.github.io/why-agent/ |
+| **Demo** — the reconciler, running in your browser | https://snedz.github.io/why-agent/ |
 | **Case Lab** (the four verdict states, with every receipt) | https://snedz.github.io/why-agent/demo_lab/ |
 | **Video** (under three minutes) | https://snedz.github.io/why-agent/why-agent-nebius-demo.mp4 |
 | **Repository** | https://github.com/Snedz/why-agent |
@@ -48,6 +48,13 @@ and a Nemotron Super VL receipt lane.
 
 Free of charge, unrestricted, no login and no data collection — including
 through the end of the judging period on 2026-12-23.
+
+The demo page is not a page of results: it runs the reconciler in the tab.
+Untick a source, type a different value into a claim, or invent an aspect, and
+the verdict is recomputed from the rows on screen. On the two lane-dependent
+cases one button removes the model-lane rows and shows the verdict flip — the
+same flip `demo_lab/flip_check.py` proves in Python. No key, no server, no
+network: the corpus and the reconciler are both in the page.
 
 **Try it first — three commands, no key, no network:**
 
@@ -167,6 +174,8 @@ which is why it cannot be lane-run and why the lanes score it MISSING.
 | A client can ask the agent for its verdict | `mcp_server.py` and `test_mcp_server.py` — the server calls no model, and a test forbids it |
 | Costs are measured, not estimated | `docs/TIER_LEDGER.md`, generated from the committed run outputs by `tier_ledger.py` |
 | The demo URL a judge opens describes this entry, with the measured numbers on it | `demo_page.py` generates `demo.html` from the corpus, the committed run outputs and the provider profile; the answer it shows is a verbatim slice of `demo.py` |
+| The page's JavaScript is this reconciler, not a lookalike | `demo_lab/reconciler.js` and `test_demo_app.py` — the port is run under node and `evidence.reconcile()` under Python over every item in both corpora; any difference in verdict, conflict, agreement, gap or aspect order fails the test |
+| The page cannot drift from the corpus | `demo_page.py --check`, and `test_demo_app.py` compares the blob embedded in the page against the rows on disk |
 | What pre-existed, and what was added | `docs/SIGNIFICANT_UPDATE.md` |
 
 Every row above has a command a reader can run; `docs/CLAIM_MAP.md` is the full
@@ -192,6 +201,31 @@ bm-web-nonmatch            CONFLICTED       PARTIAL                yes
 `bm-reviewer-split` is the two Nemotron tiers disagreeing: remove the reviewer
 rows and a genuine conflict reads as a routine corroboration.
 `bm-web-nonmatch` is the Tavily lane recording a miss it did not drop.
+
+## The workbench — the reconciler in the tab
+
+The landing page is a tool, not a poster. `demo_lab/reconciler.js` is a port of
+`evidence.reconcile()`, inlined into the page with the corpus, and everything
+on the right-hand side is computed by it:
+
+- **Untick a source** and the verdict is recomputed without it.
+- **Type a different value** into a claim and the sources stop agreeing — the
+  conflict appears with every side cited, and nothing is averaged.
+- **Invent an aspect** and watch the forged claim get cited, then ignored by
+  the verdict.
+- **Remove the model-lane rows** on a lane-dependent case and CONFLICTED
+  becomes CORROBORATED, which is the flip `demo_lab/flip_check.py` proves in
+  Python.
+
+A port with no parity test is a second implementation that will drift, so
+`test_demo_app.py` runs that file under node and the Python under CPython over
+every item in both corpora, plus edge cases built to break a careless
+translation — a forged aspect alongside complete coverage, an empty string as a
+value, `DONE` against `done`, an unknown kind with no aspect. The two answers
+must be identical: verdict, conflicts, agreements, gaps, unexpected aspects,
+aspect order, source count. If `node` is not installed the test **skips**, and
+the skip message says the port is unverified on that machine — an unverified
+port is exactly what this repository is built not to ship.
 
 ---
 
