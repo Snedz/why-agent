@@ -42,6 +42,7 @@ and a Nemotron Super VL receipt lane.
 |---|---|
 | **Demo** — the reconciler, running in your browser | https://snedz.github.io/why-agent/ |
 | **Case Lab** (the four verdict states, with every receipt) | https://snedz.github.io/why-agent/demo_lab/ |
+| **Claim Court** — the same reconciler on commerce claims | https://snedz.github.io/why-agent/demo_lab/claimcourt/ |
 | **Video** (under three minutes) | https://snedz.github.io/why-agent/why-agent-nebius-demo.mp4 |
 | **Repository** | https://github.com/Snedz/why-agent |
 | **Licence** | Apache-2.0 |
@@ -216,6 +217,14 @@ on the right-hand side is computed by it:
 - **Remove the model-lane rows** on a lane-dependent case and CONFLICTED
   becomes CORROBORATED, which is the flip `demo_lab/flip_check.py` proves in
   Python.
+
+The picker holds three corpora. Two are about work items. The third is the
+**commerce corpus**: the claims a shopper actually reads — a salon's published
+hours, a listing's materials, a sale price — run through the same reconciler.
+Part of it was fetched from the public pages of a real pilot business and the
+directories that list it, and those conflicts are real; the rest is labelled
+synthetic fixture in every case file. The **Claim Court** shows them with their
+provenance per case: https://snedz.github.io/why-agent/demo_lab/claimcourt/
 
 A port with no parity test is a second implementation that will drift, so
 `test_demo_app.py` runs that file under node and the Python under CPython over

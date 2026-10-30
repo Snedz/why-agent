@@ -208,6 +208,7 @@ about all four. This table is for the founder's own use, not for pasting.
 
 ```
 Case Lab:      https://snedz.github.io/why-agent/demo_lab/
+Claim Court:   https://snedz.github.io/why-agent/demo_lab/claimcourt/
 Claim map:     https://github.com/Snedz/why-agent/blob/main/docs/CLAIM_MAP.md
 Benchmark:     https://github.com/Snedz/why-agent/blob/main/docs/BENCHMARK_RESULTS_2026-10-28.md
 Significant update: https://github.com/Snedz/why-agent/blob/main/docs/SIGNIFICANT_UPDATE.md
@@ -484,10 +485,16 @@ The video is regenerated from the same tools, not edited by hand:
   evidence for keeping the lanes advisory. The exit code follows the gate;
   `--strict-lanes` makes a lane false approval exit non-zero too, if that is
   the criterion you want.
-- **The work items are synthetic.** Every card, receipt, commit and check id is
-  invented. The lanes ran against real models; the claims did not come from a
-  real customer system. The README says so, and the Case Lab labels every case
-  `RECORDED` (the run) and `SYNTHETIC` (the claims).
+- **The work items are synthetic; the commerce claims are not all.** In the
+  benchmark corpus every card, receipt, commit and check id is invented — the
+  lanes ran against real models, but the claims did not come from a real
+  customer system. The **Claim Court** corpus is different and says so on its
+  own page: part of it was fetched from the public pages of a real pilot
+  business and the directories that list it, and those conflicts are real;
+  the rest is labelled synthetic fixture in every case file. The Case Lab
+  labels each case `RECORDED` (the run) and `SYNTHETIC` (the claims), and the
+  Claim Court labels provenance per case rather than for the corpus as a whole.
+  Do not describe the commerce corpus as synthetic — it is not.
 - **The project is new, not an update.** Answer §4 honestly; do not claim an
   update that did not happen.
 - **The "financial or preferential support" clause.** The Sponsor is Nebius
