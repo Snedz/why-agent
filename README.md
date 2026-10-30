@@ -28,6 +28,7 @@ as a *claim*, never a verdict, because any integration can be poisoned.
 | Reviewer, deep | `nvidia/Nemotron-3-Ultra-550b-a55b` | Same, deeper — disagreements with the fast lane are preserved, never averaged |
 | Vision | `nvidia/Nemotron-3.5-Super-VL` | Receipt/screenshot fields (amount, date, counterparty, status) as checkable claims |
 | Live evidence | Tavily (via `tavily_lane.py`) | Web pages as claims — a page counts only if the claimed value literally appears in it; the generated answer is never evidence |
+| MCP surface | none — it calls no model | The verdict, the claims grouped by aspect and the lane disagreements, over MCP. A submission carrying a verdict is **refused at the boundary**: integrations contribute claims, never verdicts |
 
 **Measured, 2026-10-28** (receipts in `docs/`): on a 14-case adversarial
 corpus the deterministic gate scored **14/14 with zero false approvals**;
@@ -41,6 +42,7 @@ corpus narrations, zero invented facts on classification.
 - Cost/latency ledger and its gaps: `docs/TIER_LEDGER.md`
 - Every submission claim mapped to its proof: `docs/CLAIM_MAP.md`
 - Why raw checker pass rates mislead: `docs/NARRATION_CHECK_ANALYSIS_2026-10-28.md`
+- What pre-existed, what was added, and the honest limits: `docs/SIGNIFICANT_UPDATE.md`
 
 Run the lanes (keys from the environment only):
 
