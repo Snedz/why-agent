@@ -149,3 +149,30 @@ window only.
 - **Multiple submissions:** an entrant may submit more than one, but each must
   be unique and substantially different.
 - **Drafts** can be saved until the Submission Period ends.
+
+## What the challenge page adds on top of the Rules tab
+
+Read on the live page 2026-10-30 01:35 ET, which also confirmed the deadline
+("Oct 30, 2026 @ 1:00pm EDT") and the countdown.
+
+- **$50,000 in cash in prizes, and 29,431 participants.** The field is large.
+  The four overall and four track awards are the hard ones; the two bonus
+  awards are the realistic ones, and both cost minutes rather than days.
+- **The page's own "What to submit" list**, in its words: a working project; a
+  category (the track); a project description — "tell us what you created,
+  why you created it, and how it works"; a working demo URL; a demo video, "a
+  3-minute or shorter **public** YouTube video showing your project working —
+  **how you used Nebius Token Factory and NVIDIA Nemotron** or other NVIDIA
+  open source models"; a public code repository with a visible open source
+  licence; a README with setup instructions; the NVIDIA-models/Token-Factory
+  highlight; the feedback; the significant-update explanation; and the city,
+  if the entrant attended a Builders & Brews event.
+  Two of those are worth reading twice: **the video must show how Token
+  Factory and Nemotron were used**, and the description must say **why** the
+  project was created.
+- **The judging panel is 24 judges**, mostly NVIDIA and Nebius staff, and it
+  includes **three Tavily engineers** — which is the panel the $3,000 Best Use
+  of Tavily bonus is drawn from, and our live-evidence lane makes exactly the
+  functional runtime Tavily call that bonus asks for.
+- **The City Winner award needs a city**, and only entrants who attended a
+  Builders & Brews event can name one.

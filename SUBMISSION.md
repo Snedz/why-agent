@@ -70,6 +70,14 @@ not pick a winner: it shows every side, cited, and refuses to average them.
 An aspect nobody reported is reported as a gap, never as a pass, and never as a
 plausible explanation.
 
+Who it is for: teams that already run agents. When an overnight factory, a CI
+pipeline or a fleet of automated workers leaves thousands of receipts behind,
+nobody can answer "why did this end up that way?" — and the things that try
+answer confidently, from one source. A wrong "why" costs a re-done task and a
+second wrong fix on top of it. This agent reads every source at once and hands
+back the answer with the receipts attached, so whoever decides what to fix next
+can see which source is authoritative for what.
+
 The Nebius build feeds it five lanes that run on Nebius Token Factory:
 
   - NVIDIA Nemotron 3 Super writes the reader-facing explanation, and then it
@@ -99,6 +107,11 @@ The Case Lab shows seven cases with every claim, every lane receipt, every
 model id, token count and cost. Two of the cases are lane-dependent, and a
 script proves it by re-reading the original rows and calling the same
 reconciler with and without the lane rows.
+
+It is a product rather than a notebook: the demo URL is a working app, the
+Case Lab is a second surface, the agent is exposed over MCP so a client can ask
+it for a verdict (and a verdict-shaped submission is refused at the boundary),
+and the production path reads its evidence from a DuckDB file.
 
 No dependency. Python 3.10+. Three commands run it with no key and no network:
 python3 demo.py, python3 benchmark/score.py --eval-results
@@ -150,11 +163,14 @@ assistant.
 | Overall (Grand / 2nd / 3rd) | yes | the entry is scored on the four criteria, not on track |
 | Best Apps and Agents Track Award — NVIDIA Jetson Orin Nano | yes | this is the track submitted |
 | **Best Use of Tavily — $3,000** | **yes** | the live-evidence lane makes a functional runtime call to the Tavily API as part of the solution, which is the eligibility wording verbatim |
-| City Winner — $500 | only if the founder attends a Builders & Brews city event | Toronto is one of the 20 listed cities |
-| Most Valuable Feedback — $100 + swag | yes, if the feedback field is filled in properly | it is also one of the four equally weighted stage-two criteria |
+| City Winner — $500 | only if the founder attended a Builders & Brews event | the form asks for the city you attended; Toronto is one of the 20 listed cities |
+| Most Valuable Feedback — $100 + swag | yes, if the feedback field is filled in properly | it is also one of the four equally weighted stage-two criteria, and with 29,431 participants it is the most attainable award on the list |
 
 **Each Project is eligible for one Overall Award OR one Track Award, and one
-Bonus Award** — so this entry can be eligible for three prizes at once.
+Bonus Award** — so this entry can be eligible for three prizes at once. The
+field is 29,431 participants for $50,000 in cash, so the overall awards are the
+long shots and the two bonus awards are the realistic ones; both of them are
+earned by filling in a field properly, not by building more.
 
 ### 1.6b The four equally weighted judging criteria, and where the entry answers each
 
@@ -373,6 +389,12 @@ Case Lab: https://snedz.github.io/why-agent/demo_lab/
 7. Open the YouTube URL **in a logged-out browser** (or an incognito window) and
    confirm it plays. A link that only plays for the uploader's account fails the
    rule.
+   The challenge page's own wording for this field is *"a 3-minute or shorter
+   public YouTube video showing your project working — how you used Nebius
+   Token Factory and NVIDIA Nemotron"*. The video does: the receipt shot names
+   the endpoint and all four model ids, the lane shot puts the two Nemotron
+   tiers' scores beside the gate's, and the landing-page shot shows the
+   endpoint and the model ids on the page a judge opens.
 8. One line in the repository, so the README points at the video a judge will
    be sent to: in `README.md`, the **Video** row of the submission table
    currently reads
@@ -398,6 +420,7 @@ the repository checks that. Run these from a clean clone:
 | `python3 benchmark/score.py --eval-results benchmark/eval-benchmark-2026-10-28.json` | the 14/14 gate, the 9/14 and 6/14 lanes, and the $0.033 |
 | `python3 demo_lab/flip_check.py` | two cases really do depend on their lanes |
 | `python3 demo_lab/build.py --check` | the Case Lab is generated from the corpus, not typed |
+| `python3 demo_page.py --check` | the landing page is generated from the corpus and the run outputs, and the answer it shows is the tool's real output |
 | `python3 -m unittest test_claim_map -v` | every path the README names resolves, and every number it quotes is one the repo produced |
 
 The video is regenerated from the same tools, not edited by hand:
