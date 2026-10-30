@@ -224,7 +224,7 @@ hours, a listing's materials, a sale price — run through the same reconciler.
 Part of it was fetched from the public pages of a real pilot business and the
 directories that list it, and those conflicts are real; the rest is labelled
 synthetic fixture in every case file. The **Claim Court** shows them with their
-provenance per case: https://snedz.github.io/why-agent/demo_lab/claimcourt/
+provenance per case — it is the first link on this page.
 
 A port with no parity test is a second implementation that will drift, so
 `test_demo_app.py` runs that file under node and the Python under CPython over
