@@ -416,12 +416,13 @@ the repository checks that. Run these from a clean clone:
 
 | Command | What it proves |
 |---|---|
-| `python3 -m pytest -q` | 148 tests, 6 subtests — the suite passes offline |
+| `python3 -m pytest -q` | the whole suite passes offline — no key, no network |
 | `python3 benchmark/score.py --eval-results benchmark/eval-benchmark-2026-10-28.json` | the 14/14 gate, the 9/14 and 6/14 lanes, and the $0.033 |
 | `python3 demo_lab/flip_check.py` | two cases really do depend on their lanes |
 | `python3 demo_lab/build.py --check` | the Case Lab is generated from the corpus, not typed |
 | `python3 demo_page.py --check` | the landing page is generated from the corpus and the run outputs, and the answer it shows is the tool's real output |
 | `python3 -m unittest test_claim_map -v` | every path the README names resolves, and every number it quotes is one the repo produced |
+| `python3 -m pytest -q test_submission_packet.py` | every number in **this packet** is one the repo produced, and the two that move — the suite's size and the video's length — are not quoted here at all |
 
 The video is regenerated from the same tools, not edited by hand:
 `python3 demo_video/capture.py && python3 demo_video/render.py`.
