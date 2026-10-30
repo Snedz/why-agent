@@ -315,7 +315,7 @@ th.receipt {{ width: 26%; }}
 .nav a {{ color: #4477aa; }}
 </style></head><body>
 <h1>why-agent — Case Lab</h1>
-<p class="nav"><a href="../">&larr; the demo page — the reconciler, running in your tab</a></p>
+<p class="nav"><a href="../">&larr; the demo page — the reconciler, running in your tab</a> &nbsp;&middot;&nbsp; <a href="claimcourt/">the Claim Court — commerce claims</a></p>
 <p><b>Every AI claim, checked against its evidence.</b> Sources — cards, commits, check runs,
 receipts, web pages, reviewer models — make <i>claims</i> about a work item. One deterministic
 reconciler groups them by aspect and returns <b>CORROBORATED</b>, <b>PARTIAL</b>,

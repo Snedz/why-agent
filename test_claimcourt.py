@@ -124,6 +124,41 @@ class CourtReplayTests(unittest.TestCase):
         self.assertIn("fast", self.by_item["bm-card-lies"]["disagreements_preserved"])
 
 
+class PublishedLabTests(unittest.TestCase):
+    """The lab a judge can reach is the lab this repository generated.
+
+    `pages.yml` serves `demo_lab/` recursively, so the reachable copy is
+    `demo_lab/claimcourt/`. It was a hand-kept duplicate of `claimcourt_lab/`,
+    and it had drifted: the published page linked to
+    `demo_lab/demo_lab/index.html`, which is a 404. Nothing tested a link, so
+    nothing noticed.
+    """
+
+    PUBLISHED = ROOT / "demo_lab" / "claimcourt" / "index.html"
+    SOURCE = ROOT / "claimcourt_lab" / "index.html"
+
+    def test_the_published_copy_is_the_generated_one(self):
+        self.assertTrue(self.PUBLISHED.exists(), f"{self.PUBLISHED} is missing")
+        self.assertEqual(self.PUBLISHED.read_text(encoding="utf-8"),
+                         self.SOURCE.read_text(encoding="utf-8"),
+                         "the published lab and the generated lab have drifted apart")
+
+    def test_every_relative_link_on_the_published_page_resolves(self):
+        import re
+        page = self.PUBLISHED.read_text(encoding="utf-8")
+        for href in re.findall(r'href="([^"#][^"]*)"', page):
+            if href.startswith(("http://", "https://", "mailto:")):
+                continue
+            target = (self.PUBLISHED.parent / href).resolve()
+            self.assertTrue(target.exists(),
+                            f"the published lab links {href}, which resolves to "
+                            f"{target} — nothing is there")
+
+    def test_it_links_back_to_the_case_lab(self):
+        page = self.PUBLISHED.read_text(encoding="utf-8")
+        self.assertIn('href="../index.html"', page)
+
+
 class LabBuildTests(unittest.TestCase):
     def test_generated_files_match_committed_output(self):
         sys.path.insert(0, str(ROOT / "claimcourt_lab"))

@@ -422,6 +422,7 @@ def build() -> str:
   <div class="row">
     <a href="{VIDEO}">Download the video (MP4)</a>
     <a href="demo_lab/">The Case Lab — every claim with its receipt</a>
+    <a href="demo_lab/claimcourt/">The Claim Court — the same reconciler on commerce claims</a>
     <a href="https://github.com/Snedz/why-agent">The repository</a>
     <a href="https://github.com/Snedz/why-agent/blob/main/SUBMISSION.md">The submission packet</a>
   </div>
