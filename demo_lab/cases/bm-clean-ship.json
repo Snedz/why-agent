@@ -1,0 +1,124 @@
+{
+  "case_id": "bm-clean-ship",
+  "claims": [
+    {
+      "aspect": "",
+      "effective_aspect": "state",
+      "kind": "card",
+      "lane": "",
+      "lane_row": false,
+      "locator": "bench/cards/bm-clean-ship.md:1",
+      "observed_at": "2026-10-28",
+      "receipt": "benchmark/cases.jsonl",
+      "source": "card",
+      "statement": "the card says the release shipped",
+      "value": "shipped"
+    },
+    {
+      "aspect": "",
+      "effective_aspect": "state",
+      "kind": "commit",
+      "lane": "",
+      "lane_row": false,
+      "locator": "bench/git/1",
+      "observed_at": "2026-10-28",
+      "receipt": "benchmark/cases.jsonl",
+      "source": "git",
+      "statement": "the merge commit records the release",
+      "value": "shipped"
+    },
+    {
+      "aspect": "",
+      "effective_aspect": "state",
+      "kind": "check",
+      "lane": "",
+      "lane_row": false,
+      "locator": "bench/ci/1",
+      "observed_at": "2026-10-28",
+      "receipt": "benchmark/cases.jsonl",
+      "source": "ci",
+      "statement": "the release check passed on the shipped build",
+      "value": "shipped"
+    },
+    {
+      "aspect": "outcome",
+      "effective_aspect": "outcome",
+      "kind": "receipt",
+      "lane": "",
+      "lane_row": false,
+      "locator": "bench/deploy/1",
+      "observed_at": "2026-10-28",
+      "receipt": "benchmark/cases.jsonl",
+      "source": "deploy",
+      "statement": "the deploy receipt confirms delivery",
+      "value": "delivered"
+    },
+    {
+      "aspect": "cause",
+      "effective_aspect": "cause",
+      "kind": "commit",
+      "lane": "",
+      "lane_row": false,
+      "locator": "bench/git/1c",
+      "observed_at": "2026-10-28",
+      "receipt": "benchmark/cases.jsonl",
+      "source": "git",
+      "statement": "the merge was approved through review",
+      "value": "review-approved"
+    }
+  ],
+  "headline": "The clean case — and a lane still disagreed.",
+  "labels": {
+    "data": "SYNTHETIC",
+    "provenance": "RECORDED",
+    "run_date": "2026-10-28",
+    "run_endpoint": "https://api.tokenfactory.nebius.com/v1/"
+  },
+  "lane_dependency": {
+    "flips": false,
+    "lane_rows": [],
+    "verdict_without_lane_rows": ""
+  },
+  "lane_receipts": [
+    {
+      "agrees_with_gate": false,
+      "cost_usd": 0.00015,
+      "endpoint": "https://api.tokenfactory.nebius.com/v1/",
+      "lane": "reviewer-fast",
+      "model_id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+      "tokens": [
+        242,
+        563
+      ],
+      "verdict": "CONFLICTED"
+    },
+    {
+      "agrees_with_gate": true,
+      "cost_usd": 0.001427,
+      "endpoint": "https://api.tokenfactory.nebius.com/v1/",
+      "lane": "reviewer-deep",
+      "model_id": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+      "tokens": [
+        242,
+        395
+      ],
+      "verdict": "CORROBORATED"
+    }
+  ],
+  "narration": {
+    "check": "FAILED",
+    "classification": "system vocabulary",
+    "invented_facts": 0,
+    "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+    "unsupported_values": [
+      "CI"
+    ]
+  },
+  "note": "Every source agrees, and they cover state, outcome and cause. The gate corroborates. The fast reviewer lane called it CONFLICTED anyway. Lanes err in both directions, which is exactly why they never decide.",
+  "planted_truth": "CORROBORATED",
+  "recorded_deterministic": "CORROBORATED",
+  "title": "Clean ship",
+  "verdict": "CORROBORATED"
+}

@@ -1,0 +1,138 @@
+{
+  "case_id": "bm-reviewer-split",
+  "claims": [
+    {
+      "aspect": "",
+      "effective_aspect": "state",
+      "kind": "card",
+      "lane": "",
+      "lane_row": false,
+      "locator": "bench/cards/bm-reviewer-split.md:1",
+      "observed_at": "2026-10-28",
+      "receipt": "benchmark/cases.jsonl",
+      "source": "card",
+      "statement": "the card says released",
+      "value": "released"
+    },
+    {
+      "aspect": "",
+      "effective_aspect": "state",
+      "kind": "commit",
+      "lane": "",
+      "lane_row": false,
+      "locator": "bench/git/6",
+      "observed_at": "2026-10-28",
+      "receipt": "benchmark/cases.jsonl",
+      "source": "git",
+      "statement": "the commit records the release",
+      "value": "released"
+    },
+    {
+      "aspect": "outcome",
+      "effective_aspect": "outcome",
+      "kind": "receipt",
+      "lane": "",
+      "lane_row": false,
+      "locator": "bench/deploy/6",
+      "observed_at": "2026-10-28",
+      "receipt": "benchmark/cases.jsonl",
+      "source": "deploy",
+      "statement": "the deploy receipt confirms release",
+      "value": "released"
+    },
+    {
+      "aspect": "outcome",
+      "effective_aspect": "outcome",
+      "kind": "verdict",
+      "lane": "reviewer-fast",
+      "lane_row": true,
+      "locator": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "observed_at": "2026-10-28",
+      "receipt": "benchmark/cases.jsonl",
+      "source": "nemotron-fast",
+      "statement": "the fast reviewer judged the outcome released",
+      "value": "released"
+    },
+    {
+      "aspect": "outcome",
+      "effective_aspect": "outcome",
+      "kind": "verdict",
+      "lane": "reviewer-deep",
+      "lane_row": true,
+      "locator": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "observed_at": "2026-10-28",
+      "receipt": "benchmark/cases.jsonl",
+      "source": "nemotron-deep",
+      "statement": "the deep reviewer judged the outcome withheld",
+      "value": "withheld"
+    },
+    {
+      "aspect": "cause",
+      "effective_aspect": "cause",
+      "kind": "verdict",
+      "lane": "",
+      "lane_row": false,
+      "locator": "bench/audit/6",
+      "observed_at": "2026-10-28",
+      "receipt": "benchmark/cases.jsonl",
+      "source": "audit",
+      "statement": "the audit attributes the release to the freeze exception",
+      "value": "freeze-exception"
+    }
+  ],
+  "headline": "The two Nemotron tiers disagree — and the disagreement is the finding.",
+  "labels": {
+    "data": "SYNTHETIC",
+    "provenance": "RECORDED",
+    "run_date": "2026-10-28",
+    "run_endpoint": "https://api.tokenfactory.nebius.com/v1/"
+  },
+  "lane_dependency": {
+    "flips": true,
+    "lane_rows": [
+      "nemotron-deep",
+      "nemotron-fast"
+    ],
+    "verdict_without_lane_rows": "CORROBORATED"
+  },
+  "lane_receipts": [
+    {
+      "agrees_with_gate": true,
+      "cost_usd": 0.00012,
+      "endpoint": "https://api.tokenfactory.nebius.com/v1/",
+      "lane": "reviewer-fast",
+      "model_id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+      "tokens": [
+        275,
+        432
+      ],
+      "verdict": "CONFLICTED"
+    },
+    {
+      "agrees_with_gate": true,
+      "cost_usd": 0.001865,
+      "endpoint": "https://api.tokenfactory.nebius.com/v1/",
+      "lane": "reviewer-deep",
+      "model_id": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+      "tokens": [
+        275,
+        530
+      ],
+      "verdict": "CONFLICTED"
+    }
+  ],
+  "narration": {
+    "check": "PASSED",
+    "classification": "",
+    "invented_facts": 0,
+    "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+    "unsupported_values": []
+  },
+  "note": "The fast lane and the deep lane read the same claims and returned different verdicts. The gate keeps both, cites both, and refuses to average them. Remove the two reviewer rows and this item reads as a routine CORROBORATED — the disagreement is not visible anywhere else.",
+  "planted_truth": "CONFLICTED",
+  "recorded_deterministic": "CONFLICTED",
+  "title": "Reviewer split",
+  "verdict": "CONFLICTED"
+}

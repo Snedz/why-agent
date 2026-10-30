@@ -1,0 +1,111 @@
+{
+  "case_id": "why-alpha",
+  "claims": [
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "kind": "card",
+      "lane": "",
+      "lane_row": false,
+      "locator": "synthetic/cards/alpha.md:9",
+      "observed_at": "2026-10-22T09:11:00Z",
+      "receipt": "evidence/items.jsonl",
+      "source": "synthetic/cards/alpha.md",
+      "statement": "the card was marked DONE",
+      "value": "DONE"
+    },
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "kind": "commit",
+      "lane": "",
+      "lane_row": false,
+      "locator": "0c4f1a9 (synthetic)",
+      "observed_at": "2026-10-22T09:14:00Z",
+      "receipt": "evidence/items.jsonl",
+      "source": "git",
+      "statement": "a commit merged the fix",
+      "value": "merged"
+    },
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "kind": "check",
+      "lane": "",
+      "lane_row": false,
+      "locator": "synthetic://run/alpha/42",
+      "observed_at": "2026-10-22T09:41:00Z",
+      "receipt": "evidence/items.jsonl",
+      "source": "ci",
+      "statement": "the gate run is still red",
+      "value": "failing"
+    },
+    {
+      "aspect": "outcome",
+      "effective_aspect": "outcome",
+      "kind": "receipt",
+      "lane": "",
+      "lane_row": false,
+      "locator": "synthetic/notes/alpha.md:4",
+      "observed_at": "2026-10-22T10:02:00Z",
+      "receipt": "evidence/items.jsonl",
+      "source": "synthetic/notes/alpha.md",
+      "statement": "the burn-down receipt says nothing was claimed",
+      "value": "not-claimed"
+    }
+  ],
+  "headline": "A real conflict, shown with both sides cited — and a narration that failed its check.",
+  "labels": {
+    "data": "SYNTHETIC",
+    "provenance": "RECORDED",
+    "run_date": "2026-10-28",
+    "run_endpoint": "https://api.tokenfactory.nebius.com/v1/"
+  },
+  "lane_dependency": {
+    "flips": false,
+    "lane_rows": [],
+    "verdict_without_lane_rows": ""
+  },
+  "lane_receipts": [
+    {
+      "agrees_with_gate": false,
+      "cost_usd": 0.000278,
+      "endpoint": "https://api.tokenfactory.nebius.com/v1/",
+      "lane": "reviewer-fast",
+      "model_id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "receipt": "eval-results-2026-10-28.json",
+      "tokens": [
+        234,
+        1100
+      ],
+      "verdict": "PARTIAL"
+    },
+    {
+      "agrees_with_gate": true,
+      "cost_usd": 0.001464,
+      "endpoint": "https://api.tokenfactory.nebius.com/v1/",
+      "lane": "reviewer-deep",
+      "model_id": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "receipt": "eval-results-2026-10-28.json",
+      "tokens": [
+        234,
+        410
+      ],
+      "verdict": "CONFLICTED"
+    }
+  ],
+  "narration": {
+    "check": "FAILED",
+    "classification": "system vocabulary",
+    "invented_facts": 0,
+    "receipt": "eval-results-2026-10-28.json",
+    "unsupported_values": [
+      "UNKNOWN"
+    ]
+  },
+  "note": "Sources disagree about the same aspect. The gate refuses to pick a winner. The deep lane matched the gate; the fast lane softened it to PARTIAL. The narration of this item also failed its check: the flagged value is listed below and classified.",
+  "planted_truth": "",
+  "recorded_deterministic": "CONFLICTED",
+  "title": "Ship the alpha release notes",
+  "verdict": "CONFLICTED"
+}

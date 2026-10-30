@@ -1,0 +1,29 @@
+{
+  "case_id": "bm-no-evidence",
+  "claims": [],
+  "headline": "Nobody said anything.",
+  "labels": {
+    "data": "SYNTHETIC",
+    "provenance": "RECORDED",
+    "run_date": "2026-10-28",
+    "run_endpoint": "https://api.tokenfactory.nebius.com/v1/"
+  },
+  "lane_dependency": {
+    "flips": false,
+    "lane_rows": [],
+    "verdict_without_lane_rows": ""
+  },
+  "lane_receipts": [],
+  "narration": {
+    "check": "not run",
+    "classification": "",
+    "invented_facts": 0,
+    "receipt": "",
+    "unsupported_values": []
+  },
+  "note": "This item exists in the corpus with zero claims. The gate's answer is NO EVIDENCE — a first-class verdict, not an error. The lanes were not run: there is nothing to judge, and a model asked anyway would invent something to judge.",
+  "planted_truth": "NO EVIDENCE",
+  "recorded_deterministic": "",
+  "title": "bm-no-evidence",
+  "verdict": "NO EVIDENCE"
+}

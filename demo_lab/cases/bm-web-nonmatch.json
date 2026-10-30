@@ -1,0 +1,123 @@
+{
+  "case_id": "bm-web-nonmatch",
+  "claims": [
+    {
+      "aspect": "",
+      "effective_aspect": "state",
+      "kind": "card",
+      "lane": "",
+      "lane_row": false,
+      "locator": "bench/cards/bm-web-nonmatch.md:1",
+      "observed_at": "2026-10-28",
+      "receipt": "benchmark/cases.jsonl",
+      "source": "card",
+      "statement": "the card says the notice shipped",
+      "value": "shipped"
+    },
+    {
+      "aspect": "",
+      "effective_aspect": "state",
+      "kind": "commit",
+      "lane": "",
+      "lane_row": false,
+      "locator": "bench/git/14",
+      "observed_at": "2026-10-28",
+      "receipt": "benchmark/cases.jsonl",
+      "source": "git",
+      "statement": "the commit records the notice",
+      "value": "shipped"
+    },
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "kind": "web",
+      "lane": "live-evidence",
+      "lane_row": true,
+      "locator": "https://example.com/other",
+      "observed_at": "2026-10-28",
+      "receipt": "benchmark/cases.jsonl",
+      "source": "tavily",
+      "statement": "the claimed value was not found on this page",
+      "value": ""
+    },
+    {
+      "aspect": "outcome",
+      "effective_aspect": "outcome",
+      "kind": "receipt",
+      "lane": "",
+      "lane_row": false,
+      "locator": "bench/post/14",
+      "observed_at": "2026-10-28",
+      "receipt": "benchmark/cases.jsonl",
+      "source": "post",
+      "statement": "the postal receipt confirms the notice shipped",
+      "value": "shipped"
+    }
+  ],
+  "headline": "A live-evidence miss, recorded instead of dropped.",
+  "labels": {
+    "data": "SYNTHETIC",
+    "provenance": "RECORDED",
+    "run_date": "2026-10-28",
+    "run_endpoint": "https://api.tokenfactory.nebius.com/v1/"
+  },
+  "lane_dependency": {
+    "flips": true,
+    "lane_rows": [
+      "tavily"
+    ],
+    "verdict_without_lane_rows": "PARTIAL"
+  },
+  "lane_receipts": [
+    {
+      "agrees_with_gate": true,
+      "cost_usd": 0.000128,
+      "endpoint": "https://api.tokenfactory.nebius.com/v1/",
+      "lane": "reviewer-fast",
+      "model_id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+      "tokens": [
+        224,
+        477
+      ],
+      "verdict": "CONFLICTED"
+    },
+    {
+      "agrees_with_gate": true,
+      "cost_usd": 0.001235,
+      "endpoint": "https://api.tokenfactory.nebius.com/v1/",
+      "lane": "reviewer-deep",
+      "model_id": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+      "tokens": [
+        224,
+        337
+      ],
+      "verdict": "CONFLICTED"
+    },
+    {
+      "endpoint": "https://api.tokenfactory.nebius.com/v1/",
+      "fetched": "https://example.com/other",
+      "lane": "live-evidence",
+      "model_id": "tavily/search",
+      "receipt": "benchmark/cases.jsonl",
+      "value_found": "(no literal match)"
+    }
+  ],
+  "narration": {
+    "check": "FAILED",
+    "classification": "source reference",
+    "invented_facts": 0,
+    "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+    "unsupported_values": [
+      "\"\"",
+      "example.com/other",
+      "UNKNOWN"
+    ]
+  },
+  "note": "The Tavily lane fetched a page that does not contain the claimed value. That becomes a claim with an empty value — an honest miss — and it conflicts with the postal receipt. Remove the web row and the spoken aspects agree, and the item reads as a quiet PARTIAL.",
+  "planted_truth": "CONFLICTED",
+  "recorded_deterministic": "CONFLICTED",
+  "title": "Web non-match",
+  "verdict": "CONFLICTED"
+}
