@@ -90,6 +90,41 @@ class TavilyLaneTests(unittest.TestCase):
         self.assertIn("not found", miss.statement)
         self.assertEqual(miss.locator, "https://example.invalid/roundup")
 
+    def test_verbatim_matching_requires_delimited_occurrence(self):
+        # The boundary rule at the lane level, in default (verbatim) mode:
+        # a claim is credited only where the page states it as its own
+        # string, never as a substring of a longer one.
+        def page(content):
+            return [{"title": "A page", "url": "https://example.invalid/p",
+                     "content": content}]
+
+        rows = tl.results_to_evidence(
+            "why-tavily", page("Winners named November 30."),
+            "November 3", RETRIEVED_AT)
+        self.assertEqual(rows[0].value, "",
+                         "November 3 inside November 30 is not a statement "
+                         "of November 3")
+        self.assertIn("not found", rows[0].statement)
+
+        rows = tl.results_to_evidence(
+            "why-tavily", page("entries close November 3, 2026"),
+            "November 3", RETRIEVED_AT)
+        self.assertEqual(rows[0].value, "November 3")
+        self.assertEqual(rows[0].match_method, "verbatim")
+
+        rows = tl.results_to_evidence(
+            "why-tavily", page("Submissions close Oct 300 at noon."),
+            "Oct 30", RETRIEVED_AT)
+        self.assertEqual(rows[0].value, "",
+                         "Oct 300 does not state the Oct 30 claim")
+
+        rows = tl.results_to_evidence(
+            "why-tavily", page("Nemotrons are great."),
+            "Nemotron", RETRIEVED_AT)
+        self.assertEqual(rows[0].value, "",
+                         "a longer word containing the claim is not the "
+                         "claim")
+
     def test_a_missing_api_key_is_an_error_not_a_default(self):
         def forbidden_transport(url, payload, timeout):
             raise AssertionError("no request may be sent without a key")

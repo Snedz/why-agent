@@ -1,0 +1,50 @@
+{
+  "query": "Tavily free Researcher plan API credits per month",
+  "follow_up_questions": null,
+  "answer": null,
+  "images": [],
+  "results": [
+    {
+      "title": "Tavily | AI Wiki",
+      "url": "https://aiwiki.ai/wiki/tavily",
+      "content": "| Plan | Monthly Credits | Price | Per-Credit Cost |\n ---  --- |\n| Researcher (Free) | 1,000 | $0 | Free |\n| Project | 4,000 | $30/month | $0.0075 |\n| Bootstrap | 15,000 | $100/month | $0.0067 |\n| Startup | 38,000 | $220/month | $0.0058 |\n| Growth | 100,000 | $500/month | $0.005 |\n| Pay-as-you-go | Variable | Per usage | $0.008 per credit |\n| Enterprise | Custom | Custom | Custom |\n\n## Expanded article table\n\nThe free Researcher plan provides 1,000 API credits per month with no credit card required, making it accessible for individual developers and small experiments. Enterprise plans offer custom credit volumes, dedicated support, and enhanced security features .\n\n### Credit Costs by Operation [...] | Feature | Tavily | Exa | SerpAPI |\n ---  --- |\n| Search approach | AI-ranked aggregation from multiple sources | Semantic search over proprietary index | Raw access to Google and 20+ search engines |\n| Optimized for | LLMs and AI agents | Deep research and content retrieval | SEO monitoring and SERP data |\n| Free tier | 1,000 credits/month | 2,000 one-time credits | 250 searches/month |\n| Content extraction | Built-in Extract and Crawl APIs | HTML cleaning and content parsing | Structured SERP data only |\n| Response speed (p95) | 3.8s - 4.5s | 1.4s - 1.7s | Varies by engine |\n| People/company search | Not available | Indexes 1B+ LinkedIn profiles | Via Google/Bing results |\n| LLM framework integrations | LangChain, LlamaIndex, MCP, Vercel AI SDK | LangChain, LlamaIndex | LangChain |",
+      "score": 0.95885104,
+      "raw_content": null,
+      "id": "c587bd-00"
+    },
+    {
+      "title": "Tavily AI Free Tier 2026: Limits, Pricing & What Changed | AgentDeals",
+      "url": "https://agentdeals.dev/vendor/tavily-ai",
+      "content": "Tavily AI's free tier is called \"Free\". Real-time web search API for AI agents, with search, extract, crawl and research endpoints. The free Researcher plan gives 1,000 API credits per month with no credit card required, resetting on the first of each month. A basic search costs 1 credit and an advanced search 2; extract costs 1 credit per 5 successful URLs (2 at advanced depth); research costs 4 to 250 credits per request. Search and Extract can also be called without an API key, free and rate-limited. Pay-as-you-go costs $0.008 per credit; the Project plan is $30 per month for 4,000 credits. When monthly free credits are used up, requests stop until credits reset or the account upgrades. Pay-as-you-go charging applies if enabled. (From  read 2026-10-06.) Production API keys need an [...] ## Free Tier Details\n\nReal-time web search API for AI agents, with search, extract, crawl and research endpoints. The free Researcher plan gives 1,000 API credits per month with no credit card required, resetting on the first of each month. A basic search costs 1 credit and an advanced search 2; extract costs 1 credit per 5 successful URLs (2 at advanced depth); research costs 4 to 250 credits per request. Search and Extract can also be called without an API key, free and rate-limited. Pay-as-you-go costs $0.008 per credit; the Project plan is $30 per month for 4,000 credits.\n\nWe read that on 2026-10-26 from , and our check recorded: the page writes \"tavily\", the domain we cite Tavily AI from, and states \"$0.008\" and \"$30\" and \"1,000 API credits / month\" and \"4,000 API credits / month\". [...] `curl  curl \n\nAPI docs \u2192\n\n## Related Guides\n\nAI / ML Free Tier Comparison AI / ML Alternatives Guide Setup Guide Stability Dashboard\n\n## Frequently Asked Questions\n\n Is Tavily AI free?\n\nYes, Tavily AI offers a free tier: Free. Real-time web search API for AI agents, with search, extract, crawl and research endpoints. The free Researcher plan gives 1,000 API credits per month with no credit card required, resetting on the fi...\n\n  What is Tavily AI's free tier?",
+      "score": 0.9443876,
+      "raw_content": null,
+      "id": "e45941-01"
+    },
+    {
+      "title": "Tavily Researcher | ClawIsOpen",
+      "url": "https://clawisopen.com/tools/tavily-free",
+      "content": "Skip to content\n\nClawIsOpen\n\nSign inFind my perks\n\nDiscover / Tools / Tavily\n\nFree plan\n\n# Tavily Researcher\n\n1,000 API credits per month\n\nAdd web search and extraction to a research agent.\n\nAI app builderBootstrapped SaaSFunded startupStudent / learner\n\n## What it is useful for\n\nThe Researcher plan needs no credit card. Credits reset on the first day of each month. When depleted, requests stop until reset or a paid upgrade.\n\nAI APIs \u00b7 Research\n\n## Conditions and limits\n\n Search, extraction and crawl requests can consume different numbers of credits.\n\n## Before you choose\n\nOne credit does not always mean one request. Paid plans and pay-as-you-go usage have different billing rules.\n\nView official product \n\n## Sources & last check",
+      "score": 0.9403148,
+      "raw_content": null,
+      "id": "f154c6-02"
+    },
+    {
+      "title": "Tavily Researcher Free \u2014 1,000 API Credits/Month \u00b7 Free AI Credits",
+      "url": "https://freetokens.custats.info/offers/tavily-free-tier.html",
+      "content": "Free AI Credits\n\n\u2014 visits\u2014 today\n\n\u2190 All offers\n\nAPI providers\n\n# Tavily Researcher Free \u2014 1,000 API Credits/Month\n\nTavily\n\nongoing\u00b7sign-up required account\")\u00b7social proof\u00b7unverified\u00b7checked\n\n## The offer\n\nTavily's Researcher Free plan provides 1,000 free API credits every month. Credits reset on the first day of each month, requests stop after the monthly balance is exhausted, and no credit card is required. Tavily separately advertises a student path with four months of Project Plan access and 4,000 API credits per month.\n\n## How to claim\n\n3-step guide\n\nClaim at Tavily \u2197\n\n## Social proof\n\n> Tavily\n>\n> \u201cResearcher Free provides 1,000 API credits per month with no credit card required; credits reset on the first day of each month.\u201d [...] > Credits & Pricing - Tavily Docs\n>\n> \u201cYou get 1,000 free API Credits every month. No credit card required.\u201d\n\n> Student Account | Tavily Help Center\n>\n> \u201cStudents can receive 4 months of free access to the Project Plan, which includes 4,000 API credits per month.\u201d\n\n## Copy link\n\nThis site counts visits and offer clicks to see which offers help people. Counting uses Google Analytics 4 with IP anonymization (which may set cookies) and, when enabled, a cookie-free GoatCounter page counter. Nothing runs until you allow it. You can change your mind anytime via \u201cCookie settings\u201d in the footer.",
+      "score": 0.93707865,
+      "raw_content": null,
+      "id": "7d2c87-03"
+    },
+    {
+      "title": "Tavily Review 2026: Search API Pricing & Alternatives | AITrendTool",
+      "url": "https://aitrendtool.com/tools/tavily",
+      "content": "Skip to content \n\nAITrendTool\n\n# Tavily\n\nSearch, extract, and crawl API purpose-built for AI agents and LLM applications\n\nTavily is a search API designed for AI agents rather than humans \u2014 it returns ranked, LLM-ready content instead of a page of blue links. The free Researcher plan includes 1,000 API credits a month with no credit card; pay-as-you-go is $0.008 per credit, and the Project plan starts at $30/month for 4,000 credits with a slider for more. Students get it free. Best for developers adding web grounding to agents.\n\n\u2713 Verified OCT 12, 2026 FREEMIUM  Live\n\nVisit tavily.com \u2197   AI Search & Research  AI Agents & Automation\n\nScreenshot of Tavily\n\n## What is Tavily? [...] ## How people make money with Tavily\n\n Build research-brief automations for consultancies that need sourced summaries on demand, priced per report with credits as the main variable cost\n Offer web-grounded chatbot integration as a retainer service for agencies, where the search layer keeps client answers current without retraining a model\n\n## Frequently asked questions\n\n### Is Tavily free to use?\n\nYes. The Researcher plan is permanently free with 1,000 API credits per month and no credit card required. Credits reset on the first day of each month. Students can also apply for free access. Beyond that, pay-as-you-go costs $0.008 per credit and the Project plan starts at $30/month.\n\n \n\n### How much does the Tavily Project plan cost? [...] | Plan | Price | Includes |\n| Researcher | Free | 1,000 API credits per month \u00b7 No credit card required \u00b7 Email support \u00b7 Credits reset on the first of each month |\n| Pay As You Go | $0.008/credit | Pay only for what you use \u00b7 Cancel anytime \u00b7 Email support |\n| Project | $30/mo | 4,000 API credits per month at the base price \u00b7 Slider adjusts credits and price together \u00b7 Higher rate limits \u00b7 Email support |\n| Enterprise | Custom | Custom API call volumes \u00b7 Custom rate limits \u00b7 Enterprise-grade support and SLAs \u00b7 Enterprise-grade security and privacy |\n| Students | Free | Free access for students \u00b7 Requires verification through the vendor |\n\n## What are Tavily's key features?",
+      "score": 0.9296516,
+      "raw_content": null,
+      "id": "5a235d-04"
+    }
+  ],
+  "response_time": 2.41,
+  "request_id": "e0e6a732-a83d-45cf-a8a1-cd5ad6565b9d"
+}

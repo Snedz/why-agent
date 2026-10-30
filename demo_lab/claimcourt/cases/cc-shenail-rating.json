@@ -1,0 +1,79 @@
+{
+  "case_id": "cc-shenail-rating",
+  "claim": {
+    "locator": "https://reviews.birdeye.com/shenail-hair-lounge-170031239435949",
+    "source": "birdeye-profile",
+    "statement": "the Birdeye profile displays this rating for the salon",
+    "value": "4.5 (251 reviews)"
+  },
+  "claims": [
+    {
+      "aspect": "outcome",
+      "effective_aspect": "outcome",
+      "fixture": "recorded",
+      "kind": "card",
+      "locator": "https://reviews.birdeye.com/shenail-hair-lounge-170031239435949",
+      "observed_at": "2026-10-30",
+      "source": "birdeye-profile",
+      "statement": "the Birdeye profile displays this rating for the salon",
+      "value": "4.5 (251 reviews)"
+    },
+    {
+      "aspect": "outcome",
+      "effective_aspect": "outcome",
+      "fixture": "recorded",
+      "kind": "web",
+      "locator": "Google places record 942693713797309, read 2026-10-30",
+      "observed_at": "2026-10-30",
+      "source": "google-listing",
+      "statement": "the Google listing displays a different rating and a much smaller review count",
+      "value": "4.1 (28 reviews)"
+    },
+    {
+      "aspect": "outcome",
+      "effective_aspect": "outcome",
+      "fixture": "recorded",
+      "kind": "web",
+      "locator": "https://www.bestprosintown.com/on/niagara-falls/shenail-hair-lounge-/",
+      "observed_at": "2026-10-30",
+      "source": "bestprosintown-listing",
+      "statement": "the BestProsInTown listing displays a third rating and count",
+      "value": "4.7 (110 reviews)"
+    }
+  ],
+  "fixture": "recorded",
+  "frozen_verdict": "CONFLICTED",
+  "gate": {
+    "agreements": [],
+    "conflicts": [
+      {
+        "aspect": "outcome",
+        "citations": [
+          "birdeye-profile — https://reviews.birdeye.com/shenail-hair-lounge-170031239435949",
+          "google-listing — Google places record 942693713797309, read 2026-10-30",
+          "bestprosintown-listing — https://www.bestprosintown.com/on/niagara-falls/shenail-hair-lounge-/"
+        ],
+        "values": [
+          "4.1 (28 reviews)",
+          "4.5 (251 reviews)",
+          "4.7 (110 reviews)"
+        ]
+      }
+    ],
+    "unknown_aspects": [
+      "state",
+      "cause"
+    ],
+    "verdict": "CONFLICTED"
+  },
+  "labels": {
+    "data": "RECORDED — fetched from public pages 2026-10-30",
+    "receipt": "claimcourt/cases.jsonl"
+  },
+  "lanes": {
+    "reason": "no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.",
+    "status": "NOT RUN"
+  },
+  "title": "Shenail — the rating a customer finds",
+  "verdict": "CONFLICTED"
+}

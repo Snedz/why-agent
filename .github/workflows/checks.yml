@@ -1,0 +1,73 @@
+name: checks
+
+# The submission's own gates, on every push and every pull request.
+#
+# MEASURED 2026-10-30: this repository had no CI at all, and two changes in
+# the same week broke the submission's own tooling from under it -- once when
+# a module was renamed and the video's receipt script stopped importing, and
+# once when a claim moved. Both were caught by hand, hours later. This
+# workflow is the cheap version of that: every gate the submission claims in
+# SUBMISSION.md is run on every change.
+#
+# What is NOT run here: demo_video/capture.py and demo_video/render.py. They
+# need a browser and a specific ffmpeg build, so the frames they produce are
+# not byte-stable across machines, and a CI that re-rendered the video would
+# go red for a reason that has nothing to do with the code. The video's length
+# is checked instead, on the committed file, when ffprobe is available.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: install the test tooling
+        # MEASURED 2026-10-30: the first run of this workflow failed on its
+        # first step because a hosted runner has no pytest and no Pillow.
+        # The suite needs both, and so does the thumbnail generator.
+        run: python3 -m pip install --quiet pytest pillow
+      - name: the suite, offline, with no key
+        run: python3 -m pytest -q
+      - name: the landing page is what the generator writes
+        run: python3 demo_page.py --check
+      - name: the Case Lab is what the generator writes
+        run: python3 demo_lab/build.py --check
+      - name: the lane-dependent cases really depend on their lanes
+        run: python3 demo_lab/flip_check.py
+      - name: the thumbnail is there, and it is the right shape
+        # Not REDRAWN here: the rasterisation depends on the platform's fonts,
+        # so a runner would write a different image and the diff below would go
+        # red for a reason that has nothing to do with the code. The suite
+        # already checks the committed file's size.
+        run: |
+          python3 -c "
+          from PIL import Image
+          im = Image.open('why-agent-nebius-thumbnail.png')
+          assert im.size == (1280, 720), im.size
+          print('thumbnail:', im.size)"
+      - name: the committed video is under the three minutes the rules allow
+        run: |
+          if command -v ffprobe >/dev/null 2>&1; then
+            secs=$(ffprobe -v error -show_entries format=duration \
+                    -of default=noprint_wrappers=1:nokey=1 why-agent-nebius-demo.mp4)
+            echo "length: ${secs}s"
+            awk -v s="$secs" 'BEGIN { if (s >= 180) { print "::error::the video is at or over the three-minute limit"; exit 1 } }'
+          else
+            echo "ffprobe is not on this runner -- the length is measured at render time"
+          fi
+      - name: the generators wrote nothing different
+        run: |
+          if ! git diff --quiet; then
+            echo "::error::the generators wrote something different from what is committed"
+            git --no-pager diff --stat
+            exit 1
+          fi

@@ -1,0 +1,68 @@
+{
+  "case_id": "cc-shenail-premiere",
+  "claim": {
+    "locator": "https://shenailhairlounge.ca/ (Welcome)",
+    "source": "shenail-site",
+    "statement": "the site says the salon 'has proven to be Niagara Falls premiere Nail Bar & Hair Salon'",
+    "value": "premiere"
+  },
+  "claims": [
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "recorded",
+      "kind": "card",
+      "locator": "https://shenailhairlounge.ca/ (Welcome)",
+      "observed_at": "2026-10-30",
+      "source": "shenail-site",
+      "statement": "the site says the salon 'has proven to be Niagara Falls premiere Nail Bar & Hair Salon'",
+      "value": "premiere"
+    },
+    {
+      "aspect": "outcome",
+      "effective_aspect": "outcome",
+      "fixture": "recorded",
+      "kind": "web",
+      "locator": "Google places record 942693713797309, read 2026-10-30",
+      "observed_at": "2026-10-30",
+      "source": "google-listing",
+      "statement": "the Google listing rates the salon 4.1 of 5; no fetched source calls it the top or premiere salon, and a BestProsInTown list shows other Niagara Falls salons rated 4.7",
+      "value": "4.1"
+    }
+  ],
+  "fixture": "recorded",
+  "frozen_verdict": "PARTIAL",
+  "gate": {
+    "agreements": [
+      {
+        "aspect": "outcome",
+        "citations": [
+          "google-listing — Google places record 942693713797309, read 2026-10-30"
+        ],
+        "value": "4.1"
+      },
+      {
+        "aspect": "state",
+        "citations": [
+          "shenail-site — https://shenailhairlounge.ca/ (Welcome)"
+        ],
+        "value": "premiere"
+      }
+    ],
+    "conflicts": [],
+    "unknown_aspects": [
+      "cause"
+    ],
+    "verdict": "PARTIAL"
+  },
+  "labels": {
+    "data": "RECORDED — fetched from public pages 2026-10-30",
+    "receipt": "claimcourt/cases.jsonl"
+  },
+  "lanes": {
+    "reason": "no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.",
+    "status": "NOT RUN"
+  },
+  "title": "Shenail — 'premiere' superlative",
+  "verdict": "PARTIAL"
+}

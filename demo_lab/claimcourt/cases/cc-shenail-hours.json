@@ -1,0 +1,96 @@
+{
+  "case_id": "cc-shenail-hours",
+  "claim": {
+    "locator": "https://shenailhairlounge.ca/ (Our Hours)",
+    "source": "shenail-site",
+    "statement": "the salon's own site publishes these opening hours",
+    "value": "Mon 10:00-16:00; Tue-Fri 09:30-18:00; Sat 09:30-17:00; Sun closed"
+  },
+  "claims": [
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "recorded",
+      "kind": "card",
+      "locator": "https://shenailhairlounge.ca/ (Our Hours)",
+      "observed_at": "2026-10-30",
+      "source": "shenail-site",
+      "statement": "the salon's own site publishes these opening hours",
+      "value": "Mon 10:00-16:00; Tue-Fri 09:30-18:00; Sat 09:30-17:00; Sun closed"
+    },
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "recorded",
+      "kind": "web",
+      "locator": "Google places record 942693713797309, read 2026-10-30",
+      "observed_at": "2026-10-30",
+      "source": "google-listing",
+      "statement": "the Google listing shows the same hours as the site",
+      "value": "Mon 10:00-16:00; Tue-Fri 09:30-18:00; Sat 09:30-17:00; Sun closed"
+    },
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "recorded",
+      "kind": "web",
+      "locator": "https://www.yellowpages.ca/bus/Ontario/Niagara-Falls/Shenail-Hair-Lounge/6656388.html",
+      "observed_at": "2026-10-30",
+      "source": "yellowpages-directory",
+      "statement": "the Yellow Pages directory shows longer hours than the site and the Google listing",
+      "value": "Mon 10:00-17:00; Tue-Fri 09:30-19:00; Sat 10:00-18:00"
+    },
+    {
+      "aspect": "cause",
+      "effective_aspect": "cause",
+      "fixture": "recorded",
+      "kind": "verdict",
+      "locator": "https://reviews.birdeye.com/shenail-hair-lounge-170031239435949",
+      "observed_at": "2026-10-30",
+      "source": "birdeye-profile-note",
+      "statement": "the Birdeye profile states it has not been claimed by the business owner or representative — directory data for this business is not owner-maintained",
+      "value": "directory profiles not owner-claimed"
+    }
+  ],
+  "fixture": "recorded",
+  "frozen_verdict": "CONFLICTED",
+  "gate": {
+    "agreements": [
+      {
+        "aspect": "cause",
+        "citations": [
+          "birdeye-profile-note — https://reviews.birdeye.com/shenail-hair-lounge-170031239435949"
+        ],
+        "value": "directory profiles not owner-claimed"
+      }
+    ],
+    "conflicts": [
+      {
+        "aspect": "state",
+        "citations": [
+          "shenail-site — https://shenailhairlounge.ca/ (Our Hours)",
+          "google-listing — Google places record 942693713797309, read 2026-10-30",
+          "yellowpages-directory — https://www.yellowpages.ca/bus/Ontario/Niagara-Falls/Shenail-Hair-Lounge/6656388.html"
+        ],
+        "values": [
+          "Mon 10:00-16:00; Tue-Fri 09:30-18:00; Sat 09:30-17:00; Sun closed",
+          "Mon 10:00-17:00; Tue-Fri 09:30-19:00; Sat 10:00-18:00"
+        ]
+      }
+    ],
+    "unknown_aspects": [
+      "outcome"
+    ],
+    "verdict": "CONFLICTED"
+  },
+  "labels": {
+    "data": "RECORDED — fetched from public pages 2026-10-30",
+    "receipt": "claimcourt/cases.jsonl"
+  },
+  "lanes": {
+    "reason": "no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.",
+    "status": "NOT RUN"
+  },
+  "title": "Shenail — published opening hours",
+  "verdict": "CONFLICTED"
+}

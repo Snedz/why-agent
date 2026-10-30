@@ -1,5 +1,10 @@
 # why-agent — slide deck
 
+> **This is the deck for the Open Agent Hackathon build of 2026-10-27**, kept
+> as the earlier build's record. The current entry is the Nebius × NVIDIA Global
+> AI Hackathon (Best Apps and Agents track): its materials are the README, the
+> published video and the Case Lab, and its submission packet is `SUBMISSION.md`.
+
 **Open Agent Hackathon 2026 · Track 02: The Agent That Can Explain Why**
 Mission Winning · `github.com/Snedz/why-agent`
 

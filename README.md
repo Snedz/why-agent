@@ -8,6 +8,27 @@ tells you what happened, with the citation attached to each line.
 
 It does not pick a winner when the sources disagree. That is the whole point.
 
+## Claim Court — the commerce surface of why-agent
+
+Claim Court is the commerce surface of why-agent: the same deterministic
+gate, pointed at commerce claims — product listings and business pages
+instead of work items. Its corpus is 18 claims
+(7 recorded from our pilot salon's public pages, 11 labelled synthetic
+fixtures), and the gate returned **12 CONFLICTED / 5 PARTIAL / 1 CORROBORATED**
+— every verdict computed by the reconciler and frozen in the corpus. On the
+benchmark corpus, a Nemotron Court citation audit scores each reviewer lane's
+verdict against the evidence it failed to answer.
+
+| | |
+|---|---|
+| **Claim Court demo** | https://snedz.github.io/why-agent/demo_lab/claimcourt/ |
+| **Corpus** | `claimcourt/` — the 18 claims, their sources and aspect mapping — https://github.com/Snedz/why-agent/tree/main/claimcourt |
+| **Claim Court Case Lab** | The demo above is the Case Lab: the 18 claim cards, the Nemotron Court transcript, and the rigor section on one page |
+| **Verify one verdict** | `python3 claimcourt/score.py` — re-derives all 18 verdicts from the committed rows and fails on drift |
+| **Runtime** | Nebius Token Factory, `https://api.tokenfactory.nebius.com/v1/` — fast reviewer `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` (Nano), narration `nvidia/nemotron-3-super-120b-a12b` (Super), deep reviewer `nvidia/Nemotron-3-Ultra-550b-a55b` (Ultra), vision `nvidia/Nemotron-3.5-Super-VL` |
+| **Tavily runtime receipts** | `docs/tavily-live-2026-10-30/` — the raw Tavily responses and ablation results from the 2026-10-30 live run |
+| **Licence** | Apache-2.0 |
+
 ---
 
 ## Nebius × NVIDIA Global AI Hackathon — Best Apps and Agents track
@@ -145,6 +166,7 @@ which is why it cannot be lane-run and why the lanes score it MISSING.
 | A VL extraction becomes a claim, never a verdict | `vision_lane.py` — null fields produce no rows; a non-JSON answer raises |
 | A client can ask the agent for its verdict | `mcp_server.py` and `test_mcp_server.py` — the server calls no model, and a test forbids it |
 | Costs are measured, not estimated | `docs/TIER_LEDGER.md`, generated from the committed run outputs by `tier_ledger.py` |
+| The demo URL a judge opens describes this entry, with the measured numbers on it | `demo_page.py` generates `demo.html` from the corpus, the committed run outputs and the provider profile; the answer it shows is a verbatim slice of `demo.py` |
 | What pre-existed, and what was added | `docs/SIGNIFICANT_UPDATE.md` |
 
 Every row above has a command a reader can run; `docs/CLAIM_MAP.md` is the full

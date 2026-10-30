@@ -1,0 +1,78 @@
+{
+  "case_id": "cc-shenail-phone",
+  "claim": {
+    "locator": "https://shenailhairlounge.ca/ (Location)",
+    "source": "shenail-site",
+    "statement": "the salon's own site publishes this phone number",
+    "value": "+1 905-353-8889"
+  },
+  "claims": [
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "recorded",
+      "kind": "card",
+      "locator": "https://shenailhairlounge.ca/ (Location)",
+      "observed_at": "2026-10-30",
+      "source": "shenail-site",
+      "statement": "the salon's own site publishes this phone number",
+      "value": "+1 905-353-8889"
+    },
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "recorded",
+      "kind": "web",
+      "locator": "Google places record 942693713797309, read 2026-10-30",
+      "observed_at": "2026-10-30",
+      "source": "google-listing",
+      "statement": "the Google listing shows the same phone number as the site",
+      "value": "+1 905-353-8889"
+    },
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "recorded",
+      "kind": "web",
+      "locator": "https://www.fresha.com/a/she-nail-hair-lounge-niagara-falls-8043-lundys-lane-dccczyh5",
+      "observed_at": "2026-10-30",
+      "source": "fresha-listing",
+      "statement": "the Fresha listing for the same address shows a different phone number",
+      "value": "+1 905-341-6888"
+    }
+  ],
+  "fixture": "recorded",
+  "frozen_verdict": "CONFLICTED",
+  "gate": {
+    "agreements": [],
+    "conflicts": [
+      {
+        "aspect": "state",
+        "citations": [
+          "shenail-site — https://shenailhairlounge.ca/ (Location)",
+          "google-listing — Google places record 942693713797309, read 2026-10-30",
+          "fresha-listing — https://www.fresha.com/a/she-nail-hair-lounge-niagara-falls-8043-lundys-lane-dccczyh5"
+        ],
+        "values": [
+          "+1 905-341-6888",
+          "+1 905-353-8889"
+        ]
+      }
+    ],
+    "unknown_aspects": [
+      "outcome",
+      "cause"
+    ],
+    "verdict": "CONFLICTED"
+  },
+  "labels": {
+    "data": "RECORDED — fetched from public pages 2026-10-30",
+    "receipt": "claimcourt/cases.jsonl"
+  },
+  "lanes": {
+    "reason": "no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.",
+    "status": "NOT RUN"
+  },
+  "title": "Shenail — published phone number",
+  "verdict": "CONFLICTED"
+}

@@ -1,8 +1,10 @@
 # SUBMISSION — Nebius × NVIDIA Global AI Hackathon
 
+Update 2026-10-30: today's submission is the Claim Court entry (demo: https://snedz.github.io/why-agent/demo_lab/claimcourt/); the Claim Court video is published on YouTube and the Devpost draft has been re-pointed to Claim Court. This packet documents the earlier incumbent staging and is kept for the record.
+
 **Event:** https://nebiusglobalaihackathon.devpost.com/
 **Track:** Best Apps and Agents
-**Submissions close:** **Friday 2026-10-30, 10:00 AM PT** (13:00 ET / 10:00 Toronto).
+**Submissions close:** **Friday 2026-10-30, 10:00 AM PT** (13:00 ET / 13:00 Toronto).
 The rules as read on 2026-10-29 are in `docs/NEBIUS_RULES_2026-10-29.md`.
 
 Everything below is ready to paste. **Three things need the founder** — see
@@ -25,8 +27,9 @@ it is still the right one — but read the form's wording before pasting.
    Quebec resident, do not submit.
 2. **Upload the video to YouTube** and make it **publicly visible** (the rules
    say publicly visible; unlisted is not the same thing). The file to upload
-   is `why-agent-nebius-demo.mp4` at the repository root — 87.54 seconds, under
-   the three-minute limit. Step-by-step in §6.
+   is `why-agent-nebius-demo.mp4` at the repository root — under two minutes. The
+   measured length is printed by `python3 demo_video/render.py`, which fails the
+   build if it reaches the three minutes the rules allow. Step-by-step in §6.
 3. **Paste the form** and submit. Every field answer is §1–§5. Join the
    challenge from the founder's account first, or the Submit button will not
    appear.
@@ -69,6 +72,14 @@ not pick a winner: it shows every side, cited, and refuses to average them.
 An aspect nobody reported is reported as a gap, never as a pass, and never as a
 plausible explanation.
 
+Who it is for: teams that already run agents. When an overnight factory, a CI
+pipeline or a fleet of automated workers leaves thousands of receipts behind,
+nobody can answer "why did this end up that way?" — and the things that try
+answer confidently, from one source. A wrong "why" costs a re-done task and a
+second wrong fix on top of it. This agent reads every source at once and hands
+back the answer with the receipts attached, so whoever decides what to fix next
+can see which source is authoritative for what.
+
 The Nebius build feeds it five lanes that run on Nebius Token Factory:
 
   - NVIDIA Nemotron 3 Super writes the reader-facing explanation, and then it
@@ -98,6 +109,11 @@ The Case Lab shows seven cases with every claim, every lane receipt, every
 model id, token count and cost. Two of the cases are lane-dependent, and a
 script proves it by re-reading the original rows and calling the same
 reconciler with and without the lane rows.
+
+It is a product rather than a notebook: the demo URL is a working app, the
+Case Lab is a second surface, the agent is exposed over MCP so a client can ask
+it for a verdict (and a verdict-shaped submission is refused at the boundary),
+and the production path reads its evidence from a DuckDB file.
 
 No dependency. Python 3.10+. Three commands run it with no key and no network:
 python3 demo.py, python3 benchmark/score.py --eval-results
@@ -149,11 +165,14 @@ assistant.
 | Overall (Grand / 2nd / 3rd) | yes | the entry is scored on the four criteria, not on track |
 | Best Apps and Agents Track Award — NVIDIA Jetson Orin Nano | yes | this is the track submitted |
 | **Best Use of Tavily — $3,000** | **yes** | the live-evidence lane makes a functional runtime call to the Tavily API as part of the solution, which is the eligibility wording verbatim |
-| City Winner — $500 | only if the founder attends a Builders & Brews city event | Toronto is one of the 20 listed cities |
-| Most Valuable Feedback — $100 + swag | yes, if the feedback field is filled in properly | it is also one of the four equally weighted stage-two criteria |
+| City Winner — $500 | only if the founder attended a Builders & Brews event | the form asks for the city you attended; Toronto is one of the 20 listed cities |
+| Most Valuable Feedback — $100 + swag | yes, if the feedback field is filled in properly | it is also one of the four equally weighted stage-two criteria, and with 29,431 participants it is the most attainable award on the list |
 
 **Each Project is eligible for one Overall Award OR one Track Award, and one
-Bonus Award** — so this entry can be eligible for three prizes at once.
+Bonus Award** — so this entry can be eligible for three prizes at once. The
+field is 29,431 participants for $50,000 in cash, so the overall awards are the
+long shots and the two bonus awards are the realistic ones; both of them are
+earned by filling in a field properly, not by building more.
 
 ### 1.6b The four equally weighted judging criteria, and where the entry answers each
 
@@ -178,6 +197,17 @@ Significant update: https://github.com/Snedz/why-agent/blob/main/docs/SIGNIFICAN
 
 ### 1.8 Anything else the form asks that is not covered above
 
+- **Cover image / thumbnail** — `why-agent-nebius-thumbnail.png` (1280×720), in the
+  repository root and published at
+  `https://snedz.github.io/why-agent/why-agent-nebius-thumbnail.png`.
+- **Is the project open source?** — Yes. Apache-2.0, in `LICENSE`, detected by
+  GitHub and visible in the repository's About section.
+- **Did you use a template, starter code, or an existing project?** — No. The
+  reconciliation, the corpus, the lanes and the Case Lab are original work in
+  this repository. The repository does carry two earlier adapters (a Zetaris
+  lane and a Meterless/Nightshift narration client) from the October build; they
+  are declared in `docs/SIGNIFICANT_UPDATE.md` and `INTEGRATION.md`, and the
+  Nebius build does not depend on either.
 - **Team / organisation** — fill in with the founder's own details. Do not put
   a personal name in the repository; the form is the place for it.
 - **"Have you used this technology before?"** and similar — answer truthfully.
@@ -335,9 +365,9 @@ prose, but it may not add a fact.
 
 ## 6. Uploading the video to YouTube
 
-The file is `why-agent-nebius-demo.mp4` at the repository root, 87.54 seconds
-(measured, not estimated — `python3 demo_video/render.py` prints it and fails
-the build if it reaches three minutes).
+The file is `why-agent-nebius-demo.mp4` at the repository root. Its length is
+measured, not estimated: `python3 demo_video/render.py` prints it and fails the
+build if it reaches three minutes.
 
 1. Open the founder's YouTube Studio → **Create → Upload videos**.
 2. Drag in `why-agent-nebius-demo.mp4`.
@@ -369,9 +399,20 @@ Case Lab: https://snedz.github.io/why-agent/demo_lab/
 ```
 
 6. Copy the watch URL and paste it into §1.5.
+   **Set the thumbnail** to `why-agent-nebius-thumbnail.png` (1280×720) — it is
+   in the repository root and published at
+   `https://snedz.github.io/why-agent/why-agent-nebius-thumbnail.png`. It
+   carries the same claim as the video's title card at a size that reads in a
+   gallery; YouTube's automatic frame would not.
 7. Open the YouTube URL **in a logged-out browser** (or an incognito window) and
    confirm it plays. A link that only plays for the uploader's account fails the
    rule.
+   The challenge page's own wording for this field is *"a 3-minute or shorter
+   public YouTube video showing your project working — how you used Nebius
+   Token Factory and NVIDIA Nemotron"*. The video does: the receipt shot names
+   the endpoint and all four model ids, the lane shot puts the two Nemotron
+   tiers' scores beside the gate's, and the landing-page shot shows the
+   endpoint and the model ids on the page a judge opens.
 8. One line in the repository, so the README points at the video a judge will
    be sent to: in `README.md`, the **Video** row of the submission table
    currently reads
@@ -393,11 +434,13 @@ the repository checks that. Run these from a clean clone:
 
 | Command | What it proves |
 |---|---|
-| `python3 -m pytest -q` | 148 tests, 6 subtests — the suite passes offline |
+| `python3 -m pytest -q` | the whole suite passes offline — no key, no network |
 | `python3 benchmark/score.py --eval-results benchmark/eval-benchmark-2026-10-28.json` | the 14/14 gate, the 9/14 and 6/14 lanes, and the $0.033 |
 | `python3 demo_lab/flip_check.py` | two cases really do depend on their lanes |
 | `python3 demo_lab/build.py --check` | the Case Lab is generated from the corpus, not typed |
+| `python3 demo_page.py --check` | the landing page is generated from the corpus and the run outputs, and the answer it shows is the tool's real output |
 | `python3 -m unittest test_claim_map -v` | every path the README names resolves, and every number it quotes is one the repo produced |
+| `python3 -m pytest -q test_submission_packet.py` | every number in **this packet** is one the repo produced, and the two that move — the suite's size and the video's length — are not quoted here at all |
 
 The video is regenerated from the same tools, not edited by hand:
 `python3 demo_video/capture.py && python3 demo_video/render.py`.

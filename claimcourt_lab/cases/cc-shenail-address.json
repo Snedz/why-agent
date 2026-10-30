@@ -1,0 +1,92 @@
+{
+  "case_id": "cc-shenail-address",
+  "claim": {
+    "locator": "https://shenailhairlounge.ca/ (Location)",
+    "source": "shenail-site",
+    "statement": "the salon's own site publishes this address",
+    "value": "8043 Lundy's Lane, Niagara Falls, ON L2H 1H3"
+  },
+  "claims": [
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "recorded",
+      "kind": "card",
+      "locator": "https://shenailhairlounge.ca/ (Location)",
+      "observed_at": "2026-10-30",
+      "source": "shenail-site",
+      "statement": "the salon's own site publishes this address",
+      "value": "8043 Lundy's Lane, Niagara Falls, ON L2H 1H3"
+    },
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "recorded",
+      "kind": "web",
+      "locator": "Google places record 942693713797309, read 2026-10-30",
+      "observed_at": "2026-10-30",
+      "source": "google-listing",
+      "statement": "the Google listing shows the same address",
+      "value": "8043 Lundy's Lane, Niagara Falls, ON L2H 1H3"
+    },
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "recorded",
+      "kind": "web",
+      "locator": "https://www.yellowpages.ca/bus/Ontario/Niagara-Falls/Shenail-Hair-Lounge/6656388.html",
+      "observed_at": "2026-10-30",
+      "source": "yellowpages-directory",
+      "statement": "the Yellow Pages directory shows the same address",
+      "value": "8043 Lundy's Lane, Niagara Falls, ON L2H 1H3"
+    },
+    {
+      "aspect": "outcome",
+      "effective_aspect": "outcome",
+      "fixture": "recorded",
+      "kind": "web",
+      "locator": "https://www.fresha.com/a/she-nail-hair-lounge-niagara-falls-8043-lundys-lane-dccczyh5",
+      "observed_at": "2026-10-30",
+      "source": "fresha-listing",
+      "statement": "the Fresha booking listing is for the same address",
+      "value": "8043 Lundy's Lane, Niagara Falls, ON L2H 1H3"
+    }
+  ],
+  "fixture": "recorded",
+  "frozen_verdict": "PARTIAL",
+  "gate": {
+    "agreements": [
+      {
+        "aspect": "outcome",
+        "citations": [
+          "fresha-listing — https://www.fresha.com/a/she-nail-hair-lounge-niagara-falls-8043-lundys-lane-dccczyh5"
+        ],
+        "value": "8043 Lundy's Lane, Niagara Falls, ON L2H 1H3"
+      },
+      {
+        "aspect": "state",
+        "citations": [
+          "shenail-site — https://shenailhairlounge.ca/ (Location)",
+          "google-listing — Google places record 942693713797309, read 2026-10-30",
+          "yellowpages-directory — https://www.yellowpages.ca/bus/Ontario/Niagara-Falls/Shenail-Hair-Lounge/6656388.html"
+        ],
+        "value": "8043 Lundy's Lane, Niagara Falls, ON L2H 1H3"
+      }
+    ],
+    "conflicts": [],
+    "unknown_aspects": [
+      "cause"
+    ],
+    "verdict": "PARTIAL"
+  },
+  "labels": {
+    "data": "RECORDED — fetched from public pages 2026-10-30",
+    "receipt": "claimcourt/cases.jsonl"
+  },
+  "lanes": {
+    "reason": "no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.",
+    "status": "NOT RUN"
+  },
+  "title": "Shenail — published address",
+  "verdict": "PARTIAL"
+}

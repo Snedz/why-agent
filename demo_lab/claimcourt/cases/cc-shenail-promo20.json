@@ -1,0 +1,51 @@
+{
+  "case_id": "cc-shenail-promo20",
+  "claim": {
+    "locator": "https://shenailhairlounge.ca/wp-content/uploads/2024/02/Shenail-20-Off.png",
+    "source": "shenail-site",
+    "statement": "the site serves a '20% off' promo image uploaded in 2024-02; no terms, dates, or second mention appear on the fetched pages",
+    "value": "20% off"
+  },
+  "claims": [
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "recorded",
+      "kind": "card",
+      "locator": "https://shenailhairlounge.ca/wp-content/uploads/2024/02/Shenail-20-Off.png",
+      "observed_at": "2026-10-30",
+      "source": "shenail-site",
+      "statement": "the site serves a '20% off' promo image uploaded in 2024-02; no terms, dates, or second mention appear on the fetched pages",
+      "value": "20% off"
+    }
+  ],
+  "fixture": "recorded",
+  "frozen_verdict": "PARTIAL",
+  "gate": {
+    "agreements": [
+      {
+        "aspect": "state",
+        "citations": [
+          "shenail-site — https://shenailhairlounge.ca/wp-content/uploads/2024/02/Shenail-20-Off.png"
+        ],
+        "value": "20% off"
+      }
+    ],
+    "conflicts": [],
+    "unknown_aspects": [
+      "outcome",
+      "cause"
+    ],
+    "verdict": "PARTIAL"
+  },
+  "labels": {
+    "data": "RECORDED — fetched from public pages 2026-10-30",
+    "receipt": "claimcourt/cases.jsonl"
+  },
+  "lanes": {
+    "reason": "no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.",
+    "status": "NOT RUN"
+  },
+  "title": "Shenail — the standing 20% off promo",
+  "verdict": "PARTIAL"
+}

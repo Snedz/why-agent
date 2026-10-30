@@ -3,41 +3,164 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>why-agent — demo</title>
+<title>why-agent — an agent that answers why, and cites every sentence</title>
+<meta name="description" content="why-agent reconciles the claims a card, a commit, a check run, a receipt and two Nemotron reviewer models make about a work item, and cites every sentence of the answer. Runs on Nebius Token Factory.">
 <style>
   :root { color-scheme: dark; }
   body { margin:0; background:#0b0f14; color:#d7e0ea;
-         font:16px/1.5 -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif; }
-  main { max-width: 1040px; margin: 0 auto; padding: 40px 24px 64px; }
+         font:16px/1.6 -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  main { max-width:1040px; margin:0 auto; padding:40px 24px 72px; }
   h1 { font-size:30px; margin:0 0 6px; letter-spacing:-.4px; }
   h1 span { color:#7ee787; }
-  p.sub { color:#8b97a6; margin:0 0 26px; }
+  h2 { font-size:19px; margin:34px 0 10px; color:#eaf1f8; }
+  p.sub { color:#8b97a6; margin:0 0 22px; }
+  p { margin:0 0 14px; }
   video { width:100%; border:1px solid #26303c; border-radius:10px; background:#000; display:block; }
-  .row { margin-top:26px; display:flex; gap:18px; flex-wrap:wrap; }
+  .row { margin-top:18px; display:flex; gap:18px; flex-wrap:wrap; }
   a { color:#7ee787; }
-  .note { color:#6e7b8b; font-size:14px; margin-top:22px; }
+  .note { color:#6e7b8b; font-size:14px; margin-top:14px; }
   code { background:#111820; padding:2px 6px; border-radius:4px; font-size:14px; }
+  pre { background:#0e141c; border:1px solid #26303c; border-radius:10px; padding:16px 18px;
+         overflow-x:auto; font:13px/1.5 ui-monospace, Menlo, Consolas, monospace;
+         color:#cbd6e2; margin:0; }
+  table { border-collapse:collapse; width:100%; margin:6px 0 10px; font-size:15px; }
+  th, td { border:1px solid #26303c; padding:7px 10px; text-align:left; }
+  th { color:#8b97a6; font-weight:600; }
+  .pill { display:inline-block; border:1px solid #2c3a4a; border-radius:999px;
+           padding:2px 10px; font-size:13px; color:#9fb0c3; margin:0 6px 6px 0; }
+  .good { color:#7ee787; }
 </style>
 </head>
 <body>
 <main>
   <h1><span>why-agent</span> — an agent that answers why, and cites every sentence</h1>
-  <p class="sub">Open Agent Hackathon 2026 · Track 02: The Agent That Can Explain Why · Mission Winning</p>
+  <p class="sub"><b>Nebius × NVIDIA Global AI Hackathon</b> · Best Apps and Agents track ·
+     runs on Nebius Token Factory with NVIDIA Nemotron 3</p>
 
-  <video controls preload="metadata" poster="">
-    <source src="why-agent-demo.mp4" type="video/mp4">
-    Your browser cannot play this video. Download it: <a href="why-agent-demo.mp4">why-agent-demo.mp4</a>
+  <div>
+    <span class="pill">endpoint https://api.tokenfactory.nebius.com/v1/</span>
+    <span class="pill">Apache-2.0</span>
+    <span class="pill">no dependency · Python 3.10+</span>
+    <span class="pill">synthetic claims, real model runs</span>
+  </div>
+
+  <video controls preload="metadata" poster="why-agent-nebius-poster.png">
+    <source src="why-agent-nebius-demo.mp4" type="video/mp4">
+    Your browser cannot play this video. Download it: <a href="why-agent-nebius-demo.mp4">why-agent-nebius-demo.mp4</a>
   </video>
 
   <div class="row">
-    <a href="why-agent-demo.mp4">Download the video (MP4, 2:28)</a>
-    <a href="why-agent-deck.pdf">The slide deck (PDF, 13 pages)</a>
+    <a href="why-agent-nebius-demo.mp4">Download the video (MP4)</a>
+    <a href="demo_lab/">The Case Lab — every claim with its receipt</a>
     <a href="https://github.com/Snedz/why-agent">The repository</a>
+    <a href="https://github.com/Snedz/why-agent/blob/main/SUBMISSION.md">The submission packet</a>
+  </div>
+
+  <h2>What it does</h2>
+  <p>Give it a work item. It reads what the card says, what the receipt says, what the
+  commit says, what the check run said, and what two Nemotron reviewer models said —
+  and then it tells you what happened, with the citation attached to each line. When
+  the sources disagree it does not pick a winner: it shows every side, cites every side,
+  and says which source is authoritative for what.</p>
+
+  <h2>The answer it gives</h2>
+  <p class="note">This is the tool's real output, not a mock-up — the excerpt is taken
+  verbatim from <code>python3 demo.py</code> when this page is generated, so it cannot
+  drift into a nicer story than the tool tells.</p>
+  <pre class="excerpt">CASE why-alpha — the sources disagree
+------------------------------------------------------------------------------
+# Why: Ship the alpha release notes
+
+**Item:** `why-alpha`
+**Verdict:** CONFLICTED
+**Sources read:** 4
+
+The sources disagree. That is the finding.
+
+## What the sources say
+
+### outcome
+
+- **receipt** — the burn-down receipt says nothing was claimed → `not-claimed`  ·  `synthetic/notes/alpha.md — synthetic/notes/alpha.md:4`
+
+### state
+
+- **card** — the card was marked DONE → `DONE`  ·  `synthetic/cards/alpha.md — synthetic/cards/alpha.md:9`
+- **commit** — a commit merged the fix → `merged`  ·  `git — 0c4f1a9 (synthetic)`
+- **check** — the gate run is still red → `failing`  ·  `ci — synthetic://run/alpha/42`
+
+## Conflicts
+
+### state
+
+- `DONE` — the card was marked DONE  ·  `synthetic/cards/alpha.md — synthetic/cards/alpha.md:9`
+- `merged` — a commit merged the fix  ·  `git — 0c4f1a9 (synthetic)`
+- `failing` — the gate run is still red  ·  `ci — synthetic://run/alpha/42`
+
+**A single answer here would be a guess.** Each side is cited; the reader decides which source is authoritative for that aspect.
+
+## Unknowns
+
+- **cause** — no source says anything about this.
+
+These are UNKNOWN, not passes. An aspect nobody reported is a gap in the evidence, and it is recorded as one.
+
+## What to check next
+
+- Resolve the state conflict between `synthetic/cards/alpha.md — synthetic/cards/alpha.md:9`, `git — 0c4f1a9 (synthetic)`, `ci — synthetic://run/alpha/42` — one of them is out of date, and which one is a decision, not a lookup.
+- Find a source for cause: nobody reported it, so it is UNKNOWN rather than fine.
+
+&gt; A card says DONE, a commit says merged, a check says red, a receipt says nothing was claimed. Four sources, four answers. The agent does not pick one — it shows all four and says which one is authoritative for what.
+
+------------------------------------------------------------------------------</pre>
+
+  <h2>What the run measured</h2>
+  <p>An adversarial corpus of 14 planted-claim work items, with a truth file the
+  lanes never see. The deterministic reconciler is the only thing that decides; the
+  model lanes contribute claims and an advisory verdict.</p>
+  <table>
+    <tr><th>Scorer</th><th>Correct</th><th>False approvals</th></tr>
+    <tr><td><b>The deterministic reconciler (the gate that ships)</b></td>
+        <td><b class="good">14/14</b></td>
+        <td><b class="good">0</b></td></tr>
+    <tr><td>Reviewer — deep (the contested items)</td><td><code>nvidia/Nemotron-3-Ultra-550b-a55b</code></td><td><b>9/14</b></td><td>1</td></tr>
+    <tr><td>Reviewer — fast (the everyday call)</td><td><code>nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B</code></td><td><b>6/14</b></td><td>2</td></tr>
+  </table>
+  <p class="note">The lanes err in both directions — the fast lane believed a card that
+  claimed a failed deploy had shipped. That gap is the architecture, not a bug: the
+  lanes advise, the reconciler decides. Reviewer-lane cost $0.033,
+  0 retries. Reproduce it:
+  <code>python3 benchmark/score.py --eval-results benchmark/eval-benchmark-2026-10-28.json</code></p>
+
+  <h2>The models, and what each one is for</h2>
+  <table>
+    <tr><th>Lane</th><th>Model</th></tr>
+    <tr><td>Narration</td><td><code>nvidia/nemotron-3-super-120b-a12b</code></td></tr>
+    <tr><td>Reviewer — fast (the everyday call)</td><td><code>nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B</code></td></tr>
+    <tr><td>Reviewer — deep (the contested items)</td><td><code>nvidia/Nemotron-3-Ultra-550b-a55b</code></td></tr>
+    <tr><td>Vision — receipt images into claims</td><td><code>nvidia/Nemotron-3.5-Super-VL</code></td></tr>
+  </table>
+  <p class="note">Every lane output enters as a <b>claim</b>, never as a verdict,
+  because any integration can be poisoned. The model may write the prose; it may not
+  add a fact — every value a narration states is checked against the evidence, and a
+  value that is not there is reported, not removed.</p>
+
+  <h2>Run it yourself</h2>
+  <pre><code>git clone https://github.com/Snedz/why-agent &amp;&amp; cd why-agent
+python3 demo.py                                   # the cases, as a reader sees them
+python3 benchmark/score.py --eval-results benchmark/eval-benchmark-2026-10-28.json
+python3 demo_lab/flip_check.py                    # proves the model lanes change the verdict</code></pre>
+
+  <h2>Earlier build</h2>
+  <div class="row">
+    <a href="why-agent-demo.mp4">The October video (MP4, 2:28) — the Open Agent Hackathon build</a>
+    <a href="why-agent-deck.pdf">The October slide deck (PDF, 13 pages)</a>
   </div>
 
   <p class="note">Synthetic data only — no real card, customer or identifier. The
   reconciliation is deterministic Python; the model writes the prose and is checked
-  against the evidence. Run it yourself: <code>python3 demo.py</code>.</p>
+  against the evidence. The model runs were real: 14 items, 51 claim rows,
+  recorded 2026-10-28.</p>
 </main>
 </body>
 </html>

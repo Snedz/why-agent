@@ -1,0 +1,66 @@
+{
+  "case_id": "cc-syn-salon-price-drift",
+  "claim": {
+    "locator": "fixture:site/price-list",
+    "source": "site price list (synthetic fixture)",
+    "statement": "the salon's site price list shows a shellac manicure at $35",
+    "value": "Shellac manicure $35"
+  },
+  "claims": [
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "synthetic",
+      "kind": "card",
+      "locator": "fixture:site/price-list",
+      "observed_at": "2026-10-30",
+      "source": "site price list (synthetic fixture)",
+      "statement": "the salon's site price list shows a shellac manicure at $35",
+      "value": "Shellac manicure $35"
+    },
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "synthetic",
+      "kind": "web",
+      "locator": "fixture:web/booking",
+      "observed_at": "2026-10-30",
+      "source": "booking page (synthetic fixture)",
+      "statement": "the booking page charges $45 for the same shellac manicure",
+      "value": "Shellac manicure $45"
+    }
+  ],
+  "fixture": "synthetic",
+  "frozen_verdict": "CONFLICTED",
+  "gate": {
+    "agreements": [],
+    "conflicts": [
+      {
+        "aspect": "state",
+        "citations": [
+          "site price list (synthetic fixture) — fixture:site/price-list",
+          "booking page (synthetic fixture) — fixture:web/booking"
+        ],
+        "values": [
+          "Shellac manicure $35",
+          "Shellac manicure $45"
+        ]
+      }
+    ],
+    "unknown_aspects": [
+      "outcome",
+      "cause"
+    ],
+    "verdict": "CONFLICTED"
+  },
+  "labels": {
+    "data": "SYNTHETIC — planted fixture, labelled as such",
+    "receipt": "claimcourt/cases.jsonl"
+  },
+  "lanes": {
+    "reason": "no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.",
+    "status": "NOT RUN"
+  },
+  "title": "SYNTHETIC FIXTURE — price list vs booking price",
+  "verdict": "CONFLICTED"
+}

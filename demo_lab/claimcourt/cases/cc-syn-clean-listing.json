@@ -1,0 +1,96 @@
+{
+  "case_id": "cc-syn-clean-listing",
+  "claim": {
+    "locator": "fixture:listing/board",
+    "source": "listing (synthetic fixture)",
+    "statement": "the listing describes a solid walnut serving board with a food-safe oil finish",
+    "value": "solid walnut, food-safe oil finish"
+  },
+  "claims": [
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "synthetic",
+      "kind": "card",
+      "locator": "fixture:listing/board",
+      "observed_at": "2026-10-30",
+      "source": "listing (synthetic fixture)",
+      "statement": "the listing describes a solid walnut serving board with a food-safe oil finish",
+      "value": "solid walnut, food-safe oil finish"
+    },
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "synthetic",
+      "kind": "verdict",
+      "locator": "fixture:photo/board",
+      "observed_at": "2026-10-30",
+      "source": "nemotron-vl photo read (synthetic fixture)",
+      "statement": "the vision lane's read of the product photo reports solid walnut grain and an oil finish, no veneer seam",
+      "value": "solid walnut, food-safe oil finish"
+    },
+    {
+      "aspect": "outcome",
+      "effective_aspect": "outcome",
+      "fixture": "synthetic",
+      "kind": "receipt",
+      "locator": "fixture:invoice/board",
+      "observed_at": "2026-10-30",
+      "source": "supplier invoice (synthetic fixture)",
+      "statement": "the supplier invoice for the board lists solid walnut and a food-safe oil finish",
+      "value": "solid walnut, food-safe oil finish"
+    },
+    {
+      "aspect": "cause",
+      "effective_aspect": "cause",
+      "fixture": "synthetic",
+      "kind": "verdict",
+      "locator": "fixture:audit/board",
+      "observed_at": "2026-10-30",
+      "source": "audit note (synthetic fixture)",
+      "statement": "the audit note records that the supplier invoice matches the listing's stated materials",
+      "value": "supplier invoice matches the listing's stated materials"
+    }
+  ],
+  "fixture": "synthetic",
+  "frozen_verdict": "CORROBORATED",
+  "gate": {
+    "agreements": [
+      {
+        "aspect": "cause",
+        "citations": [
+          "audit note (synthetic fixture) — fixture:audit/board"
+        ],
+        "value": "supplier invoice matches the listing's stated materials"
+      },
+      {
+        "aspect": "outcome",
+        "citations": [
+          "supplier invoice (synthetic fixture) — fixture:invoice/board"
+        ],
+        "value": "solid walnut, food-safe oil finish"
+      },
+      {
+        "aspect": "state",
+        "citations": [
+          "listing (synthetic fixture) — fixture:listing/board",
+          "nemotron-vl photo read (synthetic fixture) — fixture:photo/board"
+        ],
+        "value": "solid walnut, food-safe oil finish"
+      }
+    ],
+    "conflicts": [],
+    "unknown_aspects": [],
+    "verdict": "CORROBORATED"
+  },
+  "labels": {
+    "data": "SYNTHETIC — planted fixture, labelled as such",
+    "receipt": "claimcourt/cases.jsonl"
+  },
+  "lanes": {
+    "reason": "no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.",
+    "status": "NOT RUN"
+  },
+  "title": "SYNTHETIC FIXTURE — the clean listing",
+  "verdict": "CORROBORATED"
+}

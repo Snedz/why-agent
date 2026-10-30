@@ -1,0 +1,66 @@
+{
+  "case_id": "cc-syn-shipping-promise",
+  "claim": {
+    "locator": "fixture:listing/shipping",
+    "source": "listing (synthetic fixture)",
+    "statement": "the listing promises dispatch in 1-2 business days",
+    "value": "ships in 1-2 business days"
+  },
+  "claims": [
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "synthetic",
+      "kind": "card",
+      "locator": "fixture:listing/shipping",
+      "observed_at": "2026-10-30",
+      "source": "listing (synthetic fixture)",
+      "statement": "the listing promises dispatch in 1-2 business days",
+      "value": "ships in 1-2 business days"
+    },
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "synthetic",
+      "kind": "web",
+      "locator": "fixture:policy/shipping",
+      "observed_at": "2026-10-30",
+      "source": "shop policy page (synthetic fixture)",
+      "statement": "the same shop's policy page says items are made to order and ship in 7-10 business days",
+      "value": "made to order: ships in 7-10 business days"
+    }
+  ],
+  "fixture": "synthetic",
+  "frozen_verdict": "CONFLICTED",
+  "gate": {
+    "agreements": [],
+    "conflicts": [
+      {
+        "aspect": "state",
+        "citations": [
+          "listing (synthetic fixture) — fixture:listing/shipping",
+          "shop policy page (synthetic fixture) — fixture:policy/shipping"
+        ],
+        "values": [
+          "made to order: ships in 7-10 business days",
+          "ships in 1-2 business days"
+        ]
+      }
+    ],
+    "unknown_aspects": [
+      "outcome",
+      "cause"
+    ],
+    "verdict": "CONFLICTED"
+  },
+  "labels": {
+    "data": "SYNTHETIC — planted fixture, labelled as such",
+    "receipt": "claimcourt/cases.jsonl"
+  },
+  "lanes": {
+    "reason": "no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.",
+    "status": "NOT RUN"
+  },
+  "title": "SYNTHETIC FIXTURE — shipping promise vs policy",
+  "verdict": "CONFLICTED"
+}

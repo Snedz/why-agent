@@ -1,0 +1,66 @@
+{
+  "case_id": "cc-syn-was-price",
+  "claim": {
+    "locator": "fixture:listing/was-price",
+    "source": "listing (synthetic fixture)",
+    "statement": "the listing advertises a was/now discount: was $80, now $40",
+    "value": "was $80, now $40"
+  },
+  "claims": [
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "synthetic",
+      "kind": "card",
+      "locator": "fixture:listing/was-price",
+      "observed_at": "2026-10-30",
+      "source": "listing (synthetic fixture)",
+      "statement": "the listing advertises a was/now discount: was $80, now $40",
+      "value": "was $80, now $40"
+    },
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "synthetic",
+      "kind": "receipt",
+      "locator": "fixture:history/price",
+      "observed_at": "2026-10-30",
+      "source": "price history (synthetic fixture)",
+      "statement": "the price record shows the item listed at $40 for the last 90 days, with no $80 price in the record",
+      "value": "price recorded as $40 for the last 90 days; no $80 price recorded"
+    }
+  ],
+  "fixture": "synthetic",
+  "frozen_verdict": "CONFLICTED",
+  "gate": {
+    "agreements": [],
+    "conflicts": [
+      {
+        "aspect": "state",
+        "citations": [
+          "listing (synthetic fixture) — fixture:listing/was-price",
+          "price history (synthetic fixture) — fixture:history/price"
+        ],
+        "values": [
+          "price recorded as $40 for the last 90 days; no $80 price recorded",
+          "was $80, now $40"
+        ]
+      }
+    ],
+    "unknown_aspects": [
+      "outcome",
+      "cause"
+    ],
+    "verdict": "CONFLICTED"
+  },
+  "labels": {
+    "data": "SYNTHETIC — planted fixture, labelled as such",
+    "receipt": "claimcourt/cases.jsonl"
+  },
+  "lanes": {
+    "reason": "no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.",
+    "status": "NOT RUN"
+  },
+  "title": "SYNTHETIC FIXTURE — 'was $80' sale price",
+  "verdict": "CONFLICTED"
+}

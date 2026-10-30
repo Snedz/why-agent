@@ -1,0 +1,51 @@
+{
+  "case_id": "cc-shenail-founded",
+  "claim": {
+    "locator": "https://shenailhairlounge.ca/hair/",
+    "source": "shenail-site",
+    "statement": "the site's hair page says 'Shenail Hair Lounge started as a home based nail and spa business in 2007'",
+    "value": "2007"
+  },
+  "claims": [
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "recorded",
+      "kind": "card",
+      "locator": "https://shenailhairlounge.ca/hair/",
+      "observed_at": "2026-10-30",
+      "source": "shenail-site",
+      "statement": "the site's hair page says 'Shenail Hair Lounge started as a home based nail and spa business in 2007'",
+      "value": "2007"
+    }
+  ],
+  "fixture": "recorded",
+  "frozen_verdict": "PARTIAL",
+  "gate": {
+    "agreements": [
+      {
+        "aspect": "state",
+        "citations": [
+          "shenail-site — https://shenailhairlounge.ca/hair/"
+        ],
+        "value": "2007"
+      }
+    ],
+    "conflicts": [],
+    "unknown_aspects": [
+      "outcome",
+      "cause"
+    ],
+    "verdict": "PARTIAL"
+  },
+  "labels": {
+    "data": "RECORDED — fetched from public pages 2026-10-30",
+    "receipt": "claimcourt/cases.jsonl"
+  },
+  "lanes": {
+    "reason": "no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.",
+    "status": "NOT RUN"
+  },
+  "title": "Shenail — founded 2007",
+  "verdict": "PARTIAL"
+}
