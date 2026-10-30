@@ -204,7 +204,15 @@ def main() -> int:
             send(render_frame([], cmdtext[:max(1, int(len(cmdtext) * frac))], True, caption, True))
         for count in range(1, len(body) + 1):
             for _ in range(max(1, int(hold_per_line * FPS))):
-                send(render_frame(body[:count], cmdtext, True, caption, False))
+                shot = render_frame(body[:count], cmdtext, True, caption, False)
+                send(shot)
+                # The poster is a frame of THIS video, so it can never show a
+                # screen the video does not show.
+                poster = seg.get("poster")
+                if (poster and count == poster.get("after_lines")
+                        and not poster.get("written")):
+                    shot.save(poster["path"])
+                    poster["written"] = True
         hold(seg.get("rest", 1.5), lambda: render_frame(body, cmdtext, True, caption, False))
 
     proc.stdin.close()

@@ -18,6 +18,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 SPEC = HERE / "_capture" / "spec.json"
 DEFAULT_OUT = ROOT / "why-agent-nebius-demo.mp4"
+POSTER_NAME = "why-agent-nebius-poster.png"
 
 
 def main() -> int:
@@ -28,6 +29,11 @@ def main() -> int:
     proc = subprocess.run([sys.executable, str(HERE / "term_video.py"), str(SPEC), str(out)])
     if proc.returncode:
         return proc.returncode
+    poster = HERE / "_capture" / "poster.png"
+    if poster.exists():
+        target = ROOT / POSTER_NAME
+        target.write_bytes(poster.read_bytes())
+        print(f"  poster: {target.name} ({target.stat().st_size} bytes)")
     length = probe(out)
     if length is None:
         return 0

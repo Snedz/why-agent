@@ -163,6 +163,13 @@ def main() -> int:
     (OUT / "lanes.txt").write_text(lanes)
     print("lanes:", "shown")
 
+    # 3c. the MCP surface — the tests read as the product's claims
+    mcp = run([PY, "-m", "pytest", "test_mcp_server.py", "-v", "-k",
+               "no_model or reads_back_conflicted or carries_its_citation or "
+               "disagreeing_with_each_other or verdict_shaped_submission_is_refused"])
+    (OUT / "mcp.txt").write_text(mcp)
+    print("mcp:", "shown")
+
     # 4. the flip check
     flip = run([PY, "demo_lab/flip_check.py"])
     (OUT / "flip.txt").write_text(flip)
@@ -203,7 +210,10 @@ def main() -> int:
          "file": str(OUT / "demo.txt"),
          "ranges": case_range(lines, 0),
          "caption": "four sources, four answers — no winner picked",
-         "hold": 0.42, "rest": 2.4},
+         "hold": 0.42, "rest": 2.4,
+         # The poster is this frame of this video: the case, its verdict and
+         # its sources. It is written by the renderer, so it cannot drift.
+         "poster": {"after_lines": 27, "path": str(OUT / "poster.png")}},
         {"kind": "cmd", "cmd": receipt_cmd,
          "file": str(OUT / "receipt.txt"),
          "ranges": [[1, 30]],
@@ -231,6 +241,12 @@ def main() -> int:
          "ranges": [[1, 14]],
          "caption": "remove a lane row and the verdict changes — proved, not asserted",
          "hold": 0.36, "rest": 2.8},
+        {"kind": "cmd", "cmd": "$ python3 -m pytest test_mcp_server.py -v -k ...",
+         "file": str(OUT / "mcp.txt"),
+         "ranges": [[7, 13]],
+         "caption": "the same agent over MCP: a client can ask it for a verdict, and a "
+                    "verdict-shaped submission is refused at the boundary",
+         "hold": 0.40, "rest": 2.6},
     ]
 
     if landing:

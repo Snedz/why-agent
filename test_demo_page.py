@@ -106,6 +106,11 @@ class PageTests(unittest.TestCase):
     def test_the_page_says_the_claims_are_synthetic(self):
         self.assertIn("Synthetic data only", self.page)
 
+    def test_the_poster_the_page_points_at_exists(self):
+        poster = demo_page.PAGE.parent / "why-agent-nebius-poster.png"
+        self.assertTrue(poster.exists(), f"{poster.name} is missing")
+        self.assertIn(f'poster="{poster.name}"', self.page)
+
     def test_the_page_makes_no_network_request(self):
         self.assertNotIn("<script", self.page)
         self.assertNotIn('src="http', self.page)

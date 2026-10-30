@@ -16,8 +16,13 @@ from a real tool run:
 | `python3 demo_video/lane_scores.py` | the lanes beside it: 9/14 and 6/14, with the items each one falsely approved |
 | `python3 demo_video/narration_check.py` | the recorded narration checks, and the checker running on two fixtures |
 | `python3 demo_lab/flip_check.py` | the two cases that demonstrably change verdict when their lane rows are removed |
+| the MCP surface | the same agent over MCP — a client can ask it for a verdict, and a verdict-shaped submission is refused at the boundary |
 | the landing page | the URL a judge opens: the endpoint, the measured scores and the model ids |
 | the Case Lab | the published page, at the lane-dependent case, with model ids and costs |
+
+The landing page's video player uses `why-agent-nebius-poster.png` as its
+poster. **That poster is a frame of this video** — the renderer writes it while
+it paints, so it cannot show a screen the video does not show.
 
 ## Re-render it
 
