@@ -1,0 +1,50 @@
+{
+  "query": "Nebius Token Factory Nemotron 3 Ultra model",
+  "follow_up_questions": null,
+  "answer": null,
+  "images": [],
+  "results": [
+    {
+      "url": "https://www.linkedin.com/posts/nebius_nemotron-3-ultra-is-live-on-nebius-token-activity-7468293005343588353-vyJ5",
+      "title": "Nemotron 3 Ultra is live on Nebius Token Factory. ...",
+      "content": "Nemotron 3 Ultra is live on Nebius Token Factory. This is a clear signal for where open models are headed: long-running agents that can",
+      "score": 0.8358192,
+      "raw_content": null,
+      "id": "d5a646-00"
+    },
+    {
+      "url": "https://mastra.ai/models/providers/nebius",
+      "title": "Nebius Token Factory Models: IDs, Pricing & Usage | Mastra Docs",
+      "content": "| `nebius/nvidia/Nemotron-3-Ultra-550b-a55b` | 1.0M | $1 | $3 |\n| `nebius/openai/gpt-oss-120b` | 131K | $0.15 | $0.60 |\n| `nebius/Qwen/Qwen3-235B-A22B-Instruct-2507` | 262K | $0.20 | $0.60 |\n| `nebius/Qwen/Qwen3-30B-A3B-Instruct-2507` | 262K | $0.10 | $0.30 |\n| `nebius/Qwen/Qwen3-Embedding-8B` | 41K | $0.01 | \u2014 |\n| `nebius/Qwen/Qwen3.5-397B-A17B` | 262K | $0.60 | $4 |\n| `nebius/Qwen/Qwen3.8-27B` | 262K | $0.45 | $3 |\n| `nebius/zai-org/GLM-5.2` | 1.0M | $1 | $4 |\n| `nebius/zai-org/GLM-5.3` | 1.0M | $1 | $4 |\n| `nebius/zai-org/GLM-5.3-Flash` | 1.0M | $0.15 | $0.50 |\n21 available models [...] | Model | Context | Tools | Reasoning | Image | Audio | Video | Input $/1M | Output $/1M |\n ---  ---  ---  --- \n| `nebius/deepseek-ai/DeepSeek-V4-Flash-0731` | 1.0M | $0.14 | $0.28 |\n| `nebius/deepseek-ai/DeepSeek-V4-Pro` | 1.0M | $2 | $4 |\n| `nebius/deepseek-ai/DeepSeek-V4-Pro-0813` | 979K | $1 | $4 |\n| `nebius/deepseek-ai/DeepSeek-V4.1-Flash` | 1.0M | $0.30 | $1 |\n| `nebius/google/gemma-3-27b-it` | 110K | $0.10 | $0.30 |\n| `nebius/MiniMaxAI/MiniMax-M3` | 1.0M | $0.30 | $1 |\n| `nebius/moonshotai/Kimi-K2.7-Code` | 262K | $0.95 | $4 |\n| `nebius/moonshotai/Kimi-K3` | 1.0M | $3 | $15 |\n| `nebius/NousResearch/Hermes-4-405B` | 131K | $1 | $3 |\n| `nebius/nvidia/Nemotron-3_5-Lightning` | 1.0M | $0.06 | $0.24 |\n| `nebius/nvidia/nemotron-3-super-120b-a12b` | 262K | $0.30 | $0.90 |",
+      "score": 0.8351749,
+      "raw_content": null,
+      "id": "dfc2b2-01"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=E3fM8Z58c4Y",
+      "title": "Nemotron 3 Ultra eval speedrun: OpenRouter vs Nebius Token Factory",
+      "content": "[3:06] between 15 and 20 seconds. Whereas the vanilla model is at 85 seconds and oh my goodness. Wow. 9 minutes 25 seconds.\n[3:15] Nebus token factory with Neotron 3 Ultra is finished with FBench and the vanilla\n[3:21] model is still at about 15% done. We're going to scoot ahead to see\n[3:30] where the vanilla model ended up. We're at an hour and 16 minutes of time.\n[3:38] with about five with about half a million more tokens. That is crazy. There you have it.\n[3:46] Neatron 3 Ultra on Nebus Token Factory done in 9 minutes while the vanilla model took over an hour. If you'd like to experience the speed yourself, head\n[3:55] on over to dev.nebius.com/builder to sign up for all these free credits. [...] [0:40] bag of free credits. Joining us in the builder program are friends over at Nvidia. They released a baller model\n[0:47] this summer called Neimotron 3 Ultra. It was released with open weights and a permissive license. It sports a million\n[0:54] token context window and as of this recording, it's one of the most capable models in the world. This model rocks and we made it available day zero on\n[1:03] Nebia's token factory, our optimize manage inference platform. To demonstrate what is possible combining NVIDIA's model and the Nebus token\n[1:11] factory inference stack, we thought we'd have a spirited little sprint time for an ifbench speedun. Ifbbench is a [...] [2:07] and away we go. Ifbbench speedrun like we're getting the first few samples\n[2:15] done. We're going to speed this up because there are 300 samples in the ifbench eval. Looks like we're\n[2:23] pushing 180 tokens per second on Nebia's token factory whereas the vanilla model\n[2:29] Neotron 3 ultra is doing about 25 tokens per second so far on the ifbench eval.\n[2:40] Nibby's token factory is running on a customized inference stack for each model with a speculative decoder, KV\n[2:48] cache optimizations, custom CUDA kernels, and a whole bunch of other performance upgrades\n[2:55] to make these models cook. We're pushing well over 200 tokens per second on Nvidia's Neotron 3 Ultra with a latency",
+      "score": 0.8232293,
+      "raw_content": null,
+      "id": "7d807d-02"
+    },
+    {
+      "url": "https://developer.nvidia.com/blog/nvidia-nemotron-3-ultra-powers-faster-more-efficient-reasoning-for-long-running-agents",
+      "title": "NVIDIA Nemotron 3 Ultra Powers Faster, More Efficient Reasoning for Long-Running Agents | NVIDIA Technical Blog",
+      "content": "NVIDIA Nemotron 3 Ultra is a 550B-parameter Mixture-of-Experts model with 55B active parameters built for frontier reasoning and orchestration in long-running agentic systems.\n The model achieves 5x higher throughput than comparable open models while delivering leading accuracy on benchmarks such as PinchBench, EnterpriseOps-Gym, Terminal-Bench 2.0, IFBench, GDPVal-AA, ProfBench, and Ruler at 1M context length.\n Nemotron 3 Ultra lowers the cost to task completion by up to 30% by using fewer total tokens and fewer tokens per turn on SWE-bench and Terminal-Bench 2.0. [...] ## Nemotron 3 Ultra for agent orchestration\n\nNemotron 3 Ultra is a 550B-parameter Mixture-of-Experts model with 55B active parameters, built for frontier reasoning and orchestration in agentic systems.\n\nWithin any agent workflow, most calls are routine, but a critical subset demands deeper reasoning. Nemotron 3 Ultra is built to handle these hard calls: sustaining architectural decisions across coding sessions, synthesizing contradictory evidence across hundreds of research sources, or verifying chip designs across thousands of constraints. [...] However, these multi-agent workflows cause token counts to grow quickly. Agents plan, call tools, invoke sub-agents, receive information, and then pass history, outputs, and reasoning steps back into the model continuously. As tasks run longer, this constant communication increases costs and the risk of goal drift.\n\nDevelopers can solve this using a system of models: frontier reasoning models for orchestration and complex planning, and efficient models for high-volume execution, validation, and tool calling.\n\nNVIDIA is releasing NVIDIA Nemotron 3 Ultra, an open model built to help long-running agents complete tasks faster while lowering cost.\n\n## Nemotron 3 Ultra for agent orchestration",
+      "score": 0.8033131,
+      "raw_content": null,
+      "id": "4d9616-03"
+    },
+    {
+      "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+      "title": "Nebius Group N.V. - current report (6-K) for fiscal year 2026",
+      "content": "of magnitude. Model performance. Day-one support for the most advanced models like Kimi K3, GLM-5.2, MiniMax 3 and NVIDIA Nemotron 3 Ultra. \u2022 Nebius delivers both accuracy and speed, validated by inde-pendent benchmarks. \u2022 In the most recent Endpoint Accuracy Index from Artificial Analysis, Nebius achieved full accuracy parity on GLM-5.2 while delivering among the fastest output speeds of any provider. The benchmark measures how much of a model\u2019s accuracy each inference provider preserves. \u2022 The Eigen AI and Clarifai integrations deepened our model optimization, inference systems, and deployment capabilities. Agentic infrastructure. Q2 was Tavily\u2019s first full quarter with-in Nebius, pairing Token Factory\u2019s inference with the real-time web access that agents need for factual accuracy \u2014 [...] this quarter New open-weight models in Token Factory: Kimi K3 GLM 5.2 Nemotron Ultra Open ecosystem Demand, proven in signed contracts Financial highlights First asset-backed financing at attractive terms (SOFR + 2.50%) ~$775M secured in July Q2 Nebius group revenue Up 454% YoY to $582M Nebius AI cloud adjusted EBITDA margin 50% Q4\u20192025 Q1\u20192026 Q2\u20192026 45% 24% Strong cash position ending Q2 Including $2.3 billion in positive operating cash flow $8B cash Repeatable framework 2026 FY guidance reiterated quarter over quarter for deals closed in Q2 4x for deals closed in Q2 \u0421apacity coming online through 2027 All numbers are approximate ACV per MW is stepping up(1) Q2 deals >$20M Q3 short-term capacity deals >$40M 2026 base $12M (2)(3) Total contract value grew Payback period 1 year 10 months",
+      "score": 0.78963995,
+      "raw_content": null,
+      "id": "8d8b3b-04"
+    }
+  ],
+  "response_time": 2.48,
+  "request_id": "57a02159-151e-4c01-8ead-d2ea236d31b8"
+}

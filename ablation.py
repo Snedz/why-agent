@@ -85,7 +85,8 @@ def ablate(items: dict[str, Item], claims: list[Evidence]) -> dict[str, Any]:
     }
 
 
-def fetch_web_rows(spec_path: str, retrieved_at: str) -> list[Evidence]:
+def fetch_web_rows(spec_path: str, retrieved_at: str, *,
+                   normalize_matches: bool = False) -> list[Evidence]:
     """Run the Tavily lane for each claims-spec entry. Live mode only."""
     import tavily_lane  # deferred: offline mode must not require the lane
 
@@ -95,7 +96,8 @@ def fetch_web_rows(spec_path: str, retrieved_at: str) -> list[Evidence]:
     for entry in spec:
         results = tavily_lane.search_claims(entry["query"])
         rows.extend(tavily_lane.results_to_evidence(
-            entry["item"], results, entry["claim"], retrieved_at))
+            entry["item"], results, entry["claim"], retrieved_at,
+            normalize_matches=normalize_matches))
     return rows
 
 
@@ -108,6 +110,9 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--claims", help="claims spec JSON for --fetch")
     ap.add_argument("--fetch", action="store_true",
                     help="fetch web rows live before ablating (needs TAVILY_API_KEY)")
+    ap.add_argument("--normalize", action="store_true",
+                    help="with --fetch, let the lane also credit normalized "
+                         "matches (labelled per row; default is verbatim only)")
     ap.add_argument("--out", help="write the JSON report here")
     args = ap.parse_args(argv)
 
@@ -121,7 +126,8 @@ def main(argv: list[str] | None = None) -> int:
         retrieved_at = datetime.datetime.now(datetime.timezone.utc).strftime(
             "%Y-%m-%dT%H:%M:%SZ")
         try:
-            web_rows = fetch_web_rows(args.claims, retrieved_at)
+            web_rows = fetch_web_rows(args.claims, retrieved_at,
+                                      normalize_matches=args.normalize)
         except Exception as exc:  # the lane's errors are RuntimeErrors
             print(f"FAIL: {exc}", file=sys.stderr)
             return 1

@@ -65,6 +65,13 @@ class Evidence:
     value: str
     observed_at: str = ""
     aspect: str = ""
+    # How the row's value was matched against its source, when the source
+    # is a page and matching is the lane's job: "verbatim",
+    # "normalized:<rule>", or "none" (see normalize.py). Empty for rows
+    # whose sources state their values directly. The label is metadata
+    # about evidence strength; reconciliation never reads it — a verdict
+    # is computed from values, exactly as before.
+    match_method: str = ""
 
     @property
     def aspect_name(self) -> str:
@@ -163,6 +170,7 @@ def load_evidence(path: str) -> list[Evidence]:
                 value=row.get("value", ""),
                 observed_at=row.get("observed_at", ""),
                 aspect=row.get("aspect", ""),
+                match_method=row.get("match_method", ""),
             ))
     return rows
 
@@ -262,6 +270,7 @@ def evidence_from_rows(rows: Iterable[dict[str, Any]]) -> list[Evidence]:
             value=str(row.get("value", "") or ""),
             observed_at=str(row.get("observed_at", "") or ""),
             aspect=str(row.get("aspect", "") or ""),
+            match_method=str(row.get("match_method", "") or ""),
         ))
     return claims
 

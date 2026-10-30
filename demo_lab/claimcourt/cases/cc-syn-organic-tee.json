@@ -1,0 +1,66 @@
+{
+  "case_id": "cc-syn-organic-tee",
+  "claim": {
+    "locator": "fixture:listing/tee",
+    "source": "listing (synthetic fixture)",
+    "statement": "the listing claims the shirt is 100% organic cotton",
+    "value": "100% organic cotton"
+  },
+  "claims": [
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "synthetic",
+      "kind": "card",
+      "locator": "fixture:listing/tee",
+      "observed_at": "2026-10-30",
+      "source": "listing (synthetic fixture)",
+      "statement": "the listing claims the shirt is 100% organic cotton",
+      "value": "100% organic cotton"
+    },
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "synthetic",
+      "kind": "verdict",
+      "locator": "fixture:photo/tee-label",
+      "observed_at": "2026-10-30",
+      "source": "nemotron-vl label read (synthetic fixture)",
+      "statement": "the vision lane's read of the sewn-in label reports a cotton-polyester blend",
+      "value": "60% cotton / 40% polyester"
+    }
+  ],
+  "fixture": "synthetic",
+  "frozen_verdict": "CONFLICTED",
+  "gate": {
+    "agreements": [],
+    "conflicts": [
+      {
+        "aspect": "state",
+        "citations": [
+          "listing (synthetic fixture) — fixture:listing/tee",
+          "nemotron-vl label read (synthetic fixture) — fixture:photo/tee-label"
+        ],
+        "values": [
+          "100% organic cotton",
+          "60% cotton / 40% polyester"
+        ]
+      }
+    ],
+    "unknown_aspects": [
+      "outcome",
+      "cause"
+    ],
+    "verdict": "CONFLICTED"
+  },
+  "labels": {
+    "data": "SYNTHETIC — planted fixture, labelled as such",
+    "receipt": "claimcourt/cases.jsonl"
+  },
+  "lanes": {
+    "reason": "no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.",
+    "status": "NOT RUN"
+  },
+  "title": "SYNTHETIC FIXTURE — 'organic cotton' tee",
+  "verdict": "CONFLICTED"
+}

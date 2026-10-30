@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claim Court — every commerce claim, checked against its evidence</title>
+<style>
+body { font-family: ui-monospace, Menlo, monospace; margin: 2rem auto; max-width: 980px; padding: 0 1rem; line-height: 1.5; color: #1a1a1a; }
+h1 { font-size: 1.5rem; } h2.sec { margin-top: 2.5rem; border-top: 2px solid #1a1a1a; padding-top: 1rem; }
+.case { border: 1px solid #ccc; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.25rem 0; }
+table { border-collapse: collapse; width: 100%; font-size: .82rem; } th, td { border: 1px solid #ddd; padding: .35rem .5rem; text-align: left; vertical-align: top; }
+.chip { display: inline-block; padding: 0 .5rem; border-radius: 999px; font-weight: 700; font-size: .8rem; }
+.chip.CORROBORATED { background: #d9f2d9; color: #14532d; } .chip.PARTIAL { background: #fdf0d5; color: #7a4d00; }
+.chip.CONFLICTED { background: #fbdede; color: #8b0000; } .chip.NO { background: #e8e8e8; color: #444; }
+.badge { display: inline-block; padding: 0 .5rem; border: 1px solid #888; border-radius: 4px; font-size: .75rem; }
+.badge.synthetic { border-color: #8b5cf6; color: #5b21b6; } .badge.recorded { border-color: #0e7490; color: #155e75; }
+.note { color: #333; } .labels { background: #f5f5f0; padding: .75rem 1rem; border-radius: 6px; font-size: .9rem; }
+.filters button { font: inherit; font-size: .82rem; margin: 0 .25rem .5rem 0; padding: .25rem .6rem; border: 1px solid #888; border-radius: 999px; background: #fff; cursor: pointer; }
+.filters button[aria-pressed="true"] { background: #1a1a1a; color: #fff; }
+.flip { background: #eef4ff; border-left: 3px solid #4477aa; padding: .5rem .75rem; font-size: .85rem; margin: .5rem 0; }
+.warn { background: #fff7e6; border-left: 3px solid #d97706; padding: .5rem .75rem; font-size: .85rem; margin: .5rem 0; }
+code { background: #f0f0f0; padding: 0 .25rem; } details { margin-top: .5rem; } summary { cursor: pointer; font-size: .88rem; }
+</style></head><body>
+<h1>Claim Court</h1>
+<p><b>Every commerce claim, checked against its evidence.</b> The claims below are the ones a
+customer actually reads — a salon's hours and phone number, a listing's materials, a sale
+price. Each is treated the way why-agent treats a work item: sources make claims, one
+deterministic reconciler groups them by aspect and returns <b>CORROBORATED</b>,
+<b>PARTIAL</b>, <b>CONFLICTED</b>, or <b>NO EVIDENCE</b>. Model lanes advise; the gate decides.
+Tonight's sitting: <b>18 claims — 12 CONFLICTED,
+5 PARTIAL, 1 CORROBORATED</b>
+(computed by the reconciler from the rows on this page, not arranged).</p>
+<div class="labels"><b>Labels, honestly:</b> 7 cases are <b>RECORDED</b> — fetched
+2026-10-30 from the public pages of our own pilot business (Shenail Hair Salon &amp; Nail Bar,
+Niagara Falls) and the directories that list it; their conflicts are real. 11 cases are
+<b>SYNTHETIC FIXTURES</b>, labelled in every title, modelled on real listing patterns; no
+fixture names a real third-party seller. The gate verdicts are deterministic and were
+computed tonight. <b>Reviewer lanes have NOT run over the commerce corpus yet</b> (no
+provider key on the build machine — see RUN_PACK.md), and the Nemotron Court's rebuttal round
+below is likewise NOT RUN. The page does not quote a lane verdict that does not exist.</div>
+
+<h2 class="sec">1 · The claims</h2>
+<div class="filters" role="group" aria-label="Filter cases">
+<button data-filter="all" aria-pressed="true">All 18</button>
+<button data-filter="recorded" aria-pressed="false">Recorded (real) 7</button>
+<button data-filter="synthetic" aria-pressed="false">Synthetic fixtures 11</button>
+<button data-filter="CONFLICTED" aria-pressed="false">CONFLICTED 12</button>
+<button data-filter="PARTIAL" aria-pressed="false">PARTIAL 5</button>
+<button data-filter="CORROBORATED" aria-pressed="false">CORROBORATED 1</button>
+</div>
+<p class="note" id="showing">Showing 18 of 18 cases.</p>
+<section class="case cc-case" data-fixture="recorded" data-verdict="PARTIAL" id="cc-shenail-address">
+<h3>Shenail — published address — <span class="chip PARTIAL">PARTIAL</span> <span class="badge recorded">RECORDED</span></h3>
+<p class="note"><b>The claim:</b> the salon&#x27;s own site publishes this address — <code>8043 Lundy&#x27;s Lane, Niagara Falls, ON L2H 1H3</code> (<code>https://shenailhairlounge.ca/ (Location)</code>)</p>
+<p class="note">Aspects nobody spoke to: <b>cause</b> — an unknown is not a pass, so this cannot read CORROBORATED.</p>
+<details><summary>Evidence rows (each carries its receipt)</summary>
+<table><tr><th>Source</th><th>Aspect</th><th>Statement</th><th>Value</th><th>Receipt</th></tr>
+<tr><td>shenail-site</td><td>state</td><td>the salon&#x27;s own site publishes this address</td><td><code>8043 Lundy&#x27;s Lane, Niagara Falls, ON L2H 1H3</code></td><td>https://shenailhairlounge.ca/ (Location)</td></tr>
+<tr><td>google-listing</td><td>state</td><td>the Google listing shows the same address</td><td><code>8043 Lundy&#x27;s Lane, Niagara Falls, ON L2H 1H3</code></td><td>Google places record 942693713797309, read 2026-10-30</td></tr>
+<tr><td>yellowpages-directory</td><td>state</td><td>the Yellow Pages directory shows the same address</td><td><code>8043 Lundy&#x27;s Lane, Niagara Falls, ON L2H 1H3</code></td><td>https://www.yellowpages.ca/bus/Ontario/Niagara-Falls/Shenail-Hair-Lounge/6656388.html</td></tr>
+<tr><td>fresha-listing</td><td>outcome</td><td>the Fresha booking listing is for the same address</td><td><code>8043 Lundy&#x27;s Lane, Niagara Falls, ON L2H 1H3</code></td><td>https://www.fresha.com/a/she-nail-hair-lounge-niagara-falls-8043-lundys-lane-dccczyh5</td></tr>
+</table></details>
+<p class="note">Reviewer lanes over this corpus: <b>NOT RUN</b> — no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.</p>
+</section>
+<section class="case cc-case" data-fixture="recorded" data-verdict="PARTIAL" id="cc-shenail-founded">
+<h3>Shenail — founded 2007 — <span class="chip PARTIAL">PARTIAL</span> <span class="badge recorded">RECORDED</span></h3>
+<p class="note"><b>The claim:</b> the site&#x27;s hair page says &#x27;Shenail Hair Lounge started as a home based nail and spa business in 2007&#x27; — <code>2007</code> (<code>https://shenailhairlounge.ca/hair/</code>)</p>
+<p class="note">Aspects nobody spoke to: <b>outcome, cause</b> — an unknown is not a pass, so this cannot read CORROBORATED.</p>
+<details><summary>Evidence rows (each carries its receipt)</summary>
+<table><tr><th>Source</th><th>Aspect</th><th>Statement</th><th>Value</th><th>Receipt</th></tr>
+<tr><td>shenail-site</td><td>state</td><td>the site&#x27;s hair page says &#x27;Shenail Hair Lounge started as a home based nail and spa business in 2007&#x27;</td><td><code>2007</code></td><td>https://shenailhairlounge.ca/hair/</td></tr>
+</table></details>
+<p class="note">Reviewer lanes over this corpus: <b>NOT RUN</b> — no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.</p>
+</section>
+<section class="case cc-case" data-fixture="recorded" data-verdict="CONFLICTED" id="cc-shenail-hours">
+<h3>Shenail — published opening hours — <span class="chip CONFLICTED">CONFLICTED</span> <span class="badge recorded">RECORDED</span></h3>
+<p class="note"><b>The claim:</b> the salon&#x27;s own site publishes these opening hours — <code>Mon 10:00-16:00; Tue-Fri 09:30-18:00; Sat 09:30-17:00; Sun closed</code> (<code>https://shenailhairlounge.ca/ (Our Hours)</code>)</p>
+<div class="flip"><b>Conflict on state:</b> <code>Mon 10:00-16:00; Tue-Fri 09:30-18:00; Sat 09:30-17:00; Sun closed</code> vs <code>Mon 10:00-17:00; Tue-Fri 09:30-19:00; Sat 10:00-18:00</code> — cited: shenail-site — https://shenailhairlounge.ca/ (Our Hours); google-listing — Google places record 942693713797309, read 2026-10-30; yellowpages-directory — https://www.yellowpages.ca/bus/Ontario/Niagara-Falls/Shenail-Hair-Lounge/6656388.html.</div>
+<p class="note">Aspects nobody spoke to: <b>outcome</b> — an unknown is not a pass, so this cannot read CORROBORATED.</p>
+<details><summary>Evidence rows (each carries its receipt)</summary>
+<table><tr><th>Source</th><th>Aspect</th><th>Statement</th><th>Value</th><th>Receipt</th></tr>
+<tr><td>shenail-site</td><td>state</td><td>the salon&#x27;s own site publishes these opening hours</td><td><code>Mon 10:00-16:00; Tue-Fri 09:30-18:00; Sat 09:30-17:00; Sun closed</code></td><td>https://shenailhairlounge.ca/ (Our Hours)</td></tr>
+<tr><td>google-listing</td><td>state</td><td>the Google listing shows the same hours as the site</td><td><code>Mon 10:00-16:00; Tue-Fri 09:30-18:00; Sat 09:30-17:00; Sun closed</code></td><td>Google places record 942693713797309, read 2026-10-30</td></tr>
+<tr><td>yellowpages-directory</td><td>state</td><td>the Yellow Pages directory shows longer hours than the site and the Google listing</td><td><code>Mon 10:00-17:00; Tue-Fri 09:30-19:00; Sat 10:00-18:00</code></td><td>https://www.yellowpages.ca/bus/Ontario/Niagara-Falls/Shenail-Hair-Lounge/6656388.html</td></tr>
+<tr><td>birdeye-profile-note</td><td>cause</td><td>the Birdeye profile states it has not been claimed by the business owner or representative — directory data for this business is not owner-maintained</td><td><code>directory profiles not owner-claimed</code></td><td>https://reviews.birdeye.com/shenail-hair-lounge-170031239435949</td></tr>
+</table></details>
+<p class="note">Reviewer lanes over this corpus: <b>NOT RUN</b> — no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.</p>
+</section>
+<section class="case cc-case" data-fixture="recorded" data-verdict="CONFLICTED" id="cc-shenail-phone">
+<h3>Shenail — published phone number — <span class="chip CONFLICTED">CONFLICTED</span> <span class="badge recorded">RECORDED</span></h3>
+<p class="note"><b>The claim:</b> the salon&#x27;s own site publishes this phone number — <code>+1 905-353-8889</code> (<code>https://shenailhairlounge.ca/ (Location)</code>)</p>
+<div class="flip"><b>Conflict on state:</b> <code>+1 905-341-6888</code> vs <code>+1 905-353-8889</code> — cited: shenail-site — https://shenailhairlounge.ca/ (Location); google-listing — Google places record 942693713797309, read 2026-10-30; fresha-listing — https://www.fresha.com/a/she-nail-hair-lounge-niagara-falls-8043-lundys-lane-dccczyh5.</div>
+<p class="note">Aspects nobody spoke to: <b>outcome, cause</b> — an unknown is not a pass, so this cannot read CORROBORATED.</p>
+<details><summary>Evidence rows (each carries its receipt)</summary>
+<table><tr><th>Source</th><th>Aspect</th><th>Statement</th><th>Value</th><th>Receipt</th></tr>
+<tr><td>shenail-site</td><td>state</td><td>the salon&#x27;s own site publishes this phone number</td><td><code>+1 905-353-8889</code></td><td>https://shenailhairlounge.ca/ (Location)</td></tr>
+<tr><td>google-listing</td><td>state</td><td>the Google listing shows the same phone number as the site</td><td><code>+1 905-353-8889</code></td><td>Google places record 942693713797309, read 2026-10-30</td></tr>
+<tr><td>fresha-listing</td><td>state</td><td>the Fresha listing for the same address shows a different phone number</td><td><code>+1 905-341-6888</code></td><td>https://www.fresha.com/a/she-nail-hair-lounge-niagara-falls-8043-lundys-lane-dccczyh5</td></tr>
+</table></details>
+<p class="note">Reviewer lanes over this corpus: <b>NOT RUN</b> — no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.</p>
+</section>
+<section class="case cc-case" data-fixture="recorded" data-verdict="PARTIAL" id="cc-shenail-premiere">
+<h3>Shenail — &#x27;premiere&#x27; superlative — <span class="chip PARTIAL">PARTIAL</span> <span class="badge recorded">RECORDED</span></h3>
+<p class="note"><b>The claim:</b> the site says the salon &#x27;has proven to be Niagara Falls premiere Nail Bar &amp; Hair Salon&#x27; — <code>premiere</code> (<code>https://shenailhairlounge.ca/ (Welcome)</code>)</p>
+<p class="note">Aspects nobody spoke to: <b>cause</b> — an unknown is not a pass, so this cannot read CORROBORATED.</p>
+<details><summary>Evidence rows (each carries its receipt)</summary>
+<table><tr><th>Source</th><th>Aspect</th><th>Statement</th><th>Value</th><th>Receipt</th></tr>
+<tr><td>shenail-site</td><td>state</td><td>the site says the salon &#x27;has proven to be Niagara Falls premiere Nail Bar &amp; Hair Salon&#x27;</td><td><code>premiere</code></td><td>https://shenailhairlounge.ca/ (Welcome)</td></tr>
+<tr><td>google-listing</td><td>outcome</td><td>the Google listing rates the salon 4.1 of 5; no fetched source calls it the top or premiere salon, and a BestProsInTown list shows other Niagara Falls salons rated 4.7</td><td><code>4.1</code></td><td>Google places record 942693713797309, read 2026-10-30</td></tr>
+</table></details>
+<p class="note">Reviewer lanes over this corpus: <b>NOT RUN</b> — no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.</p>
+</section>
+<section class="case cc-case" data-fixture="recorded" data-verdict="PARTIAL" id="cc-shenail-promo20">
+<h3>Shenail — the standing 20% off promo — <span class="chip PARTIAL">PARTIAL</span> <span class="badge recorded">RECORDED</span></h3>
+<p class="note"><b>The claim:</b> the site serves a &#x27;20% off&#x27; promo image uploaded in 2024-02; no terms, dates, or second mention appear on the fetched pages — <code>20% off</code> (<code>https://shenailhairlounge.ca/wp-content/uploads/2024/02/Shenail-20-Off.png</code>)</p>
+<p class="note">Aspects nobody spoke to: <b>outcome, cause</b> — an unknown is not a pass, so this cannot read CORROBORATED.</p>
+<details><summary>Evidence rows (each carries its receipt)</summary>
+<table><tr><th>Source</th><th>Aspect</th><th>Statement</th><th>Value</th><th>Receipt</th></tr>
+<tr><td>shenail-site</td><td>state</td><td>the site serves a &#x27;20% off&#x27; promo image uploaded in 2024-02; no terms, dates, or second mention appear on the fetched pages</td><td><code>20% off</code></td><td>https://shenailhairlounge.ca/wp-content/uploads/2024/02/Shenail-20-Off.png</td></tr>
+</table></details>
+<p class="note">Reviewer lanes over this corpus: <b>NOT RUN</b> — no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.</p>
+</section>
+<section class="case cc-case" data-fixture="recorded" data-verdict="CONFLICTED" id="cc-shenail-rating">
+<h3>Shenail — the rating a customer finds — <span class="chip CONFLICTED">CONFLICTED</span> <span class="badge recorded">RECORDED</span></h3>
+<p class="note"><b>The claim:</b> the Birdeye profile displays this rating for the salon — <code>4.5 (251 reviews)</code> (<code>https://reviews.birdeye.com/shenail-hair-lounge-170031239435949</code>)</p>
+<div class="flip"><b>Conflict on outcome:</b> <code>4.1 (28 reviews)</code> vs <code>4.5 (251 reviews)</code> vs <code>4.7 (110 reviews)</code> — cited: birdeye-profile — https://reviews.birdeye.com/shenail-hair-lounge-170031239435949; google-listing — Google places record 942693713797309, read 2026-10-30; bestprosintown-listing — https://www.bestprosintown.com/on/niagara-falls/shenail-hair-lounge-/.</div>
+<p class="note">Aspects nobody spoke to: <b>state, cause</b> — an unknown is not a pass, so this cannot read CORROBORATED.</p>
+<details><summary>Evidence rows (each carries its receipt)</summary>
+<table><tr><th>Source</th><th>Aspect</th><th>Statement</th><th>Value</th><th>Receipt</th></tr>
+<tr><td>birdeye-profile</td><td>outcome</td><td>the Birdeye profile displays this rating for the salon</td><td><code>4.5 (251 reviews)</code></td><td>https://reviews.birdeye.com/shenail-hair-lounge-170031239435949</td></tr>
+<tr><td>google-listing</td><td>outcome</td><td>the Google listing displays a different rating and a much smaller review count</td><td><code>4.1 (28 reviews)</code></td><td>Google places record 942693713797309, read 2026-10-30</td></tr>
+<tr><td>bestprosintown-listing</td><td>outcome</td><td>the BestProsInTown listing displays a third rating and count</td><td><code>4.7 (110 reviews)</code></td><td>https://www.bestprosintown.com/on/niagara-falls/shenail-hair-lounge-/</td></tr>
+</table></details>
+<p class="note">Reviewer lanes over this corpus: <b>NOT RUN</b> — no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.</p>
+</section>
+<section class="case cc-case" data-fixture="synthetic" data-verdict="PARTIAL" id="cc-syn-as-seen-on-tv">
+<h3>SYNTHETIC FIXTURE — &#x27;As seen on TV&#x27; — <span class="chip PARTIAL">PARTIAL</span> <span class="badge synthetic">SYNTHETIC FIXTURE</span></h3>
+<p class="note"><b>The claim:</b> the listing carries an &#x27;As seen on TV&#x27; badge; nothing else in the corpus speaks about the item — <code>As seen on TV</code> (<code>fixture:listing/tv</code>)</p>
+<p class="note">Aspects nobody spoke to: <b>outcome, cause</b> — an unknown is not a pass, so this cannot read CORROBORATED.</p>
+<details><summary>Evidence rows (each carries its receipt)</summary>
+<table><tr><th>Source</th><th>Aspect</th><th>Statement</th><th>Value</th><th>Receipt</th></tr>
+<tr><td>listing (synthetic fixture)</td><td>state</td><td>the listing carries an &#x27;As seen on TV&#x27; badge; nothing else in the corpus speaks about the item</td><td><code>As seen on TV</code></td><td>fixture:listing/tv</td></tr>
+</table></details>
+<p class="note">Reviewer lanes over this corpus: <b>NOT RUN</b> — no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.</p>
+</section>
+<section class="case cc-case" data-fixture="synthetic" data-verdict="CONFLICTED" id="cc-syn-award-banner">
+<h3>SYNTHETIC FIXTURE — award banner, no award found — <span class="chip CONFLICTED">CONFLICTED</span> <span class="badge synthetic">SYNTHETIC FIXTURE</span></h3>
+<p class="note"><b>The claim:</b> the site&#x27;s hero banner claims a 2025 &#x27;Best of the City&#x27; award — <code>Best of the City 2025 — award-winning</code> (<code>fixture:site/award</code>)</p>
+<div class="flip"><b>Conflict on state:</b> <code></code> vs <code>Best of the City 2025 — award-winning</code> — cited: site hero banner (synthetic fixture) — fixture:site/award; award winners list (synthetic fixture) — fixture:web/award-winners-2025.</div>
+<p class="note">Aspects nobody spoke to: <b>outcome, cause</b> — an unknown is not a pass, so this cannot read CORROBORATED.</p>
+<details><summary>Evidence rows (each carries its receipt)</summary>
+<table><tr><th>Source</th><th>Aspect</th><th>Statement</th><th>Value</th><th>Receipt</th></tr>
+<tr><td>site hero banner (synthetic fixture)</td><td>state</td><td>the site&#x27;s hero banner claims a 2025 &#x27;Best of the City&#x27; award</td><td><code>Best of the City 2025 — award-winning</code></td><td>fixture:site/award</td></tr>
+<tr><td>award winners list (synthetic fixture)</td><td>state</td><td>the claimed award does not appear on the award programme&#x27;s published 2025 winners list — a recorded non-match, kept as a claim with an empty value</td><td><code></code></td><td>fixture:web/award-winners-2025</td></tr>
+</table></details>
+<p class="note">Reviewer lanes over this corpus: <b>NOT RUN</b> — no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.</p>
+</section>
+<section class="case cc-case" data-fixture="synthetic" data-verdict="CORROBORATED" id="cc-syn-clean-listing">
+<h3>SYNTHETIC FIXTURE — the clean listing — <span class="chip CORROBORATED">CORROBORATED</span> <span class="badge synthetic">SYNTHETIC FIXTURE</span></h3>
+<p class="note"><b>The claim:</b> the listing describes a solid walnut serving board with a food-safe oil finish — <code>solid walnut, food-safe oil finish</code> (<code>fixture:listing/board</code>)</p>
+<p class="note">Every expected aspect is spoken to and no two sources disagree — the only shape that earns CORROBORATED.</p>
+<details><summary>Evidence rows (each carries its receipt)</summary>
+<table><tr><th>Source</th><th>Aspect</th><th>Statement</th><th>Value</th><th>Receipt</th></tr>
+<tr><td>listing (synthetic fixture)</td><td>state</td><td>the listing describes a solid walnut serving board with a food-safe oil finish</td><td><code>solid walnut, food-safe oil finish</code></td><td>fixture:listing/board</td></tr>
+<tr><td>nemotron-vl photo read (synthetic fixture)</td><td>state</td><td>the vision lane&#x27;s read of the product photo reports solid walnut grain and an oil finish, no veneer seam</td><td><code>solid walnut, food-safe oil finish</code></td><td>fixture:photo/board</td></tr>
+<tr><td>supplier invoice (synthetic fixture)</td><td>outcome</td><td>the supplier invoice for the board lists solid walnut and a food-safe oil finish</td><td><code>solid walnut, food-safe oil finish</code></td><td>fixture:invoice/board</td></tr>
+<tr><td>audit note (synthetic fixture)</td><td>cause</td><td>the audit note records that the supplier invoice matches the listing&#x27;s stated materials</td><td><code>supplier invoice matches the listing&#x27;s stated materials</code></td><td>fixture:audit/board</td></tr>
+</table></details>
+<p class="note">Reviewer lanes over this corpus: <b>NOT RUN</b> — no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.</p>
+</section>
+<section class="case cc-case" data-fixture="synthetic" data-verdict="CONFLICTED" id="cc-syn-genuine-leather">
+<h3>SYNTHETIC FIXTURE — &#x27;genuine leather&#x27; bag — <span class="chip CONFLICTED">CONFLICTED</span> <span class="badge synthetic">SYNTHETIC FIXTURE</span></h3>
+<p class="note"><b>The claim:</b> the listing claims the bag is genuine leather — <code>genuine leather</code> (<code>fixture:listing/bag</code>)</p>
+<div class="flip"><b>Conflict on state:</b> <code>PU synthetic leather</code> vs <code>genuine leather</code> — cited: listing (synthetic fixture) — fixture:listing/bag; manufacturer spec (synthetic fixture) — fixture:spec/bag.</div>
+<p class="note">Aspects nobody spoke to: <b>outcome, cause</b> — an unknown is not a pass, so this cannot read CORROBORATED.</p>
+<details><summary>Evidence rows (each carries its receipt)</summary>
+<table><tr><th>Source</th><th>Aspect</th><th>Statement</th><th>Value</th><th>Receipt</th></tr>
+<tr><td>listing (synthetic fixture)</td><td>state</td><td>the listing claims the bag is genuine leather</td><td><code>genuine leather</code></td><td>fixture:listing/bag</td></tr>
+<tr><td>manufacturer spec (synthetic fixture)</td><td>state</td><td>the manufacturer&#x27;s spec for the same SKU lists PU synthetic leather</td><td><code>PU synthetic leather</code></td><td>fixture:spec/bag</td></tr>
+</table></details>
+<p class="note">Reviewer lanes over this corpus: <b>NOT RUN</b> — no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.</p>
+</section>
+<section class="case cc-case" data-fixture="synthetic" data-verdict="CONFLICTED" id="cc-syn-handmade-mug">
+<h3>SYNTHETIC FIXTURE — &#x27;100% handmade&#x27; mug — <span class="chip CONFLICTED">CONFLICTED</span> <span class="badge synthetic">SYNTHETIC FIXTURE</span></h3>
+<p class="note"><b>The claim:</b> the listing claims the mug is 100% handmade ceramic — <code>100% handmade ceramic</code> (<code>fixture:listing/mug</code>)</p>
+<div class="flip"><b>Conflict on state:</b> <code>100% handmade ceramic</code> vs <code>machine-printed decal on a moulded blank</code> — cited: listing (synthetic fixture) — fixture:listing/mug; nemotron-vl photo read (synthetic fixture) — fixture:photo/mug.</div>
+<p class="note">Aspects nobody spoke to: <b>cause</b> — an unknown is not a pass, so this cannot read CORROBORATED.</p>
+<details><summary>Evidence rows (each carries its receipt)</summary>
+<table><tr><th>Source</th><th>Aspect</th><th>Statement</th><th>Value</th><th>Receipt</th></tr>
+<tr><td>listing (synthetic fixture)</td><td>state</td><td>the listing claims the mug is 100% handmade ceramic</td><td><code>100% handmade ceramic</code></td><td>fixture:listing/mug</td></tr>
+<tr><td>nemotron-vl photo read (synthetic fixture)</td><td>state</td><td>the vision lane&#x27;s read of the product photo reports a printed decal and uniform mould lines</td><td><code>machine-printed decal on a moulded blank</code></td><td>fixture:photo/mug</td></tr>
+<tr><td>supplier spec (synthetic fixture)</td><td>outcome</td><td>the supplier spec for the blank describes machine printing on a moulded blank</td><td><code>machine-printed decal on a moulded blank</code></td><td>fixture:spec/mug</td></tr>
+</table></details>
+<p class="note">Reviewer lanes over this corpus: <b>NOT RUN</b> — no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.</p>
+</section>
+<section class="case cc-case" data-fixture="synthetic" data-verdict="CONFLICTED" id="cc-syn-open-7-days">
+<h3>SYNTHETIC FIXTURE — &#x27;open 7 days&#x27; vs its own hours table — <span class="chip CONFLICTED">CONFLICTED</span> <span class="badge synthetic">SYNTHETIC FIXTURE</span></h3>
+<p class="note"><b>The claim:</b> the site&#x27;s hero banner claims the business is open 7 days a week — <code>open 7 days a week</code> (<code>fixture:site/hero-hours</code>)</p>
+<div class="flip"><b>Conflict on state:</b> <code>Sunday: closed</code> vs <code>open 7 days a week</code> — cited: site hero (synthetic fixture) — fixture:site/hero-hours; same site&#x27;s hours table (synthetic fixture) — fixture:site/hours-table.</div>
+<p class="note">Aspects nobody spoke to: <b>outcome, cause</b> — an unknown is not a pass, so this cannot read CORROBORATED.</p>
+<details><summary>Evidence rows (each carries its receipt)</summary>
+<table><tr><th>Source</th><th>Aspect</th><th>Statement</th><th>Value</th><th>Receipt</th></tr>
+<tr><td>site hero (synthetic fixture)</td><td>state</td><td>the site&#x27;s hero banner claims the business is open 7 days a week</td><td><code>open 7 days a week</code></td><td>fixture:site/hero-hours</td></tr>
+<tr><td>same site&#x27;s hours table (synthetic fixture)</td><td>state</td><td>the same site&#x27;s hours table lists Sunday as closed</td><td><code>Sunday: closed</code></td><td>fixture:site/hours-table</td></tr>
+</table></details>
+<p class="note">Reviewer lanes over this corpus: <b>NOT RUN</b> — no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.</p>
+</section>
+<section class="case cc-case" data-fixture="synthetic" data-verdict="CONFLICTED" id="cc-syn-organic-tee">
+<h3>SYNTHETIC FIXTURE — &#x27;organic cotton&#x27; tee — <span class="chip CONFLICTED">CONFLICTED</span> <span class="badge synthetic">SYNTHETIC FIXTURE</span></h3>
+<p class="note"><b>The claim:</b> the listing claims the shirt is 100% organic cotton — <code>100% organic cotton</code> (<code>fixture:listing/tee</code>)</p>
+<div class="flip"><b>Conflict on state:</b> <code>100% organic cotton</code> vs <code>60% cotton / 40% polyester</code> — cited: listing (synthetic fixture) — fixture:listing/tee; nemotron-vl label read (synthetic fixture) — fixture:photo/tee-label.</div>
+<p class="note">Aspects nobody spoke to: <b>outcome, cause</b> — an unknown is not a pass, so this cannot read CORROBORATED.</p>
+<details><summary>Evidence rows (each carries its receipt)</summary>
+<table><tr><th>Source</th><th>Aspect</th><th>Statement</th><th>Value</th><th>Receipt</th></tr>
+<tr><td>listing (synthetic fixture)</td><td>state</td><td>the listing claims the shirt is 100% organic cotton</td><td><code>100% organic cotton</code></td><td>fixture:listing/tee</td></tr>
+<tr><td>nemotron-vl label read (synthetic fixture)</td><td>state</td><td>the vision lane&#x27;s read of the sewn-in label reports a cotton-polyester blend</td><td><code>60% cotton / 40% polyester</code></td><td>fixture:photo/tee-label</td></tr>
+</table></details>
+<p class="note">Reviewer lanes over this corpus: <b>NOT RUN</b> — no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.</p>
+</section>
+<section class="case cc-case" data-fixture="synthetic" data-verdict="CONFLICTED" id="cc-syn-review-count">
+<h3>SYNTHETIC FIXTURE — review-count badge — <span class="chip CONFLICTED">CONFLICTED</span> <span class="badge synthetic">SYNTHETIC FIXTURE</span></h3>
+<p class="note"><b>The claim:</b> the site displays a badge claiming 500+ five-star reviews — <code>500+ five-star reviews</code> (<code>fixture:site/reviews-badge</code>)</p>
+<div class="flip"><b>Conflict on state:</b> <code>28 reviews (4.1 stars)</code> vs <code>500+ five-star reviews</code> — cited: site badge (synthetic fixture) — fixture:site/reviews-badge; google-style listing (synthetic fixture) — fixture:web/listing-reviews.</div>
+<p class="note">Aspects nobody spoke to: <b>outcome, cause</b> — an unknown is not a pass, so this cannot read CORROBORATED.</p>
+<details><summary>Evidence rows (each carries its receipt)</summary>
+<table><tr><th>Source</th><th>Aspect</th><th>Statement</th><th>Value</th><th>Receipt</th></tr>
+<tr><td>site badge (synthetic fixture)</td><td>state</td><td>the site displays a badge claiming 500+ five-star reviews</td><td><code>500+ five-star reviews</code></td><td>fixture:site/reviews-badge</td></tr>
+<tr><td>google-style listing (synthetic fixture)</td><td>state</td><td>the public listing for the same business shows 28 reviews at 4.1 stars</td><td><code>28 reviews (4.1 stars)</code></td><td>fixture:web/listing-reviews</td></tr>
+</table></details>
+<p class="note">Reviewer lanes over this corpus: <b>NOT RUN</b> — no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.</p>
+</section>
+<section class="case cc-case" data-fixture="synthetic" data-verdict="CONFLICTED" id="cc-syn-salon-price-drift">
+<h3>SYNTHETIC FIXTURE — price list vs booking price — <span class="chip CONFLICTED">CONFLICTED</span> <span class="badge synthetic">SYNTHETIC FIXTURE</span></h3>
+<p class="note"><b>The claim:</b> the salon&#x27;s site price list shows a shellac manicure at $35 — <code>Shellac manicure $35</code> (<code>fixture:site/price-list</code>)</p>
+<div class="flip"><b>Conflict on state:</b> <code>Shellac manicure $35</code> vs <code>Shellac manicure $45</code> — cited: site price list (synthetic fixture) — fixture:site/price-list; booking page (synthetic fixture) — fixture:web/booking.</div>
+<p class="note">Aspects nobody spoke to: <b>outcome, cause</b> — an unknown is not a pass, so this cannot read CORROBORATED.</p>
+<details><summary>Evidence rows (each carries its receipt)</summary>
+<table><tr><th>Source</th><th>Aspect</th><th>Statement</th><th>Value</th><th>Receipt</th></tr>
+<tr><td>site price list (synthetic fixture)</td><td>state</td><td>the salon&#x27;s site price list shows a shellac manicure at $35</td><td><code>Shellac manicure $35</code></td><td>fixture:site/price-list</td></tr>
+<tr><td>booking page (synthetic fixture)</td><td>state</td><td>the booking page charges $45 for the same shellac manicure</td><td><code>Shellac manicure $45</code></td><td>fixture:web/booking</td></tr>
+</table></details>
+<p class="note">Reviewer lanes over this corpus: <b>NOT RUN</b> — no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.</p>
+</section>
+<section class="case cc-case" data-fixture="synthetic" data-verdict="CONFLICTED" id="cc-syn-shipping-promise">
+<h3>SYNTHETIC FIXTURE — shipping promise vs policy — <span class="chip CONFLICTED">CONFLICTED</span> <span class="badge synthetic">SYNTHETIC FIXTURE</span></h3>
+<p class="note"><b>The claim:</b> the listing promises dispatch in 1-2 business days — <code>ships in 1-2 business days</code> (<code>fixture:listing/shipping</code>)</p>
+<div class="flip"><b>Conflict on state:</b> <code>made to order: ships in 7-10 business days</code> vs <code>ships in 1-2 business days</code> — cited: listing (synthetic fixture) — fixture:listing/shipping; shop policy page (synthetic fixture) — fixture:policy/shipping.</div>
+<p class="note">Aspects nobody spoke to: <b>outcome, cause</b> — an unknown is not a pass, so this cannot read CORROBORATED.</p>
+<details><summary>Evidence rows (each carries its receipt)</summary>
+<table><tr><th>Source</th><th>Aspect</th><th>Statement</th><th>Value</th><th>Receipt</th></tr>
+<tr><td>listing (synthetic fixture)</td><td>state</td><td>the listing promises dispatch in 1-2 business days</td><td><code>ships in 1-2 business days</code></td><td>fixture:listing/shipping</td></tr>
+<tr><td>shop policy page (synthetic fixture)</td><td>state</td><td>the same shop&#x27;s policy page says items are made to order and ship in 7-10 business days</td><td><code>made to order: ships in 7-10 business days</code></td><td>fixture:policy/shipping</td></tr>
+</table></details>
+<p class="note">Reviewer lanes over this corpus: <b>NOT RUN</b> — no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.</p>
+</section>
+<section class="case cc-case" data-fixture="synthetic" data-verdict="CONFLICTED" id="cc-syn-was-price">
+<h3>SYNTHETIC FIXTURE — &#x27;was $80&#x27; sale price — <span class="chip CONFLICTED">CONFLICTED</span> <span class="badge synthetic">SYNTHETIC FIXTURE</span></h3>
+<p class="note"><b>The claim:</b> the listing advertises a was/now discount: was $80, now $40 — <code>was $80, now $40</code> (<code>fixture:listing/was-price</code>)</p>
+<div class="flip"><b>Conflict on state:</b> <code>price recorded as $40 for the last 90 days; no $80 price recorded</code> vs <code>was $80, now $40</code> — cited: listing (synthetic fixture) — fixture:listing/was-price; price history (synthetic fixture) — fixture:history/price.</div>
+<p class="note">Aspects nobody spoke to: <b>outcome, cause</b> — an unknown is not a pass, so this cannot read CORROBORATED.</p>
+<details><summary>Evidence rows (each carries its receipt)</summary>
+<table><tr><th>Source</th><th>Aspect</th><th>Statement</th><th>Value</th><th>Receipt</th></tr>
+<tr><td>listing (synthetic fixture)</td><td>state</td><td>the listing advertises a was/now discount: was $80, now $40</td><td><code>was $80, now $40</code></td><td>fixture:listing/was-price</td></tr>
+<tr><td>price history (synthetic fixture)</td><td>state</td><td>the price record shows the item listed at $40 for the last 90 days, with no $80 price in the record</td><td><code>price recorded as $40 for the last 90 days; no $80 price recorded</code></td><td>fixture:history/price</td></tr>
+</table></details>
+<p class="note">Reviewer lanes over this corpus: <b>NOT RUN</b> — no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.</p>
+</section>
+<h2 class="sec">2 · Nemotron Court — the lanes, cross-examined</h2>
+<p>The reviewer tiers' Round 1 verdicts below are <b>RECORDED</b> from the 2026-10-28 live Token Factory run. On <b>8 of 14 items</b> a lane disagreed with the deterministic gate; every disagreement is preserved with its citations, never averaged. The <b>citation audit</b> is computed, not narrated: for each lane verdict it lists the evidence that verdict fails to account for. The rebuttal round is <b>NOT RUN</b> — it is a live model round and no provider key is present tonight (RUN_PACK.md, step 4).</p>
+<section class="case" id="court-bm-card-lies">
+<h3>bm-card-lies — gate: <b>CONFLICTED</b> · planted truth <b>CONFLICTED</b></h3>
+<p class="note">Round 1 (recorded): fast (nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B): <b>CORROBORATED</b> ($0.0002) — <b>disagrees with the gate</b>; deep (nvidia/Nemotron-3-Ultra-550b-a55b): <b>CONFLICTED</b> ($0.0018) — agrees with the gate.</p>
+<div class="warn">Audit — fast: verdict <b>not supported</b> as stated. Unanswered: conflict on state (card — bench/cards/bm-card-lies.md:1; ci — bench/ci/2); missing on cause.</div>
+<p class="note">Audit — deep: verdict <b>supported</b>; it answers every conflict and missing aspect the gate found.</p>
+<p class="note">Rebuttal round: <b>NOT RUN</b> — cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.</p>
+</section>
+<section class="case" id="court-bm-clean-ship">
+<h3>bm-clean-ship — gate: <b>CORROBORATED</b> · planted truth <b>CORROBORATED</b></h3>
+<p class="note">Round 1 (recorded): fast (nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B): <b>CONFLICTED</b> ($0.0001) — <b>disagrees with the gate</b>; deep (nvidia/Nemotron-3-Ultra-550b-a55b): <b>CORROBORATED</b> ($0.0014) — agrees with the gate.</p>
+<div class="warn">Audit — fast: verdict <b>not supported</b> as stated. Unanswered: agreement on cause (git — bench/git/1c); agreement on outcome (deploy — bench/deploy/1); agreement on state (card — bench/cards/bm-clean-ship.md:1; git — bench/git/1; ci — bench/ci/1).</div>
+<p class="note">Audit — deep: verdict <b>supported</b>; it answers every conflict and missing aspect the gate found.</p>
+<p class="note">Rebuttal round: <b>NOT RUN</b> — cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.</p>
+</section>
+<section class="case" id="court-bm-forged-aspect">
+<h3>bm-forged-aspect — gate: <b>PARTIAL</b> · planted truth <b>PARTIAL</b></h3>
+<p class="note">Round 1 (recorded): fast (nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B): <b>CONFLICTED</b> ($0.0003) — <b>disagrees with the gate</b>; deep (nvidia/Nemotron-3-Ultra-550b-a55b): <b>UNPARSEABLE</b> ($0.0125) — <b>disagrees with the gate</b>.</p>
+<div class="warn">Audit — fast: verdict <b>not supported</b> as stated. Unanswered: agreement on outcome (ops — bench/ops/12); agreement on state (card — bench/cards/bm-forged-aspect.md:1; git — bench/git/12).</div>
+<div class="warn">Audit — deep: verdict <b>not supported</b> as stated. Unanswered: the gate’s verdict itself — a preserved disagreement.</div>
+<p class="note">Rebuttal round: <b>NOT RUN</b> — cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.</p>
+</section>
+<section class="case" id="court-bm-green-check-wrong-scope">
+<h3>bm-green-check-wrong-scope — gate: <b>PARTIAL</b> · planted truth <b>PARTIAL</b></h3>
+<p class="note">Round 1 (recorded): fast (nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B): <b>PARTIAL</b> ($0.0002) — agrees with the gate; deep (nvidia/Nemotron-3-Ultra-550b-a55b): <b>CONFLICTED</b> ($0.0011) — <b>disagrees with the gate</b>.</p>
+<p class="note">Audit — fast: verdict <b>supported</b>; it answers every conflict and missing aspect the gate found.</p>
+<div class="warn">Audit — deep: verdict <b>not supported</b> as stated. Unanswered: agreement on outcome (deploy — bench/deploy/3); agreement on state (card — bench/cards/bm-green-check-wrong-scope.md:1; ci — bench/ci/3).</div>
+<p class="note">Rebuttal round: <b>NOT RUN</b> — cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.</p>
+</section>
+<section class="case" id="court-bm-missing-cause">
+<h3>bm-missing-cause — gate: <b>PARTIAL</b> · planted truth <b>PARTIAL</b></h3>
+<p class="note">Round 1 (recorded): fast (nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B): <b>CORROBORATED</b> ($0.0001) — <b>disagrees with the gate</b>; deep (nvidia/Nemotron-3-Ultra-550b-a55b): <b>CORROBORATED</b> ($0.0012) — <b>disagrees with the gate</b>.</p>
+<div class="warn">Audit — fast: verdict <b>not supported</b> as stated. Unanswered: missing on cause.</div>
+<div class="warn">Audit — deep: verdict <b>not supported</b> as stated. Unanswered: missing on cause.</div>
+<p class="note">Rebuttal round: <b>NOT RUN</b> — cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.</p>
+</section>
+<section class="case" id="court-bm-no-evidence">
+<h3>bm-no-evidence — gate: <b>NO EVIDENCE</b> · planted truth <b>NO EVIDENCE</b></h3>
+<p class="note">Round 1 (recorded): fast: <b>not run</b> — the item has no claims; the harness does not run lanes on an item with nothing to judge (recorded 2026-10-28 behaviour); deep: <b>not run</b> — the item has no claims; the harness does not run lanes on an item with nothing to judge (recorded 2026-10-28 behaviour).</p>
+<p class="note">Rebuttal round: <b>NOT RUN</b> — cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.</p>
+</section>
+<section class="case" id="court-bm-receipt-mismatch">
+<h3>bm-receipt-mismatch — gate: <b>CONFLICTED</b> · planted truth <b>CONFLICTED</b></h3>
+<p class="note">Round 1 (recorded): fast (nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B): <b>CONFLICTED</b> ($0.0001) — agrees with the gate; deep (nvidia/Nemotron-3-Ultra-550b-a55b): <b>CONFLICTED</b> ($0.0013) — agrees with the gate.</p>
+<p class="note">Audit — fast: verdict <b>supported</b>; it answers every conflict and missing aspect the gate found.</p>
+<p class="note">Audit — deep: verdict <b>supported</b>; it answers every conflict and missing aspect the gate found.</p>
+<p class="note">Rebuttal round: <b>NOT RUN</b> — cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.</p>
+</section>
+<section class="case" id="court-bm-reviewer-split">
+<h3>bm-reviewer-split — gate: <b>CONFLICTED</b> · planted truth <b>CONFLICTED</b></h3>
+<p class="note">Round 1 (recorded): fast (nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B): <b>CONFLICTED</b> ($0.0001) — agrees with the gate; deep (nvidia/Nemotron-3-Ultra-550b-a55b): <b>CONFLICTED</b> ($0.0019) — agrees with the gate.</p>
+<p class="note">Audit — fast: verdict <b>supported</b>; it answers every conflict and missing aspect the gate found.</p>
+<p class="note">Audit — deep: verdict <b>supported</b>; it answers every conflict and missing aspect the gate found.</p>
+<p class="note">Rebuttal round: <b>NOT RUN</b> — cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.</p>
+</section>
+<section class="case" id="court-bm-stale-card">
+<h3>bm-stale-card — gate: <b>CONFLICTED</b> · planted truth <b>CONFLICTED</b></h3>
+<p class="note">Round 1 (recorded): fast (nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B): <b>PARTIAL</b> ($0.0001) — <b>disagrees with the gate</b>; deep (nvidia/Nemotron-3-Ultra-550b-a55b): <b>CONFLICTED</b> ($0.0011) — agrees with the gate.</p>
+<div class="warn">Audit — fast: verdict <b>not supported</b> as stated. Unanswered: the gate’s verdict itself — a preserved disagreement.</div>
+<p class="note">Audit — deep: verdict <b>supported</b>; it answers every conflict and missing aspect the gate found.</p>
+<p class="note">Rebuttal round: <b>NOT RUN</b> — cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.</p>
+</section>
+<section class="case" id="court-bm-unexpected-aspect">
+<h3>bm-unexpected-aspect — gate: <b>CORROBORATED</b> · planted truth <b>CORROBORATED</b></h3>
+<p class="note">Round 1 (recorded): fast (nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B): <b>PARTIAL</b> ($0.0002) — <b>disagrees with the gate</b>; deep (nvidia/Nemotron-3-Ultra-550b-a55b): <b>PARTIAL</b> ($0.0017) — <b>disagrees with the gate</b>.</p>
+<div class="warn">Audit — fast: verdict <b>not supported</b> as stated. Unanswered: agreement on cause (reviewer-x — bench/rev/11); agreement on outcome (qa — bench/qa/11); agreement on state (card — bench/cards/bm-unexpected-aspect.md:1; git — bench/git/11).</div>
+<div class="warn">Audit — deep: verdict <b>not supported</b> as stated. Unanswered: agreement on cause (reviewer-x — bench/rev/11); agreement on outcome (qa — bench/qa/11); agreement on state (card — bench/cards/bm-unexpected-aspect.md:1; git — bench/git/11).</div>
+<p class="note">Rebuttal round: <b>NOT RUN</b> — cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.</p>
+</section>
+<section class="case" id="court-bm-vl-receipt">
+<h3>bm-vl-receipt — gate: <b>CORROBORATED</b> · planted truth <b>CORROBORATED</b></h3>
+<p class="note">Round 1 (recorded): fast (nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B): <b>PARTIAL</b> ($0.0003) — <b>disagrees with the gate</b>; deep (nvidia/Nemotron-3-Ultra-550b-a55b): <b>CORROBORATED</b> ($0.0028) — agrees with the gate.</p>
+<div class="warn">Audit — fast: verdict <b>not supported</b> as stated. Unanswered: agreement on cause (audit — bench/audit/13); agreement on outcome (nemotron-vl — receipt.png via nvidia/Nemotron-3.5-Super-VL; bank — bench/bank/13); agreement on state (card — bench/cards/bm-vl-receipt.md:1).</div>
+<p class="note">Audit — deep: verdict <b>supported</b>; it answers every conflict and missing aspect the gate found.</p>
+<p class="note">Exhibits: vision read <code>receipt.png via nvidia/Nemotron-3.5-Super-VL</code> → <code>paid-100</code>.</p>
+<p class="note">Rebuttal round: <b>NOT RUN</b> — cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.</p>
+</section>
+<section class="case" id="court-bm-web-confirms">
+<h3>bm-web-confirms — gate: <b>CORROBORATED</b> · planted truth <b>CORROBORATED</b></h3>
+<p class="note">Round 1 (recorded): fast (nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B): <b>CORROBORATED</b> ($0.0001) — agrees with the gate; deep (nvidia/Nemotron-3-Ultra-550b-a55b): <b>CORROBORATED</b> ($0.0016) — agrees with the gate.</p>
+<p class="note">Audit — fast: verdict <b>supported</b>; it answers every conflict and missing aspect the gate found.</p>
+<p class="note">Audit — deep: verdict <b>supported</b>; it answers every conflict and missing aspect the gate found.</p>
+<p class="note">Exhibits: live-evidence read <code>https://status.example.com/ok</code> → <code>live</code>.</p>
+<p class="note">Rebuttal round: <b>NOT RUN</b> — cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.</p>
+</section>
+<section class="case" id="court-bm-web-contradicts">
+<h3>bm-web-contradicts — gate: <b>CONFLICTED</b> · planted truth <b>CONFLICTED</b></h3>
+<p class="note">Round 1 (recorded): fast (nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B): <b>CONFLICTED</b> ($0.0001) — agrees with the gate; deep (nvidia/Nemotron-3-Ultra-550b-a55b): <b>CONFLICTED</b> ($0.0013) — agrees with the gate.</p>
+<p class="note">Audit — fast: verdict <b>supported</b>; it answers every conflict and missing aspect the gate found.</p>
+<p class="note">Audit — deep: verdict <b>supported</b>; it answers every conflict and missing aspect the gate found.</p>
+<p class="note">Exhibits: live-evidence read <code>https://status.example.com/incident</code> → <code>down</code>.</p>
+<p class="note">Rebuttal round: <b>NOT RUN</b> — cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.</p>
+</section>
+<section class="case" id="court-bm-web-nonmatch">
+<h3>bm-web-nonmatch — gate: <b>CONFLICTED</b> · planted truth <b>CONFLICTED</b></h3>
+<p class="note">Round 1 (recorded): fast (nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B): <b>CONFLICTED</b> ($0.0001) — agrees with the gate; deep (nvidia/Nemotron-3-Ultra-550b-a55b): <b>CONFLICTED</b> ($0.0012) — agrees with the gate.</p>
+<p class="note">Audit — fast: verdict <b>supported</b>; it answers every conflict and missing aspect the gate found.</p>
+<p class="note">Audit — deep: verdict <b>supported</b>; it answers every conflict and missing aspect the gate found.</p>
+<p class="note">Exhibits: live-evidence read <code>https://example.com/other</code> → <code>(no literal match)</code>.</p>
+<p class="note">Rebuttal round: <b>NOT RUN</b> — cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.</p>
+</section>
+<h2 class="sec">3 · Rigor — the adversarial benchmark underneath</h2>
+<p>Before it judged a single commerce claim, the gate was scored on a planted-truth adversarial corpus (agent-work claims, recorded live run 2026-10-28, reviewer-lane cost $0.033). The lanes' false approvals are published, not hidden — they are the evidence for keeping lanes advisory. Scores below are computed from the committed files by the same counting rule as <code>benchmark/score.py</code>.</p>
+<div id="bench-chart" style="width:100%;height:260px"></div>
+<table><tr><th>Scorer</th><th>Model</th><th>Correct</th><th>False approvals</th></tr>
+<tr><td>Deterministic gate (the reconciler)</td><td><code>evidence.py — no model</code></td><td><b>14/14</b></td><td>0</td></tr>
+<tr><td>Deep lane (advisory)</td><td><code>nvidia/Nemotron-3-Ultra-550b-a55b</code></td><td><b>9/14</b></td><td>1</td></tr>
+<tr><td>Fast lane (advisory)</td><td><code>nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B</code></td><td><b>6/14</b></td><td>2</td></tr>
+</table>
+<p class="note">The original agent-work cases, with lane receipts and narration checks, are in the first Case Lab: <a href="../demo_lab/index.html">demo_lab/index.html</a> — bm-card-lies (CONFLICTED); bm-clean-ship (CORROBORATED); bm-no-evidence (NO EVIDENCE); bm-reviewer-split (CONFLICTED); bm-web-nonmatch (CONFLICTED); why-alpha (CONFLICTED); why-beta (PARTIAL).</p>
+<p>Generated by <code>claimcourt_lab/build.py</code> from
+<code>claimcourt/cases.jsonl</code>, <code>court/debate-replay.json</code> and
+<code>benchmark/</code>. The builder makes no network request; the only external call on
+this page is the optional ECharts CDN chart, and the table above carries the same numbers
+without it.</p>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<script>
+(function () {
+  var data = [{"name": "Deterministic gate", "correct": 14, "false_approvals": 0}, {"name": "Deep lane", "correct": 9, "false_approvals": 1}, {"name": "Fast lane", "correct": 6, "false_approvals": 2}];
+  if (window.echarts) {
+    var chart = echarts.init(document.getElementById('bench-chart'));
+    chart.setOption({
+      title: { text: 'Adversarial benchmark — correct verdicts of 14 (recorded 2026-10-28)' },
+      tooltip: {},
+      xAxis: { type: 'value', max: 14 },
+      yAxis: { type: 'category', data: data.map(function (d) { return d.name; }).reverse() },
+      series: [{ type: 'bar', data: data.map(function (d) { return d.correct; }).reverse(),
+                  label: { show: true, position: 'right' } }]
+    });
+  }
+  var buttons = document.querySelectorAll('.filters button');
+  var cards = document.querySelectorAll('.cc-case');
+  var showing = document.getElementById('showing');
+  buttons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      buttons.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+      btn.setAttribute('aria-pressed', 'true');
+      var f = btn.getAttribute('data-filter');
+      var n = 0;
+      cards.forEach(function (card) {
+        var show = f === 'all' || card.getAttribute('data-fixture') === f ||
+                   card.getAttribute('data-verdict') === f;
+        card.style.display = show ? '' : 'none';
+        if (show) n++;
+      });
+      showing.textContent = 'Showing ' + n + ' of ' + cards.length + ' cases.';
+    });
+  });
+})();
+</script>
+</body></html>

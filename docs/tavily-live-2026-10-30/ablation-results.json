@@ -1,0 +1,185 @@
+{
+  "run": "tavily-on-off-ablation-live-receipts",
+  "generated_by": "ablation.ablate + tavily_lane.results_to_evidence (repo code, unmodified)",
+  "retrieved_at": "2026-10-30T05:01:00Z",
+  "transport_note": "Web rows were built by the lane's own results_to_evidence from recorded Tavily API response bodies captured live on 2026-10-30 ~01:01 EDT via the connected Tavily connector. The harness's live mode would have obtained the same bodies via search_claims over HTTPS with TAVILY_API_KEY; that key is not present on this VM, so only the transport differs, not the data or the parsing.",
+  "items": [
+    {
+      "item_id": "nebius-deadline",
+      "verdict_without_web": "PARTIAL",
+      "verdict_with_web": "CONFLICTED",
+      "changed": true,
+      "web_rows": 4,
+      "web_rows_with_value": 0,
+      "claimed_value": "Oct 30",
+      "receipt_file": "~/workspace/tavily-live/claim1-nebius-deadline.json",
+      "query": "Nebius NVIDIA Global AI Hackathon submissions close deadline",
+      "web_row_detail": [
+        {
+          "locator": "https://nebiusglobalaihackathon.devpost.com/rules",
+          "value": "",
+          "matched": false,
+          "statement": "claimed value 'Oct 30' not found on this page: Nebius x NVIDIA Global AI Hackathon: Build the next frontier of AI on open infrastructure - Devpost"
+        },
+        {
+          "locator": "https://www.startupgrantsindia.com/nebius-nvidia-global-ai-hackathon",
+          "value": "",
+          "matched": false,
+          "statement": "claimed value 'Oct 30' not found on this page: Nebius x NVIDIA Global AI Hackathon 2026: Apply by 30 Oct"
+        },
+        {
+          "locator": "https://nebiusglobalaihackathon.devpost.com",
+          "value": "",
+          "matched": false,
+          "statement": "claimed value 'Oct 30' not found on this page: Nebius x NVIDIA Global AI Hackathon: Build the next frontier of AI on open infrastructure - Devpost"
+        },
+        {
+          "locator": "https://nebius.com/events/nebius-nvidia-ai-builders-hackathon",
+          "value": "",
+          "matched": false,
+          "statement": "claimed value 'Oct 30' not found on this page: Nebius Build Week Hackathon in partnership with NVIDIA"
+        }
+      ]
+    },
+    {
+      "item_id": "zetaris-deadline",
+      "verdict_without_web": "PARTIAL",
+      "verdict_with_web": "CONFLICTED",
+      "changed": true,
+      "web_rows": 5,
+      "web_rows_with_value": 0,
+      "claimed_value": "November 3",
+      "receipt_file": "~/workspace/tavily-live/claim2-zetaris-deadline.json",
+      "query": "Zetaris Demo Challenge entries close Tuesday November",
+      "web_row_detail": [
+        {
+          "locator": "https://www.youtube.com/watch?v=gmGVfHe9ZhA",
+          "value": "",
+          "matched": false,
+          "statement": "claimed value 'November 3' not found on this page: Open Agent Hackathon - Data Day with Zetaris"
+        },
+        {
+          "locator": "https://www.zetaris.com/book-a-demo",
+          "value": "",
+          "matched": false,
+          "statement": "claimed value 'November 3' not found on this page: Book a Demo | Zetaris Open Agentic Lakehouse"
+        },
+        {
+          "locator": "https://www.zetaris.com",
+          "value": "",
+          "matched": false,
+          "statement": "claimed value 'November 3' not found on this page: Zetaris | The World's Leading Data Harness for AI"
+        },
+        {
+          "locator": "https://www.linkedin.com/posts/zetaris_zetaris-spacexai-and-nvidia-are-headlining-activity-7513764960376643584-xjR9",
+          "value": "",
+          "matched": false,
+          "statement": "claimed value 'November 3' not found on this page: Zetaris Open Agent Hackathon 2026: 144-Hour Challenge | Zetaris posted on the topic | LinkedIn"
+        },
+        {
+          "locator": "https://www.instagram.com/reel/DU6sRxUEykQ",
+          "value": "",
+          "matched": false,
+          "statement": "claimed value 'November 3' not found on this page: Zetaris started with a problem we coudln't unsee... ..."
+        }
+      ]
+    },
+    {
+      "item_id": "tavily-free-tier",
+      "verdict_without_web": "PARTIAL",
+      "verdict_with_web": "CONFLICTED",
+      "changed": true,
+      "web_rows": 5,
+      "web_rows_with_value": 1,
+      "claimed_value": "1,000 credits",
+      "receipt_file": "~/workspace/tavily-live/claim3-tavily-credits.json",
+      "query": "Tavily free Researcher plan API credits per month",
+      "web_row_detail": [
+        {
+          "locator": "https://aiwiki.ai/wiki/tavily",
+          "value": "1,000 credits",
+          "matched": true,
+          "statement": "Tavily | AI Wiki"
+        },
+        {
+          "locator": "https://agentdeals.dev/vendor/tavily-ai",
+          "value": "",
+          "matched": false,
+          "statement": "claimed value '1,000 credits' not found on this page: Tavily AI Free Tier 2026: Limits, Pricing & What Changed | AgentDeals"
+        },
+        {
+          "locator": "https://clawisopen.com/tools/tavily-free",
+          "value": "",
+          "matched": false,
+          "statement": "claimed value '1,000 credits' not found on this page: Tavily Researcher | ClawIsOpen"
+        },
+        {
+          "locator": "https://freetokens.custats.info/offers/tavily-free-tier.html",
+          "value": "",
+          "matched": false,
+          "statement": "claimed value '1,000 credits' not found on this page: Tavily Researcher Free \u2014 1,000 API Credits/Month \u00b7 Free AI Credits"
+        },
+        {
+          "locator": "https://aitrendtool.com/tools/tavily",
+          "value": "",
+          "matched": false,
+          "statement": "claimed value '1,000 credits' not found on this page: Tavily Review 2026: Search API Pricing & Alternatives | AITrendTool"
+        }
+      ]
+    },
+    {
+      "item_id": "nemotron-top-tier",
+      "verdict_without_web": "PARTIAL",
+      "verdict_with_web": "CONFLICTED",
+      "changed": true,
+      "web_rows": 5,
+      "web_rows_with_value": 4,
+      "claimed_value": "Nemotron",
+      "receipt_file": "~/workspace/tavily-live/claim4-nemotron-ultra.json",
+      "query": "Nebius Token Factory Nemotron 3 Ultra model",
+      "web_row_detail": [
+        {
+          "locator": "https://www.linkedin.com/posts/nebius_nemotron-3-ultra-is-live-on-nebius-token-activity-7468293005343588353-vyJ5",
+          "value": "Nemotron",
+          "matched": true,
+          "statement": "Nemotron 3 Ultra is live on Nebius Token Factory. ..."
+        },
+        {
+          "locator": "https://mastra.ai/models/providers/nebius",
+          "value": "Nemotron",
+          "matched": true,
+          "statement": "Nebius Token Factory Models: IDs, Pricing & Usage | Mastra Docs"
+        },
+        {
+          "locator": "https://www.youtube.com/watch?v=E3fM8Z58c4Y",
+          "value": "",
+          "matched": false,
+          "statement": "claimed value 'Nemotron' not found on this page: Nemotron 3 Ultra eval speedrun: OpenRouter vs Nebius Token Factory"
+        },
+        {
+          "locator": "https://developer.nvidia.com/blog/nvidia-nemotron-3-ultra-powers-faster-more-efficient-reasoning-for-long-running-agents",
+          "value": "Nemotron",
+          "matched": true,
+          "statement": "NVIDIA Nemotron 3 Ultra Powers Faster, More Efficient Reasoning for Long-Running Agents | NVIDIA Technical Blog"
+        },
+        {
+          "locator": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-2.htm",
+          "value": "Nemotron",
+          "matched": true,
+          "statement": "Nebius Group N.V. - current report (6-K) for fiscal year 2026"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "items_total": 4,
+    "items_with_web_rows": 4,
+    "verdicts_changed": 4,
+    "changed_item_ids": [
+      "nebius-deadline",
+      "zetaris-deadline",
+      "tavily-free-tier",
+      "nemotron-top-tier"
+    ]
+  }
+}

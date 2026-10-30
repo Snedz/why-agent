@@ -1,0 +1,50 @@
+{
+  "query": "Zetaris Demo Challenge entries close Tuesday November",
+  "follow_up_questions": null,
+  "answer": null,
+  "images": [],
+  "results": [
+    {
+      "url": "https://www.youtube.com/watch?v=gmGVfHe9ZhA",
+      "title": "Open Agent Hackathon - Data Day with Zetaris",
+      "content": "[39:51] man. So, I appreciate you really coming out and so uh the you know, the pressure is on for each of you to just enjoy this experience, meet people. That's what we're here for. But when does it end?\n[40:02] So, just giving you a sense of the dates. You're going to hear a lot more.\n[40:05] There's going to be times and stamps, all that. But you know we have about you know uh you know five days from Thursday\n[40:12] so here in the US to Tuesday. Um and when you think about like the use cases\n[40:19] the actual in shout out to the question I appreciate you joining in here. Shout out for the UK. Um\n[40:26] the actual challenge statements are not announced. Those are going to be announced on the day of. What I'm [...] [27:46] about as we're building is which package do I need? Um you know how do I use it in my build and then actually in my\n[27:53] product? And then, you know, lastly, when I have issues or challenges or questions, you'll have access to a support channel inside of the hack OS.\n[28:04] So, that's where you'll be able to go and there'll be members of the team from Zatars you can contact. If there's any like specific issues you're having\n[28:11] getting set up, we expect it. Don't be shy. We also have an agent that's baked into the tool you'll be able to use.\n[28:18] We'll speak more about that on kickoff.\n[28:21] So you can make sure that whatever is, you know, happening, whether you're confused, you don't know how to use it, you're struggling, that's normal. That's [...] [31:08] But this is something I think goes universally for whatever you're building and that is you know how do I know I'm\n[31:15] solving a problem worth solving? there's when build is so much easier so many\n[31:21] solutions become you know viable to the point to where what solutions are most\n[31:28] valuable and that's where you move to a different place so I just want to give you a couple things as you're thinking about how you can leverage Zarus to\n[31:36] really solve the the the semantic challenge of keeping all this different context together um where do you bring that to life and where do you apply that",
+      "score": 0.4277797,
+      "raw_content": null,
+      "id": "3e6183-00"
+    },
+    {
+      "url": "https://www.zetaris.com/book-a-demo",
+      "title": "Book a Demo | Zetaris Open Agentic Lakehouse",
+      "content": "Zetaris\nZetaris\nZetaris\n\nBooting the Harness\u2026 skip\n\nBook a demo\n\n# See the Open Agentic Lakehouse in action\n\n30 minutes. One solution architect. Your data architecture.\n\nLearn how your organization can make faster and more reliable decisions based on more complete data with Zetaris. We'll show you query-in-place, multi-engine routing across Spark, Trino, Presto and DuckDB, and agentic AI running on your existing data infrastructure, without moving, copying or migrating a single byte. No slides. No sales pitch. Just the platform.\n\nTrusted by\n\nSingtel\nHitachi Vantara\nNVIDIA\nAT&T\nCisco\nNokia\n\nWhat to expect\n\n## What to expect from your Zetaris demo\n\n### Led by a solution architect\n\nYou'll be paired with someone who understands your stack and your industry, not an SDR running through a script. [...] Yes. Zetaris is transparent about pricing and we'll walk through the relevant model based on your deployment preference and scale. We can also provide a tailored quote as a follow-up.\n\nNo. The demo is led by a solution architect, not a salesperson, and is structured around showing you the platform working on a real workload close to yours.\n\nZetaris\nZetaris\nZetaris\n\nYour Data. Your IP. Your Harness.\n\nThe World's Leading Data Harness. Accelerating software innovation from data to AI.\n\n## Product\n\n## Partners\n\n## Company\n\n## Resources [...] ### 30 minutes, tailored\n\nBooked at a time that works for you. The agenda is built around your data architecture and AI goal, not a generic deck.\n\n### Your data, your use case\n\nWe focus on a workload close to yours: a query in place across cloud and on-prem, an AI agent on real enterprise data, a governance flow you'd actually run.\n\n### Pricing and next steps\n\nZetaris removes monthly sticker shock with architectural optionality, so you can choose the right storage and tooling for the right price.\n\n## Find out what Zetaris can do for your organization\n\nBook a 30-minute demo of the Open Agentic Lakehouse.\n\n### \n\n## Frequently asked questions\n\nA standard Zetaris demo runs for 30 minutes. We tailor the agenda to your data architecture and use case, with time for a deeper technical Q&A.",
+      "score": 0.3804832,
+      "raw_content": null,
+      "id": "07f65b-01"
+    },
+    {
+      "title": "Zetaris | The World's Leading Data Harness for AI",
+      "url": "https://www.zetaris.com",
+      "content": "Skip to content\n\nZetaris Zetaris Zetaris \n\nBook a demo Start Free\n\nai\\_data\\_gateway / Zetaris\n\nZ\n\nzetaris.cloud \u00b7 z-cloud-gateway\n\nZ Zetaris Cloud\n\nProvisioning your cluster\n\nPreparing cloud Creating cluster Worker nodes Platform services Ready\n\nBooting the Harness\u2026\n\nAccelerating software innovation from data to AI.\n\n# The World's Leading Data Harness.\n\nStart Free View The Git Repo\n\nMerchant risk data product\n\nBuild a governed merchant risk data product from our payment sources, with quality rules before anything ships.\n\nCalled zetaris.list\\_sources\n\nRead payments\\_s3, merchant\\_pg, settlement\\_pg\n\nThought 5s\n\nusl/merc\\_risk\\_compliance.sql+214\u22120\n\nquality/rules.yaml+40\u22120\n\nPlan, search, build anything\u2026\n\n\u221e AgentAuto\u2191\n\nZZetaris Data Harnessmerc\\_risk\\_compliance.md [...] Unified semantic layer\n\n  Unstructured business context \u2014 policies, table definitions, domain glossaries \u2014 made queryable at runtime. No vector DB required. Every connected agent gets the same governed view.\n ### 06 \u00b7 Open source\n\n  Open data catalog + Git\n\n  On-the-fly metadata scanning across Delta Lake, Iceberg, CSV, Parquet, Postgres \u2014 no ingest step. Full workspace version control with Git. Branch, commit, and roll back your data models.\n\nPricing\n\n## Try it free. Scale when it earns it.\n\n Free to start Hobby $0.00 Free forever",
+      "score": 0.37627983,
+      "raw_content": null,
+      "id": "8c41d8-02"
+    },
+    {
+      "title": "Zetaris Open Agent Hackathon 2026: 144-Hour Challenge | Zetaris posted on the topic | LinkedIn",
+      "url": "https://www.linkedin.com/posts/zetaris_zetaris-spacexai-and-nvidia-are-headlining-activity-7513764960376643584-xjR9",
+      "content": "To view or add a comment, sign in\n\nAI projects don't fail because of AI.\nThey fail because of data, decisions, and design.\nhere at Zetaris we have seen it all:\nBudgets blown before launch\nMonths wasted prepping unusable data\nThe wrong models solving the wrong problems\nNo unified view of the business\nAlmost all of it? Avoidable.\nIf your AI strategy runs on fragmented, duplicated, or unvalidated data, you're not innovating, you're compounding risk.\nZetaris helps enterprises unify their data, get it AI-ready faster, and sidestep the mistakes that derail transformation before it even starts.\n\nTo view or add a comment, sign in [...] To view or add a comment, sign in\n\nZetaris, SpaceXAI and NVIDIA are headlining the Open Agent Hackathon 2026: 144 hours, fully online, hosted by GenAI Works. More than 5,000 builders from 100+ countries are expected to join.\n \nCoding agents can write a working app in minutes. Then they hit the enterprise data layer and stall.\nFrom October 22 to 27, we're putting that gap to the test.\n \nThe brief: Pair Zetaris Data Harness with SpaceXAI's coding harness to build agents that work on live enterprise data. \n \nWhat you need to know:\n\u2192 October 22 - 27, 2026, fully online\n\u2192 Teams of one to five, solo entries welcome\n\u2192 $20,000 prize pool, including $15,000 in cash\n\u2192 Free to enter\n \nRegister: \n\nTo view or add a comment, sign in [...] View organization page for Zetaris\n\n5,345 followers\n\nZetaris, SpaceXAI and NVIDIA are headlining the Open Agent Hackathon 2026: 144 hours, fully online, hosted by GenAI Works. More than 5,000 builders from 100+ countries are expected to join.\n \nCoding agents can write a working app in minutes. Then they hit the enterprise data layer and stall.\nFrom October 22 to 27, we're putting that gap to the test.\n \nThe brief: Pair Zetaris Data Harness with SpaceXAI's Coding Harness to build agents that work on live enterprise data. \n \nWhat you need to know:\n\u2192 October 22 - 27, 2026, fully online\n\u2192 Teams of one to five, solo entries welcome\n\u2192 $20,000 prize pool, including $15,000 in cash\n\u2192 Free to enter\n \nRegister:",
+      "score": 0.3665676,
+      "raw_content": null,
+      "id": "40530f-03"
+    },
+    {
+      "url": "https://www.instagram.com/reel/DU6sRxUEykQ",
+      "title": "Zetaris started with a problem we coudln't unsee... ...",
+      "content": "Zetaris is the story of what happens when you decide to challenge how the entire system works instead of patching around it. Comment \u201cDEMO\u201d and\u00a0...Read more",
+      "score": 0.34627652,
+      "raw_content": null,
+      "id": "2cb0f4-04"
+    }
+  ],
+  "response_time": 3.8,
+  "request_id": "f24178ad-6955-4281-bfa8-2f4d825a6085"
+}

@@ -13,7 +13,12 @@ Two guards make web results safe to treat as evidence, and both are
 deliberate:
 
   * A page only supports a claimed value if the value LITERALLY APPEARS in
-    the page's text (case-insensitive). A search engine's ranking is an
+    the page's text (case-insensitive), as a delimited occurrence: the
+    characters immediately around it must not be letters or digits (see
+    `normalize.contains_verbatim` for the precise rule). Raw substring
+    appearance is not enough — "November 3" sits inside "November 30"
+    without the page stating a November 3 anything, and crediting that
+    would manufacture corroboration. A search engine's ranking is an
     opinion about relevance, not a verification; the deterministic gate is
     the same one `narrate.py` applies to prose — a value counts when it is
     there to be pointed at, not when a model says it is implied.
@@ -27,6 +32,16 @@ becomes a row with an empty value and a statement saying the value was not
 found there — an honest non-match, which reconciliation then treats as its
 own claim about the item's state. Silence would be easier to fake than a
 recorded miss.
+
+A second, optional match mode (`normalize_matches=True`) softens the
+literal rule with the canonicalizations in `normalize.py` — dates written
+"October 30" for a claim of "Oct 30", "1,000 API credits" for a claim of
+"1,000 credits". It exists because a live run on 2026-10-30 showed the
+verbatim rule crediting only 5 of 19 pages on claims that were mostly
+true. It is OFF by default, and it is never silent: every row records its
+`match_method` ("verbatim", "normalized:<rule>", or "none"), a normalized
+hit says so in its statement, and a normalized match is labelled as the
+weaker evidence it is wherever rows are counted.
 
 The API key comes from the TAVILY_API_KEY environment variable and nowhere
 else: never hardcoded, never in a file this module writes.
@@ -43,6 +58,7 @@ import urllib.error
 import urllib.request
 from typing import Any, Callable
 
+import normalize
 from evidence import Evidence
 
 SEARCH_URL = "https://api.tavily.com/search"
@@ -126,16 +142,23 @@ def search_claims(query: str, max_results: int = 5, *,
 
 
 def results_to_evidence(item_id: str, results: list[dict], claimed_value: str,
-                        retrieved_at: str) -> list[Evidence]:
+                        retrieved_at: str, *,
+                        normalize_matches: bool = False) -> list[Evidence]:
     """Turn Tavily results into claims about an item.
 
     A row carries the claimed value ONLY if that value literally appears in
-    the page's content (case-insensitive). Otherwise the row's value is empty
-    and its statement says the value was not found on the page — a recorded
-    non-match, not a silent omission.
+    the page's content as a delimited occurrence (case-insensitive; the
+    boundary rule is `normalize.contains_verbatim`). Otherwise the row's
+    value is empty and its statement says the value was not found on the
+    page — a recorded non-match, not a silent omission.
+
+    With `normalize_matches=True`, a page whose text states the same value
+    in a different written form also carries it — see `normalize.py` for the
+    rules. Those rows are labelled twice: `match_method` records the rule
+    that fired, and the statement says the match was normalized, so the
+    weaker evidence never masquerades as the stronger kind.
     """
     rows: list[Evidence] = []
-    needle = claimed_value.casefold()
     for result in results:
         url = str(result.get("url", "") or "")
         title = str(result.get("title", "") or "").strip()
@@ -144,9 +167,31 @@ def results_to_evidence(item_id: str, results: list[dict], claimed_value: str,
         # start of its text. Never Tavily's generated answer — see the module
         # docstring.
         base = title or content[:200]
-        if needle and needle in content.casefold():
+        if claimed_value and normalize.contains_verbatim(claimed_value,
+                                                         content):
             statement = base
             value = claimed_value
+            method = normalize.METHOD_VERBATIM
+        elif normalize_matches:
+            match = normalize.explain_match(claimed_value, content)
+            if match.matched:
+                statement = (
+                    f"{base} — claimed value matched by {match.method}"
+                    f" ({match.detail})"
+                    if base else
+                    f"claimed value matched by {match.method}"
+                    f" ({match.detail})"
+                )
+                value = claimed_value
+                method = match.method
+            else:
+                statement = (
+                    f"claimed value {claimed_value!r} not found on this page: {base}"
+                    if base else
+                    f"claimed value {claimed_value!r} not found on this page"
+                )
+                value = ""
+                method = normalize.METHOD_NONE
         else:
             statement = (
                 f"claimed value {claimed_value!r} not found on this page: {base}"
@@ -154,6 +199,7 @@ def results_to_evidence(item_id: str, results: list[dict], claimed_value: str,
                 f"claimed value {claimed_value!r} not found on this page"
             )
             value = ""
+            method = normalize.METHOD_NONE
         rows.append(Evidence(
             item_id=item_id,
             kind="web",
@@ -162,6 +208,7 @@ def results_to_evidence(item_id: str, results: list[dict], claimed_value: str,
             statement=statement,
             value=value,
             observed_at=retrieved_at,
+            match_method=method,
         ))
     return rows
 
@@ -181,6 +228,10 @@ def main(argv: list[str] | None = None) -> int:
                     help="the claimed value; a page counts only if it appears verbatim")
     ap.add_argument("--out", required=True, help="JSONL file to append rows to")
     ap.add_argument("--max-results", type=int, default=5)
+    ap.add_argument("--normalize", action="store_true",
+                    help="also credit pages that state the same value in a "
+                         "different written form (normalize.py); those rows "
+                         "are labelled with their match_method")
     args = ap.parse_args(argv)
 
     try:
@@ -190,13 +241,22 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     retrieved_at = datetime.datetime.now(datetime.timezone.utc).strftime(
         "%Y-%m-%dT%H:%M:%SZ")
-    rows = results_to_evidence(args.item, results, args.claim, retrieved_at)
+    rows = results_to_evidence(args.item, results, args.claim, retrieved_at,
+                               normalize_matches=args.normalize)
     with open(args.out, "a", encoding="utf-8") as fh:
         for row in rows:
             fh.write(json.dumps(dataclasses.asdict(row)) + "\n")
     matched = sum(1 for r in rows if r.value)
-    print(f"{len(rows)} web row(s) appended to {args.out}; "
-          f"{matched} page(s) contained the claimed value verbatim")
+    if args.normalize:
+        verbatim = sum(1 for r in rows
+                       if r.match_method == normalize.METHOD_VERBATIM)
+        normalized = matched - verbatim
+        print(f"{len(rows)} web row(s) appended to {args.out}; "
+              f"{matched} page(s) contained the claimed value "
+              f"({verbatim} verbatim, {normalized} normalized)")
+    else:
+        print(f"{len(rows)} web row(s) appended to {args.out}; "
+              f"{matched} page(s) contained the claimed value verbatim")
     return 0
 
 

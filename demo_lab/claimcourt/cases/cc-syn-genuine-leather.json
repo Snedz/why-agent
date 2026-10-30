@@ -1,0 +1,66 @@
+{
+  "case_id": "cc-syn-genuine-leather",
+  "claim": {
+    "locator": "fixture:listing/bag",
+    "source": "listing (synthetic fixture)",
+    "statement": "the listing claims the bag is genuine leather",
+    "value": "genuine leather"
+  },
+  "claims": [
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "synthetic",
+      "kind": "card",
+      "locator": "fixture:listing/bag",
+      "observed_at": "2026-10-30",
+      "source": "listing (synthetic fixture)",
+      "statement": "the listing claims the bag is genuine leather",
+      "value": "genuine leather"
+    },
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "synthetic",
+      "kind": "receipt",
+      "locator": "fixture:spec/bag",
+      "observed_at": "2026-10-30",
+      "source": "manufacturer spec (synthetic fixture)",
+      "statement": "the manufacturer's spec for the same SKU lists PU synthetic leather",
+      "value": "PU synthetic leather"
+    }
+  ],
+  "fixture": "synthetic",
+  "frozen_verdict": "CONFLICTED",
+  "gate": {
+    "agreements": [],
+    "conflicts": [
+      {
+        "aspect": "state",
+        "citations": [
+          "listing (synthetic fixture) — fixture:listing/bag",
+          "manufacturer spec (synthetic fixture) — fixture:spec/bag"
+        ],
+        "values": [
+          "PU synthetic leather",
+          "genuine leather"
+        ]
+      }
+    ],
+    "unknown_aspects": [
+      "outcome",
+      "cause"
+    ],
+    "verdict": "CONFLICTED"
+  },
+  "labels": {
+    "data": "SYNTHETIC — planted fixture, labelled as such",
+    "receipt": "claimcourt/cases.jsonl"
+  },
+  "lanes": {
+    "reason": "no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.",
+    "status": "NOT RUN"
+  },
+  "title": "SYNTHETIC FIXTURE — 'genuine leather' bag",
+  "verdict": "CONFLICTED"
+}

@@ -1,0 +1,66 @@
+{
+  "case_id": "cc-syn-review-count",
+  "claim": {
+    "locator": "fixture:site/reviews-badge",
+    "source": "site badge (synthetic fixture)",
+    "statement": "the site displays a badge claiming 500+ five-star reviews",
+    "value": "500+ five-star reviews"
+  },
+  "claims": [
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "synthetic",
+      "kind": "card",
+      "locator": "fixture:site/reviews-badge",
+      "observed_at": "2026-10-30",
+      "source": "site badge (synthetic fixture)",
+      "statement": "the site displays a badge claiming 500+ five-star reviews",
+      "value": "500+ five-star reviews"
+    },
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "synthetic",
+      "kind": "web",
+      "locator": "fixture:web/listing-reviews",
+      "observed_at": "2026-10-30",
+      "source": "google-style listing (synthetic fixture)",
+      "statement": "the public listing for the same business shows 28 reviews at 4.1 stars",
+      "value": "28 reviews (4.1 stars)"
+    }
+  ],
+  "fixture": "synthetic",
+  "frozen_verdict": "CONFLICTED",
+  "gate": {
+    "agreements": [],
+    "conflicts": [
+      {
+        "aspect": "state",
+        "citations": [
+          "site badge (synthetic fixture) — fixture:site/reviews-badge",
+          "google-style listing (synthetic fixture) — fixture:web/listing-reviews"
+        ],
+        "values": [
+          "28 reviews (4.1 stars)",
+          "500+ five-star reviews"
+        ]
+      }
+    ],
+    "unknown_aspects": [
+      "outcome",
+      "cause"
+    ],
+    "verdict": "CONFLICTED"
+  },
+  "labels": {
+    "data": "SYNTHETIC — planted fixture, labelled as such",
+    "receipt": "claimcourt/cases.jsonl"
+  },
+  "lanes": {
+    "reason": "no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.",
+    "status": "NOT RUN"
+  },
+  "title": "SYNTHETIC FIXTURE — review-count badge",
+  "verdict": "CONFLICTED"
+}

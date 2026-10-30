@@ -1,0 +1,84 @@
+{
+  "case_id": "cc-syn-handmade-mug",
+  "claim": {
+    "locator": "fixture:listing/mug",
+    "source": "listing (synthetic fixture)",
+    "statement": "the listing claims the mug is 100% handmade ceramic",
+    "value": "100% handmade ceramic"
+  },
+  "claims": [
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "synthetic",
+      "kind": "card",
+      "locator": "fixture:listing/mug",
+      "observed_at": "2026-10-30",
+      "source": "listing (synthetic fixture)",
+      "statement": "the listing claims the mug is 100% handmade ceramic",
+      "value": "100% handmade ceramic"
+    },
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "synthetic",
+      "kind": "verdict",
+      "locator": "fixture:photo/mug",
+      "observed_at": "2026-10-30",
+      "source": "nemotron-vl photo read (synthetic fixture)",
+      "statement": "the vision lane's read of the product photo reports a printed decal and uniform mould lines",
+      "value": "machine-printed decal on a moulded blank"
+    },
+    {
+      "aspect": "outcome",
+      "effective_aspect": "outcome",
+      "fixture": "synthetic",
+      "kind": "receipt",
+      "locator": "fixture:spec/mug",
+      "observed_at": "2026-10-30",
+      "source": "supplier spec (synthetic fixture)",
+      "statement": "the supplier spec for the blank describes machine printing on a moulded blank",
+      "value": "machine-printed decal on a moulded blank"
+    }
+  ],
+  "fixture": "synthetic",
+  "frozen_verdict": "CONFLICTED",
+  "gate": {
+    "agreements": [
+      {
+        "aspect": "outcome",
+        "citations": [
+          "supplier spec (synthetic fixture) — fixture:spec/mug"
+        ],
+        "value": "machine-printed decal on a moulded blank"
+      }
+    ],
+    "conflicts": [
+      {
+        "aspect": "state",
+        "citations": [
+          "listing (synthetic fixture) — fixture:listing/mug",
+          "nemotron-vl photo read (synthetic fixture) — fixture:photo/mug"
+        ],
+        "values": [
+          "100% handmade ceramic",
+          "machine-printed decal on a moulded blank"
+        ]
+      }
+    ],
+    "unknown_aspects": [
+      "cause"
+    ],
+    "verdict": "CONFLICTED"
+  },
+  "labels": {
+    "data": "SYNTHETIC — planted fixture, labelled as such",
+    "receipt": "claimcourt/cases.jsonl"
+  },
+  "lanes": {
+    "reason": "no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.",
+    "status": "NOT RUN"
+  },
+  "title": "SYNTHETIC FIXTURE — '100% handmade' mug",
+  "verdict": "CONFLICTED"
+}

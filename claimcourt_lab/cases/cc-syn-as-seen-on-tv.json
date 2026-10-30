@@ -1,0 +1,51 @@
+{
+  "case_id": "cc-syn-as-seen-on-tv",
+  "claim": {
+    "locator": "fixture:listing/tv",
+    "source": "listing (synthetic fixture)",
+    "statement": "the listing carries an 'As seen on TV' badge; nothing else in the corpus speaks about the item",
+    "value": "As seen on TV"
+  },
+  "claims": [
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "synthetic",
+      "kind": "card",
+      "locator": "fixture:listing/tv",
+      "observed_at": "2026-10-30",
+      "source": "listing (synthetic fixture)",
+      "statement": "the listing carries an 'As seen on TV' badge; nothing else in the corpus speaks about the item",
+      "value": "As seen on TV"
+    }
+  ],
+  "fixture": "synthetic",
+  "frozen_verdict": "PARTIAL",
+  "gate": {
+    "agreements": [
+      {
+        "aspect": "state",
+        "citations": [
+          "listing (synthetic fixture) — fixture:listing/tv"
+        ],
+        "value": "As seen on TV"
+      }
+    ],
+    "conflicts": [],
+    "unknown_aspects": [
+      "outcome",
+      "cause"
+    ],
+    "verdict": "PARTIAL"
+  },
+  "labels": {
+    "data": "SYNTHETIC — planted fixture, labelled as such",
+    "receipt": "claimcourt/cases.jsonl"
+  },
+  "lanes": {
+    "reason": "no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.",
+    "status": "NOT RUN"
+  },
+  "title": "SYNTHETIC FIXTURE — 'As seen on TV'",
+  "verdict": "PARTIAL"
+}

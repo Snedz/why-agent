@@ -1,0 +1,1339 @@
+{
+  "corpus": "benchmark/cases.jsonl",
+  "endpoint": "https://api.tokenfactory.nebius.com/v1/",
+  "generated_at": "2026-10-30T04:40:22Z",
+  "items": [
+    {
+      "citation_audit": [
+        {
+          "matches_gate": false,
+          "supported": false,
+          "tier": "fast",
+          "unanswered": [
+            {
+              "aspect": "state",
+              "citations": [
+                "card — bench/cards/bm-card-lies.md:1",
+                "ci — bench/ci/2"
+              ],
+              "kind": "conflict"
+            },
+            {
+              "aspect": "cause",
+              "citations": [],
+              "kind": "missing"
+            }
+          ]
+        },
+        {
+          "matches_gate": true,
+          "supported": true,
+          "tier": "deep",
+          "unanswered": []
+        }
+      ],
+      "disagreements_preserved": [
+        "fast"
+      ],
+      "exhibits": [],
+      "gate": {
+        "agreements": [
+          {
+            "aspect": "outcome",
+            "citations": [
+              "deploy — bench/deploy/2"
+            ],
+            "value": "failed"
+          }
+        ],
+        "conflicts": [
+          {
+            "aspect": "state",
+            "citations": [
+              "card — bench/cards/bm-card-lies.md:1",
+              "ci — bench/ci/2"
+            ],
+            "values": [
+              "failed",
+              "shipped"
+            ]
+          }
+        ],
+        "unknown_aspects": [
+          "cause"
+        ],
+        "verdict": "CONFLICTED"
+      },
+      "item": "bm-card-lies",
+      "planted_truth": "CONFLICTED",
+      "rebuttal_round": {
+        "reason": "cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.",
+        "status": "NOT RUN"
+      },
+      "round1": [
+        {
+          "agrees_with_gate": false,
+          "cost_usd": 0.000218,
+          "lane": "nemotron-fast",
+          "model_id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "fast",
+          "tokens": [
+            196,
+            861
+          ],
+          "verdict": "CORROBORATED"
+        },
+        {
+          "agrees_with_gate": true,
+          "cost_usd": 0.001768,
+          "lane": "nemotron-deep",
+          "model_id": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "deep",
+          "tokens": [
+            196,
+            524
+          ],
+          "verdict": "CONFLICTED"
+        }
+      ],
+      "title": "Card claims shipped"
+    },
+    {
+      "citation_audit": [
+        {
+          "matches_gate": false,
+          "supported": false,
+          "tier": "fast",
+          "unanswered": [
+            {
+              "aspect": "cause",
+              "citations": [
+                "git — bench/git/1c"
+              ],
+              "kind": "agreement"
+            },
+            {
+              "aspect": "outcome",
+              "citations": [
+                "deploy — bench/deploy/1"
+              ],
+              "kind": "agreement"
+            },
+            {
+              "aspect": "state",
+              "citations": [
+                "card — bench/cards/bm-clean-ship.md:1",
+                "git — bench/git/1",
+                "ci — bench/ci/1"
+              ],
+              "kind": "agreement"
+            }
+          ]
+        },
+        {
+          "matches_gate": true,
+          "supported": true,
+          "tier": "deep",
+          "unanswered": []
+        }
+      ],
+      "disagreements_preserved": [
+        "fast"
+      ],
+      "exhibits": [],
+      "gate": {
+        "agreements": [
+          {
+            "aspect": "cause",
+            "citations": [
+              "git — bench/git/1c"
+            ],
+            "value": "review-approved"
+          },
+          {
+            "aspect": "outcome",
+            "citations": [
+              "deploy — bench/deploy/1"
+            ],
+            "value": "delivered"
+          },
+          {
+            "aspect": "state",
+            "citations": [
+              "card — bench/cards/bm-clean-ship.md:1",
+              "git — bench/git/1",
+              "ci — bench/ci/1"
+            ],
+            "value": "shipped"
+          }
+        ],
+        "conflicts": [],
+        "unknown_aspects": [],
+        "verdict": "CORROBORATED"
+      },
+      "item": "bm-clean-ship",
+      "planted_truth": "CORROBORATED",
+      "rebuttal_round": {
+        "reason": "cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.",
+        "status": "NOT RUN"
+      },
+      "round1": [
+        {
+          "agrees_with_gate": false,
+          "cost_usd": 0.00015,
+          "lane": "nemotron-fast",
+          "model_id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "fast",
+          "tokens": [
+            242,
+            563
+          ],
+          "verdict": "CONFLICTED"
+        },
+        {
+          "agrees_with_gate": true,
+          "cost_usd": 0.001427,
+          "lane": "nemotron-deep",
+          "model_id": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "deep",
+          "tokens": [
+            242,
+            395
+          ],
+          "verdict": "CORROBORATED"
+        }
+      ],
+      "title": "Clean ship"
+    },
+    {
+      "citation_audit": [
+        {
+          "matches_gate": false,
+          "supported": false,
+          "tier": "fast",
+          "unanswered": [
+            {
+              "aspect": "outcome",
+              "citations": [
+                "ops — bench/ops/12"
+              ],
+              "kind": "agreement"
+            },
+            {
+              "aspect": "state",
+              "citations": [
+                "card — bench/cards/bm-forged-aspect.md:1",
+                "git — bench/git/12"
+              ],
+              "kind": "agreement"
+            }
+          ]
+        },
+        {
+          "matches_gate": false,
+          "supported": false,
+          "tier": "deep",
+          "unanswered": []
+        }
+      ],
+      "disagreements_preserved": [
+        "fast",
+        "deep"
+      ],
+      "exhibits": [],
+      "gate": {
+        "agreements": [
+          {
+            "aspect": "outcome",
+            "citations": [
+              "ops — bench/ops/12"
+            ],
+            "value": "done"
+          },
+          {
+            "aspect": "state",
+            "citations": [
+              "card — bench/cards/bm-forged-aspect.md:1",
+              "git — bench/git/12"
+            ],
+            "value": "done"
+          }
+        ],
+        "conflicts": [],
+        "unknown_aspects": [
+          "cause"
+        ],
+        "verdict": "PARTIAL"
+      },
+      "item": "bm-forged-aspect",
+      "planted_truth": "PARTIAL",
+      "rebuttal_round": {
+        "reason": "cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.",
+        "status": "NOT RUN"
+      },
+      "round1": [
+        {
+          "agrees_with_gate": false,
+          "cost_usd": 0.0003,
+          "lane": "nemotron-fast",
+          "model_id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "fast",
+          "tokens": [
+            229,
+            1192
+          ],
+          "verdict": "CONFLICTED"
+        },
+        {
+          "agrees_with_gate": false,
+          "cost_usd": 0.012517,
+          "lane": "nemotron-deep",
+          "model_id": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "deep",
+          "tokens": [
+            229,
+            4096
+          ],
+          "verdict": "UNPARSEABLE"
+        }
+      ],
+      "title": "Forged aspect"
+    },
+    {
+      "citation_audit": [
+        {
+          "matches_gate": true,
+          "supported": true,
+          "tier": "fast",
+          "unanswered": []
+        },
+        {
+          "matches_gate": false,
+          "supported": false,
+          "tier": "deep",
+          "unanswered": [
+            {
+              "aspect": "outcome",
+              "citations": [
+                "deploy — bench/deploy/3"
+              ],
+              "kind": "agreement"
+            },
+            {
+              "aspect": "state",
+              "citations": [
+                "card — bench/cards/bm-green-check-wrong-scope.md:1",
+                "ci — bench/ci/3"
+              ],
+              "kind": "agreement"
+            }
+          ]
+        }
+      ],
+      "disagreements_preserved": [
+        "deep"
+      ],
+      "exhibits": [],
+      "gate": {
+        "agreements": [
+          {
+            "aspect": "outcome",
+            "citations": [
+              "deploy — bench/deploy/3"
+            ],
+            "value": "reverted"
+          },
+          {
+            "aspect": "state",
+            "citations": [
+              "card — bench/cards/bm-green-check-wrong-scope.md:1",
+              "ci — bench/ci/3"
+            ],
+            "value": "merged"
+          }
+        ],
+        "conflicts": [],
+        "unknown_aspects": [
+          "cause"
+        ],
+        "verdict": "PARTIAL"
+      },
+      "item": "bm-green-check-wrong-scope",
+      "planted_truth": "PARTIAL",
+      "rebuttal_round": {
+        "reason": "cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.",
+        "status": "NOT RUN"
+      },
+      "round1": [
+        {
+          "agrees_with_gate": true,
+          "cost_usd": 0.000184,
+          "lane": "nemotron-fast",
+          "model_id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "fast",
+          "tokens": [
+            206,
+            716
+          ],
+          "verdict": "PARTIAL"
+        },
+        {
+          "agrees_with_gate": false,
+          "cost_usd": 0.001073,
+          "lane": "nemotron-deep",
+          "model_id": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "deep",
+          "tokens": [
+            206,
+            289
+          ],
+          "verdict": "CONFLICTED"
+        }
+      ],
+      "title": "Green check wrong scope"
+    },
+    {
+      "citation_audit": [
+        {
+          "matches_gate": false,
+          "supported": false,
+          "tier": "fast",
+          "unanswered": [
+            {
+              "aspect": "cause",
+              "citations": [],
+              "kind": "missing"
+            }
+          ]
+        },
+        {
+          "matches_gate": false,
+          "supported": false,
+          "tier": "deep",
+          "unanswered": [
+            {
+              "aspect": "cause",
+              "citations": [],
+              "kind": "missing"
+            }
+          ]
+        }
+      ],
+      "disagreements_preserved": [
+        "fast",
+        "deep"
+      ],
+      "exhibits": [],
+      "gate": {
+        "agreements": [
+          {
+            "aspect": "outcome",
+            "citations": [
+              "ops — bench/ops/5"
+            ],
+            "value": "done"
+          },
+          {
+            "aspect": "state",
+            "citations": [
+              "card — bench/cards/bm-missing-cause.md:1",
+              "git — bench/git/5"
+            ],
+            "value": "done"
+          }
+        ],
+        "conflicts": [],
+        "unknown_aspects": [
+          "cause"
+        ],
+        "verdict": "PARTIAL"
+      },
+      "item": "bm-missing-cause",
+      "planted_truth": "PARTIAL",
+      "rebuttal_round": {
+        "reason": "cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.",
+        "status": "NOT RUN"
+      },
+      "round1": [
+        {
+          "agrees_with_gate": false,
+          "cost_usd": 5.1e-05,
+          "lane": "nemotron-fast",
+          "model_id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "fast",
+          "tokens": [
+            196,
+            163
+          ],
+          "verdict": "CORROBORATED"
+        },
+        {
+          "agrees_with_gate": false,
+          "cost_usd": 0.001153,
+          "lane": "nemotron-deep",
+          "model_id": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "deep",
+          "tokens": [
+            196,
+            319
+          ],
+          "verdict": "CORROBORATED"
+        }
+      ],
+      "title": "Missing cause"
+    },
+    {
+      "citation_audit": [],
+      "disagreements_preserved": [],
+      "exhibits": [],
+      "gate": {
+        "agreements": [],
+        "conflicts": [],
+        "unknown_aspects": [
+          "state",
+          "outcome",
+          "cause"
+        ],
+        "verdict": "NO EVIDENCE"
+      },
+      "item": "bm-no-evidence",
+      "planted_truth": "NO EVIDENCE",
+      "rebuttal_round": {
+        "reason": "cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.",
+        "status": "NOT RUN"
+      },
+      "round1": [
+        {
+          "lane": "nemotron-fast",
+          "model_id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "reason": "the item has no claims; the harness does not run lanes on an item with nothing to judge (recorded 2026-10-28 behaviour)",
+          "status": "not run",
+          "tier": "fast"
+        },
+        {
+          "lane": "nemotron-deep",
+          "model_id": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "reason": "the item has no claims; the harness does not run lanes on an item with nothing to judge (recorded 2026-10-28 behaviour)",
+          "status": "not run",
+          "tier": "deep"
+        }
+      ],
+      "title": ""
+    },
+    {
+      "citation_audit": [
+        {
+          "matches_gate": true,
+          "supported": true,
+          "tier": "fast",
+          "unanswered": []
+        },
+        {
+          "matches_gate": true,
+          "supported": true,
+          "tier": "deep",
+          "unanswered": []
+        }
+      ],
+      "disagreements_preserved": [],
+      "exhibits": [],
+      "gate": {
+        "agreements": [
+          {
+            "aspect": "state",
+            "citations": [
+              "card — bench/cards/bm-receipt-mismatch.md:1",
+              "git — bench/git/9"
+            ],
+            "value": "paid"
+          }
+        ],
+        "conflicts": [
+          {
+            "aspect": "outcome",
+            "citations": [
+              "stripe — bench/pay/9a",
+              "audit — bench/audit/9"
+            ],
+            "values": [
+              "paid-100",
+              "paid-90"
+            ]
+          }
+        ],
+        "unknown_aspects": [
+          "cause"
+        ],
+        "verdict": "CONFLICTED"
+      },
+      "item": "bm-receipt-mismatch",
+      "planted_truth": "CONFLICTED",
+      "rebuttal_round": {
+        "reason": "cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.",
+        "status": "NOT RUN"
+      },
+      "round1": [
+        {
+          "agrees_with_gate": true,
+          "cost_usd": 0.000103,
+          "lane": "nemotron-fast",
+          "model_id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "fast",
+          "tokens": [
+            234,
+            372
+          ],
+          "verdict": "CONFLICTED"
+        },
+        {
+          "agrees_with_gate": true,
+          "cost_usd": 0.001347,
+          "lane": "nemotron-deep",
+          "model_id": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "deep",
+          "tokens": [
+            234,
+            371
+          ],
+          "verdict": "CONFLICTED"
+        }
+      ],
+      "title": "Receipt mismatch"
+    },
+    {
+      "citation_audit": [
+        {
+          "matches_gate": true,
+          "supported": true,
+          "tier": "fast",
+          "unanswered": []
+        },
+        {
+          "matches_gate": true,
+          "supported": true,
+          "tier": "deep",
+          "unanswered": []
+        }
+      ],
+      "disagreements_preserved": [],
+      "exhibits": [],
+      "gate": {
+        "agreements": [
+          {
+            "aspect": "cause",
+            "citations": [
+              "audit — bench/audit/6"
+            ],
+            "value": "freeze-exception"
+          },
+          {
+            "aspect": "state",
+            "citations": [
+              "card — bench/cards/bm-reviewer-split.md:1",
+              "git — bench/git/6"
+            ],
+            "value": "released"
+          }
+        ],
+        "conflicts": [
+          {
+            "aspect": "outcome",
+            "citations": [
+              "deploy — bench/deploy/6",
+              "nemotron-fast — nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+              "nemotron-deep — nvidia/Nemotron-3-Ultra-550b-a55b"
+            ],
+            "values": [
+              "released",
+              "withheld"
+            ]
+          }
+        ],
+        "unknown_aspects": [],
+        "verdict": "CONFLICTED"
+      },
+      "item": "bm-reviewer-split",
+      "planted_truth": "CONFLICTED",
+      "rebuttal_round": {
+        "reason": "cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.",
+        "status": "NOT RUN"
+      },
+      "round1": [
+        {
+          "agrees_with_gate": true,
+          "cost_usd": 0.00012,
+          "lane": "nemotron-fast",
+          "model_id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "fast",
+          "tokens": [
+            275,
+            432
+          ],
+          "verdict": "CONFLICTED"
+        },
+        {
+          "agrees_with_gate": true,
+          "cost_usd": 0.001865,
+          "lane": "nemotron-deep",
+          "model_id": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "deep",
+          "tokens": [
+            275,
+            530
+          ],
+          "verdict": "CONFLICTED"
+        }
+      ],
+      "title": "Reviewer split"
+    },
+    {
+      "citation_audit": [
+        {
+          "matches_gate": false,
+          "supported": false,
+          "tier": "fast",
+          "unanswered": []
+        },
+        {
+          "matches_gate": true,
+          "supported": true,
+          "tier": "deep",
+          "unanswered": []
+        }
+      ],
+      "disagreements_preserved": [
+        "fast"
+      ],
+      "exhibits": [],
+      "gate": {
+        "agreements": [],
+        "conflicts": [
+          {
+            "aspect": "state",
+            "citations": [
+              "card — bench/cards/bm-stale-card.md:1",
+              "git — bench/git/10",
+              "ci — bench/ci/10"
+            ],
+            "values": [
+              "closed",
+              "open"
+            ]
+          }
+        ],
+        "unknown_aspects": [
+          "outcome",
+          "cause"
+        ],
+        "verdict": "CONFLICTED"
+      },
+      "item": "bm-stale-card",
+      "planted_truth": "CONFLICTED",
+      "rebuttal_round": {
+        "reason": "cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.",
+        "status": "NOT RUN"
+      },
+      "round1": [
+        {
+          "agrees_with_gate": false,
+          "cost_usd": 0.000133,
+          "lane": "nemotron-fast",
+          "model_id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "fast",
+          "tokens": [
+            198,
+            506
+          ],
+          "verdict": "PARTIAL"
+        },
+        {
+          "agrees_with_gate": true,
+          "cost_usd": 0.001086,
+          "lane": "nemotron-deep",
+          "model_id": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "deep",
+          "tokens": [
+            198,
+            296
+          ],
+          "verdict": "CONFLICTED"
+        }
+      ],
+      "title": "Stale card"
+    },
+    {
+      "citation_audit": [
+        {
+          "matches_gate": false,
+          "supported": false,
+          "tier": "fast",
+          "unanswered": [
+            {
+              "aspect": "cause",
+              "citations": [
+                "reviewer-x — bench/rev/11"
+              ],
+              "kind": "agreement"
+            },
+            {
+              "aspect": "outcome",
+              "citations": [
+                "qa — bench/qa/11"
+              ],
+              "kind": "agreement"
+            },
+            {
+              "aspect": "state",
+              "citations": [
+                "card — bench/cards/bm-unexpected-aspect.md:1",
+                "git — bench/git/11"
+              ],
+              "kind": "agreement"
+            }
+          ]
+        },
+        {
+          "matches_gate": false,
+          "supported": false,
+          "tier": "deep",
+          "unanswered": [
+            {
+              "aspect": "cause",
+              "citations": [
+                "reviewer-x — bench/rev/11"
+              ],
+              "kind": "agreement"
+            },
+            {
+              "aspect": "outcome",
+              "citations": [
+                "qa — bench/qa/11"
+              ],
+              "kind": "agreement"
+            },
+            {
+              "aspect": "state",
+              "citations": [
+                "card — bench/cards/bm-unexpected-aspect.md:1",
+                "git — bench/git/11"
+              ],
+              "kind": "agreement"
+            }
+          ]
+        }
+      ],
+      "disagreements_preserved": [
+        "fast",
+        "deep"
+      ],
+      "exhibits": [],
+      "gate": {
+        "agreements": [
+          {
+            "aspect": "cause",
+            "citations": [
+              "reviewer-x — bench/rev/11"
+            ],
+            "value": "checklist"
+          },
+          {
+            "aspect": "outcome",
+            "citations": [
+              "qa — bench/qa/11"
+            ],
+            "value": "verified"
+          },
+          {
+            "aspect": "state",
+            "citations": [
+              "card — bench/cards/bm-unexpected-aspect.md:1",
+              "git — bench/git/11"
+            ],
+            "value": "verified"
+          }
+        ],
+        "conflicts": [],
+        "unknown_aspects": [],
+        "verdict": "CORROBORATED"
+      },
+      "item": "bm-unexpected-aspect",
+      "planted_truth": "CORROBORATED",
+      "rebuttal_round": {
+        "reason": "cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.",
+        "status": "NOT RUN"
+      },
+      "round1": [
+        {
+          "agrees_with_gate": false,
+          "cost_usd": 0.000218,
+          "lane": "nemotron-fast",
+          "model_id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "fast",
+          "tokens": [
+            247,
+            846
+          ],
+          "verdict": "PARTIAL"
+        },
+        {
+          "agrees_with_gate": false,
+          "cost_usd": 0.001744,
+          "lane": "nemotron-deep",
+          "model_id": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "deep",
+          "tokens": [
+            247,
+            499
+          ],
+          "verdict": "PARTIAL"
+        }
+      ],
+      "title": "Unexpected aspect"
+    },
+    {
+      "citation_audit": [
+        {
+          "matches_gate": false,
+          "supported": false,
+          "tier": "fast",
+          "unanswered": [
+            {
+              "aspect": "cause",
+              "citations": [
+                "audit — bench/audit/13"
+              ],
+              "kind": "agreement"
+            },
+            {
+              "aspect": "outcome",
+              "citations": [
+                "nemotron-vl — receipt.png via nvidia/Nemotron-3.5-Super-VL",
+                "bank — bench/bank/13"
+              ],
+              "kind": "agreement"
+            },
+            {
+              "aspect": "state",
+              "citations": [
+                "card — bench/cards/bm-vl-receipt.md:1"
+              ],
+              "kind": "agreement"
+            }
+          ]
+        },
+        {
+          "matches_gate": true,
+          "supported": true,
+          "tier": "deep",
+          "unanswered": []
+        }
+      ],
+      "disagreements_preserved": [
+        "fast"
+      ],
+      "exhibits": [
+        {
+          "lane": "vision",
+          "locator": "receipt.png via nvidia/Nemotron-3.5-Super-VL",
+          "source": "nemotron-vl",
+          "statement": "the vision lane read the receipt amount",
+          "value": "paid-100"
+        }
+      ],
+      "gate": {
+        "agreements": [
+          {
+            "aspect": "cause",
+            "citations": [
+              "audit — bench/audit/13"
+            ],
+            "value": "autopay"
+          },
+          {
+            "aspect": "outcome",
+            "citations": [
+              "nemotron-vl — receipt.png via nvidia/Nemotron-3.5-Super-VL",
+              "bank — bench/bank/13"
+            ],
+            "value": "paid-100"
+          },
+          {
+            "aspect": "state",
+            "citations": [
+              "card — bench/cards/bm-vl-receipt.md:1"
+            ],
+            "value": "paid"
+          }
+        ],
+        "conflicts": [],
+        "unknown_aspects": [],
+        "verdict": "CORROBORATED"
+      },
+      "item": "bm-vl-receipt",
+      "planted_truth": "CORROBORATED",
+      "rebuttal_round": {
+        "reason": "cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.",
+        "status": "NOT RUN"
+      },
+      "round1": [
+        {
+          "agrees_with_gate": false,
+          "cost_usd": 0.000302,
+          "lane": "nemotron-fast",
+          "model_id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "fast",
+          "tokens": [
+            240,
+            1198
+          ],
+          "verdict": "PARTIAL"
+        },
+        {
+          "agrees_with_gate": true,
+          "cost_usd": 0.002781,
+          "lane": "nemotron-deep",
+          "model_id": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "deep",
+          "tokens": [
+            240,
+            847
+          ],
+          "verdict": "CORROBORATED"
+        }
+      ],
+      "title": "VL receipt"
+    },
+    {
+      "citation_audit": [
+        {
+          "matches_gate": true,
+          "supported": true,
+          "tier": "fast",
+          "unanswered": []
+        },
+        {
+          "matches_gate": true,
+          "supported": true,
+          "tier": "deep",
+          "unanswered": []
+        }
+      ],
+      "disagreements_preserved": [],
+      "exhibits": [
+        {
+          "lane": "live-evidence",
+          "locator": "https://status.example.com/ok",
+          "source": "tavily",
+          "statement": "the status page reports the service live",
+          "value": "live"
+        }
+      ],
+      "gate": {
+        "agreements": [
+          {
+            "aspect": "cause",
+            "citations": [
+              "ci — bench/ci/8"
+            ],
+            "value": "new-region"
+          },
+          {
+            "aspect": "outcome",
+            "citations": [
+              "monitor — bench/mon/8"
+            ],
+            "value": "normal"
+          },
+          {
+            "aspect": "state",
+            "citations": [
+              "card — bench/cards/bm-web-confirms.md:1",
+              "tavily — https://status.example.com/ok"
+            ],
+            "value": "live"
+          }
+        ],
+        "conflicts": [],
+        "unknown_aspects": [],
+        "verdict": "CORROBORATED"
+      },
+      "item": "bm-web-confirms",
+      "planted_truth": "CORROBORATED",
+      "rebuttal_round": {
+        "reason": "cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.",
+        "status": "NOT RUN"
+      },
+      "round1": [
+        {
+          "agrees_with_gate": true,
+          "cost_usd": 0.000131,
+          "lane": "nemotron-fast",
+          "model_id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "fast",
+          "tokens": [
+            228,
+            488
+          ],
+          "verdict": "CORROBORATED"
+        },
+        {
+          "agrees_with_gate": true,
+          "cost_usd": 0.001596,
+          "lane": "nemotron-deep",
+          "model_id": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "deep",
+          "tokens": [
+            228,
+            456
+          ],
+          "verdict": "CORROBORATED"
+        }
+      ],
+      "title": "Web confirms"
+    },
+    {
+      "citation_audit": [
+        {
+          "matches_gate": true,
+          "supported": true,
+          "tier": "fast",
+          "unanswered": []
+        },
+        {
+          "matches_gate": true,
+          "supported": true,
+          "tier": "deep",
+          "unanswered": []
+        }
+      ],
+      "disagreements_preserved": [],
+      "exhibits": [
+        {
+          "lane": "live-evidence",
+          "locator": "https://status.example.com/incident",
+          "source": "tavily",
+          "statement": "the status page reports the service down",
+          "value": "down"
+        }
+      ],
+      "gate": {
+        "agreements": [
+          {
+            "aspect": "outcome",
+            "citations": [
+              "monitor — bench/mon/7"
+            ],
+            "value": "outage"
+          }
+        ],
+        "conflicts": [
+          {
+            "aspect": "state",
+            "citations": [
+              "card — bench/cards/bm-web-contradicts.md:1",
+              "tavily — https://status.example.com/incident"
+            ],
+            "values": [
+              "down",
+              "live"
+            ]
+          }
+        ],
+        "unknown_aspects": [
+          "cause"
+        ],
+        "verdict": "CONFLICTED"
+      },
+      "item": "bm-web-contradicts",
+      "planted_truth": "CONFLICTED",
+      "rebuttal_round": {
+        "reason": "cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.",
+        "status": "NOT RUN"
+      },
+      "round1": [
+        {
+          "agrees_with_gate": true,
+          "cost_usd": 8.9e-05,
+          "lane": "nemotron-fast",
+          "model_id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "fast",
+          "tokens": [
+            209,
+            318
+          ],
+          "verdict": "CONFLICTED"
+        },
+        {
+          "agrees_with_gate": true,
+          "cost_usd": 0.00131,
+          "lane": "nemotron-deep",
+          "model_id": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "deep",
+          "tokens": [
+            209,
+            367
+          ],
+          "verdict": "CONFLICTED"
+        }
+      ],
+      "title": "Web contradicts"
+    },
+    {
+      "citation_audit": [
+        {
+          "matches_gate": true,
+          "supported": true,
+          "tier": "fast",
+          "unanswered": []
+        },
+        {
+          "matches_gate": true,
+          "supported": true,
+          "tier": "deep",
+          "unanswered": []
+        }
+      ],
+      "disagreements_preserved": [],
+      "exhibits": [
+        {
+          "lane": "live-evidence",
+          "locator": "https://example.com/other",
+          "source": "tavily",
+          "statement": "the claimed value was not found on this page",
+          "value": ""
+        }
+      ],
+      "gate": {
+        "agreements": [
+          {
+            "aspect": "outcome",
+            "citations": [
+              "post — bench/post/14"
+            ],
+            "value": "shipped"
+          }
+        ],
+        "conflicts": [
+          {
+            "aspect": "state",
+            "citations": [
+              "card — bench/cards/bm-web-nonmatch.md:1",
+              "git — bench/git/14",
+              "tavily — https://example.com/other"
+            ],
+            "values": [
+              "",
+              "shipped"
+            ]
+          }
+        ],
+        "unknown_aspects": [
+          "cause"
+        ],
+        "verdict": "CONFLICTED"
+      },
+      "item": "bm-web-nonmatch",
+      "planted_truth": "CONFLICTED",
+      "rebuttal_round": {
+        "reason": "cross-examination is a live model round and no provider key is present on the build machine; run `NEBIUS_API_KEY=... python3 court.py --live` to hold it. The citation audit above is the deterministic layer and is complete.",
+        "status": "NOT RUN"
+      },
+      "round1": [
+        {
+          "agrees_with_gate": true,
+          "cost_usd": 0.000128,
+          "lane": "nemotron-fast",
+          "model_id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "fast",
+          "tokens": [
+            224,
+            477
+          ],
+          "verdict": "CONFLICTED"
+        },
+        {
+          "agrees_with_gate": true,
+          "cost_usd": 0.001235,
+          "lane": "nemotron-deep",
+          "model_id": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "receipt": "benchmark/eval-benchmark-2026-10-28.json",
+          "status": "recorded",
+          "tier": "deep",
+          "tokens": [
+            224,
+            337
+          ],
+          "verdict": "CONFLICTED"
+        }
+      ],
+      "title": "Web non-match"
+    }
+  ],
+  "kind": "nemotron-court-debate",
+  "labels": {
+    "citation_audit": "COMPUTED — deterministic, run over the committed corpus by court.py; no model text",
+    "rebuttal_round": "NOT RUN — no provider key present; the transcript does not invent one",
+    "round1": "RECORDED — verdicts, costs and tokens from the 2026-10-28 live Token Factory run, committed as benchmark/eval-benchmark-2026-10-28.json"
+  },
+  "mode": "replay",
+  "summary": {
+    "gate_verdicts": {
+      "CONFLICTED": 6,
+      "CORROBORATED": 4,
+      "NO EVIDENCE": 1,
+      "PARTIAL": 3
+    },
+    "items": 14,
+    "items_with_disagreement": 8
+  }
+}

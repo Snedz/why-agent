@@ -1,0 +1,66 @@
+{
+  "case_id": "cc-syn-award-banner",
+  "claim": {
+    "locator": "fixture:site/award",
+    "source": "site hero banner (synthetic fixture)",
+    "statement": "the site's hero banner claims a 2025 'Best of the City' award",
+    "value": "Best of the City 2025 — award-winning"
+  },
+  "claims": [
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "synthetic",
+      "kind": "card",
+      "locator": "fixture:site/award",
+      "observed_at": "2026-10-30",
+      "source": "site hero banner (synthetic fixture)",
+      "statement": "the site's hero banner claims a 2025 'Best of the City' award",
+      "value": "Best of the City 2025 — award-winning"
+    },
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "synthetic",
+      "kind": "web",
+      "locator": "fixture:web/award-winners-2025",
+      "observed_at": "2026-10-30",
+      "source": "award winners list (synthetic fixture)",
+      "statement": "the claimed award does not appear on the award programme's published 2025 winners list — a recorded non-match, kept as a claim with an empty value",
+      "value": ""
+    }
+  ],
+  "fixture": "synthetic",
+  "frozen_verdict": "CONFLICTED",
+  "gate": {
+    "agreements": [],
+    "conflicts": [
+      {
+        "aspect": "state",
+        "citations": [
+          "site hero banner (synthetic fixture) — fixture:site/award",
+          "award winners list (synthetic fixture) — fixture:web/award-winners-2025"
+        ],
+        "values": [
+          "",
+          "Best of the City 2025 — award-winning"
+        ]
+      }
+    ],
+    "unknown_aspects": [
+      "outcome",
+      "cause"
+    ],
+    "verdict": "CONFLICTED"
+  },
+  "labels": {
+    "data": "SYNTHETIC — planted fixture, labelled as such",
+    "receipt": "claimcourt/cases.jsonl"
+  },
+  "lanes": {
+    "reason": "no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.",
+    "status": "NOT RUN"
+  },
+  "title": "SYNTHETIC FIXTURE — award banner, no award found",
+  "verdict": "CONFLICTED"
+}

@@ -1,0 +1,66 @@
+{
+  "case_id": "cc-syn-open-7-days",
+  "claim": {
+    "locator": "fixture:site/hero-hours",
+    "source": "site hero (synthetic fixture)",
+    "statement": "the site's hero banner claims the business is open 7 days a week",
+    "value": "open 7 days a week"
+  },
+  "claims": [
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "synthetic",
+      "kind": "card",
+      "locator": "fixture:site/hero-hours",
+      "observed_at": "2026-10-30",
+      "source": "site hero (synthetic fixture)",
+      "statement": "the site's hero banner claims the business is open 7 days a week",
+      "value": "open 7 days a week"
+    },
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "fixture": "synthetic",
+      "kind": "web",
+      "locator": "fixture:site/hours-table",
+      "observed_at": "2026-10-30",
+      "source": "same site's hours table (synthetic fixture)",
+      "statement": "the same site's hours table lists Sunday as closed",
+      "value": "Sunday: closed"
+    }
+  ],
+  "fixture": "synthetic",
+  "frozen_verdict": "CONFLICTED",
+  "gate": {
+    "agreements": [],
+    "conflicts": [
+      {
+        "aspect": "state",
+        "citations": [
+          "site hero (synthetic fixture) — fixture:site/hero-hours",
+          "same site's hours table (synthetic fixture) — fixture:site/hours-table"
+        ],
+        "values": [
+          "Sunday: closed",
+          "open 7 days a week"
+        ]
+      }
+    ],
+    "unknown_aspects": [
+      "outcome",
+      "cause"
+    ],
+    "verdict": "CONFLICTED"
+  },
+  "labels": {
+    "data": "SYNTHETIC — planted fixture, labelled as such",
+    "receipt": "claimcourt/cases.jsonl"
+  },
+  "lanes": {
+    "reason": "no provider key on the build machine; the gate verdict above is deterministic and computed from the rows shown. Live lanes: RUN_PACK.md step 3.",
+    "status": "NOT RUN"
+  },
+  "title": "SYNTHETIC FIXTURE — 'open 7 days' vs its own hours table",
+  "verdict": "CONFLICTED"
+}
