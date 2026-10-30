@@ -9,6 +9,12 @@ Everything below is ready to paste. **Three things need the founder** — see
 §0. Nothing has been submitted, published to Devpost, or uploaded to YouTube
 by the build lane; those are behind the founder's accounts and their call.
 
+**On the field labels.** The "Enter a Submission" form is behind a Devpost
+login, so its own wording was not readable from here. The answers below are
+keyed to the ten numbered submission requirements in the rules, which enumerate
+the fields the form asks for. If a label on the form differs, the answer under
+it is still the right one — but read the form's wording before pasting.
+
 ---
 
 ## 0. What only the founder can do
@@ -366,6 +372,12 @@ Case Lab: https://snedz.github.io/why-agent/demo_lab/
 7. Open the YouTube URL **in a logged-out browser** (or an incognito window) and
    confirm it plays. A link that only plays for the uploader's account fails the
    rule.
+8. One line in the repository, so the README points at the video a judge will
+   be sent to: in `README.md`, the **Video** row of the submission table
+   currently reads
+   `https://snedz.github.io/why-agent/why-agent-nebius-demo.mp4` — replace it
+   with the YouTube URL and push. The Pages copy stays as it is; it is the
+   fallback if YouTube is slow.
 
 The video is also published on GitHub Pages at
 `https://snedz.github.io/why-agent/why-agent-nebius-demo.mp4`, so there is a
