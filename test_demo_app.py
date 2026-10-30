@@ -44,6 +44,7 @@ NODE = shutil.which("node")
 CORPUS_PATHS = {
     "benchmark": demo_page.tier_ledger.CASES,
     "demo": HERE / "evidence" / "items.jsonl",
+    "claimcourt": HERE / "claimcourt" / "cases.jsonl",
 }
 
 # What `.github/workflows/pages.yml` copies into the published site. A relative

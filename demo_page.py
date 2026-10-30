@@ -51,9 +51,13 @@ WORKBENCH_JS = HERE / "demo_lab" / "workbench.js"
 # Both corpora, labelled, because a reader should be able to see which file a
 # claim came from. `benchmark/cases.jsonl` is the adversarial corpus the scores
 # above are measured on; `evidence/items.jsonl` is the one `demo.py` prints.
+# Labelled by the file the rows come from, not by a count: two of these
+# corpora hold items with no claim rows at all (a card and nothing else), so a
+# number in the label disagrees with the length of the list under it.
 CORPORA = (
-    ("benchmark", "The adversarial corpus — 14 planted-claim items", "cases.jsonl"),
-    ("demo", "The five cases python3 demo.py prints", "items.jsonl"),
+    ("benchmark", "The adversarial corpus — benchmark/cases.jsonl", "cases.jsonl"),
+    ("demo", "The demo corpus — evidence/items.jsonl", "items.jsonl"),
+    ("claimcourt", "The commerce corpus — claimcourt/cases.jsonl", "cases.jsonl"),
 )
 
 
@@ -144,7 +148,12 @@ def workbench_payload() -> dict:
     """Every item in both corpora, with its claims, as data for the page."""
     notes, lanes = _case_lab()
     paths = {"benchmark": tier_ledger.CASES,
-             "demo": HERE / "evidence" / "items.jsonl"}
+             "demo": HERE / "evidence" / "items.jsonl",
+             # The commerce corpus: the same rows and the same reconciler, on
+             # claims a shopper reads rather than a card a build system wrote.
+             # `claimcourt/score.py` already holds its verdicts to the frozen
+             # file; including it here means the browser is held to them too.
+             "claimcourt": HERE / "claimcourt" / "cases.jsonl"}
     items: list[dict] = []
     corpora: list[dict] = []
 
