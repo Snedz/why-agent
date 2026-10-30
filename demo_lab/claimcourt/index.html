@@ -20,7 +20,8 @@ table { border-collapse: collapse; width: 100%; font-size: .82rem; } th, td { bo
 code { background: #f0f0f0; padding: 0 .25rem; } details { margin-top: .5rem; } summary { cursor: pointer; font-size: .88rem; }
 </style></head><body>
 <h1>Claim Court</h1>
-<p><b>Every commerce claim, checked against its evidence.</b> The claims below are the ones a
+<p><b>Every commerce claim, checked against its evidence.</b> Claim Court is the commerce
+surface of why-agent. The claims below are the ones a
 customer actually reads — a salon's hours and phone number, a listing's materials, a sale
 price. Each is treated the way why-agent treats a work item: sources make claims, one
 deterministic reconciler groups them by aspect and returns <b>CORROBORATED</b>,
@@ -374,9 +375,21 @@ below is likewise NOT RUN. The page does not quote a lane verdict that does not 
 <tr><td>Fast lane (advisory)</td><td><code>nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B</code></td><td><b>6/14</b></td><td>2</td></tr>
 </table>
 <p class="note">The original agent-work cases, with lane receipts and narration checks, are in the first Case Lab: <a href="../demo_lab/index.html">demo_lab/index.html</a> — bm-card-lies (CONFLICTED); bm-clean-ship (CORROBORATED); bm-no-evidence (NO EVIDENCE); bm-reviewer-split (CONFLICTED); bm-web-nonmatch (CONFLICTED); why-alpha (CONFLICTED); why-beta (PARTIAL).</p>
+<h2 class="sec">4 · Live-evidence check — Tavily (measured 2026-10-30)</h2>
+<p><b>Tavily is our evidence-expansion layer, not an answer layer.</b> <span class="badge recorded">RECORDED</span> On 4 claims / 19 pages it widened the evidence surface the reconciler could test — and the open web disagreed with itself on all four: PARTIAL → CONFLICTED is the system becoming safer, because a conflict that exists in the wild was invisible in the static corpus. The 5/19 verbatim rate is a property of the web, and it is exactly why raw search output must pass a verbatim gate before it can corroborate anything. We use Search → Extract, never the generated answer as evidence.</p>
+<div class="flip"><b>One claim, end to end.</b> Our own planning claim: the Nebius deadline, <code>Oct 30</code>. Query: “Nebius NVIDIA Global AI Hackathon submissions close deadline”. Tavily returned 4 pages — <a href="https://nebiusglobalaihackathon.devpost.com/rules">https://nebiusglobalaihackathon.devpost.com/rules</a>; <a href="https://www.startupgrantsindia.com/nebius-nvidia-global-ai-hackathon">https://www.startupgrantsindia.com/nebius-nvidia-global-ai-hackathon</a>; <a href="https://nebiusglobalaihackathon.devpost.com">https://nebiusglobalaihackathon.devpost.com</a>; <a href="https://nebius.com/events/nebius-nvidia-ai-builders-hackathon">https://nebius.com/events/nebius-nvidia-ai-builders-hackathon</a>. Pages containing the claimed value verbatim: <b>0 of 4</b>. Without web rows the reconciler returned <span class="chip PARTIAL">PARTIAL</span>; with them, <span class="chip CONFLICTED">CONFLICTED</span>.</div>
+<table><tr><th>Claimed value</th><th>Without web</th><th>With web — verbatim</th><th>Pages credited</th><th>With web — normalization v1</th><th>Pages credited</th></tr>
+<tr><td><code>Oct 30</code></td><td><span class="chip PARTIAL">PARTIAL</span></td><td><span class="chip CONFLICTED">CONFLICTED</span></td><td>0/4</td><td><span class="chip CONFLICTED">CONFLICTED</span></td><td>3/4</td></tr>
+<tr><td><code>November 3</code></td><td><span class="chip PARTIAL">PARTIAL</span></td><td><span class="chip CONFLICTED">CONFLICTED</span></td><td>0/5</td><td><span class="chip CONFLICTED">CONFLICTED</span></td><td>0/5</td></tr>
+<tr><td><code>1,000 credits</code></td><td><span class="chip PARTIAL">PARTIAL</span></td><td><span class="chip CONFLICTED">CONFLICTED</span></td><td>1/5</td><td><span class="chip PARTIAL">PARTIAL</span></td><td>5/5</td></tr>
+<tr><td><code>Nemotron</code></td><td><span class="chip PARTIAL">PARTIAL</span></td><td><span class="chip CONFLICTED">CONFLICTED</span></td><td>4/5</td><td><span class="chip CONFLICTED">CONFLICTED</span></td><td>4/5</td></tr>
+</table>
+<p class="note"><b>Normalization v1</b> is a second, labelled matching mode (dates, numbers and phones canonicalised at ingest; every hit is labelled <code>normalized:&lt;rule&gt;</code> on its row). Over the same receipts it credits <b>12 of 19 pages</b>, and the “1,000 credits” claim improves to PARTIAL — all five of its pages credited by the number rule. The other three claims stay CONFLICTED. “Oct 30” stays CONFLICTED even with 3 of its 4 pages matched by the date rule: the fourth page states no date, and a recorded miss counts as disagreement — an open design question, deliberately not changed here. Reconciliation itself stayed exact.</p>
+<p class="note">Receipts — the raw Tavily responses and both ablation result files: <a href="https://github.com/Snedz/why-agent/tree/main/docs/tavily-live-2026-10-30">docs/tavily-live-2026-10-30/</a> in the repo. Harness: <code>ablation.py</code>; lane: <code>tavily_lane.py</code>; matching rules: <code>normalize.py</code>.</p>
 <p>Generated by <code>claimcourt_lab/build.py</code> from
-<code>claimcourt/cases.jsonl</code>, <code>court/debate-replay.json</code> and
-<code>benchmark/</code>. The builder makes no network request; the only external call on
+<code>claimcourt/cases.jsonl</code>, <code>court/debate-replay.json</code>,
+<code>benchmark/</code> and the recorded Tavily ablation receipts in
+<code>docs/tavily-live-2026-10-30/</code>. The builder makes no network request; the only external call on
 this page is the optional ECharts CDN chart, and the table above carries the same numbers
 without it.</p>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>

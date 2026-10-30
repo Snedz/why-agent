@@ -14,8 +14,10 @@ Same house rule as demo_lab/build.py: generate, don't assert. Every
 verdict on the page is computed here by the real reconciler; every score
 in the rigor section is computed from the committed benchmark files with
 benchmark/score.py's own counting function; the court section renders
-court/debate-replay.json as generated. If a number on this page cannot be
-traced to a committed file, it does not ship.
+court/debate-replay.json as generated; the Tavily section renders the
+recorded live-ablation result files committed under
+docs/tavily-live-2026-10-30/. If a number on this page cannot be traced
+to a committed file, it does not ship.
 """
 from __future__ import annotations
 
@@ -40,6 +42,11 @@ BENCH_CASES = ROOT / "benchmark" / "cases.jsonl"
 BENCH_TRUTH = ROOT / "benchmark" / "truth.json"
 BENCH_EVAL = ROOT / "benchmark" / "eval-benchmark-2026-10-28.json"
 LAB_CASES = ROOT / "demo_lab" / "cases"
+TAVILY_DIR = ROOT / "docs" / "tavily-live-2026-10-30"
+TAVILY_VERBATIM = TAVILY_DIR / "ablation-results.json"
+TAVILY_NORMALIZED = TAVILY_DIR / "ablation-normalized-results.json"
+TAVILY_RECEIPTS_URL = ("https://github.com/Snedz/why-agent/tree/main/"
+                       "docs/tavily-live-2026-10-30")
 OUT_DIR = HERE / "cases"
 COURT_OUT = HERE / "court.json"
 INDEX = HERE / "index.html"
@@ -205,7 +212,58 @@ def build_rigor() -> dict:
     }
 
 
-def render_html(cases: list[dict], debate: dict | None, rigor: dict) -> str:
+def build_tavily() -> dict | None:
+    """The recorded Tavily on/off ablation (live run 2026-10-30).
+
+    Renders only what the committed result files measured: the verbatim
+    run (docs/tavily-live-2026-10-30/ablation-results.json) and the
+    normalization-v1 re-run over the same receipts
+    (ablation-normalized-results.json beside it). Returns None if either
+    file is missing, and the page then carries no Tavily section.
+    """
+    if not (TAVILY_VERBATIM.exists() and TAVILY_NORMALIZED.exists()):
+        return None
+    verb = json.loads(TAVILY_VERBATIM.read_text(encoding="utf-8"))
+    norm = json.loads(TAVILY_NORMALIZED.read_text(encoding="utf-8"))
+    norm_by_id = {i["item_id"]: i for i in norm["items"]}
+    items = []
+    for it in verb["items"]:
+        n = norm_by_id[it["item_id"]]
+        items.append({
+            "item_id": it["item_id"],
+            "claimed_value": it["claimed_value"],
+            "without": it["verdict_without_web"],
+            "verbatim": it["verdict_with_web"],
+            "normalized": n["verdict_with_web_normalized"],
+            "pages": it["web_rows"],
+            "pages_verbatim": it["web_rows_with_value"],
+            "pages_normalized": n["web_rows_with_value_normalized"],
+        })
+    worked_src = next((i for i in verb["items"]
+                       if i["item_id"] == "nebius-deadline"), verb["items"][0])
+    worked = {
+        "claimed_value": worked_src["claimed_value"],
+        "query": worked_src["query"],
+        "without": worked_src["verdict_without_web"],
+        "verbatim": worked_src["verdict_with_web"],
+        "pages": [{"locator": p["locator"], "matched": p["matched"]}
+                  for p in worked_src["web_row_detail"]],
+    }
+    return {
+        "retrieved_at": verb["retrieved_at"],
+        "items": items,
+        "pages_total": norm["summary"]["pages_total"],
+        "pages_verbatim": norm["summary"]["pages_with_value_verbatim"],
+        "pages_normalized": norm["summary"]["pages_with_value_normalized"],
+        "verbatim_changed": verb["summary"]["verdicts_changed"],
+        "normalized_changed": norm["summary"]["normalized"]["verdicts_changed"],
+        "receipts_url": TAVILY_RECEIPTS_URL,
+        "worked": worked,
+    }
+
+
+def render_html(cases: list[dict], debate: dict | None, rigor: dict,
+                tavily: dict | None) -> str:
     e = html.escape
     counts = {}
     for c in cases:
@@ -241,7 +299,8 @@ table {{ border-collapse: collapse; width: 100%; font-size: .82rem; }} th, td {{
 code {{ background: #f0f0f0; padding: 0 .25rem; }} details {{ margin-top: .5rem; }} summary {{ cursor: pointer; font-size: .88rem; }}
 </style></head><body>
 <h1>Claim Court</h1>
-<p><b>Every commerce claim, checked against its evidence.</b> The claims below are the ones a
+<p><b>Every commerce claim, checked against its evidence.</b> Claim Court is the commerce
+surface of why-agent. The claims below are the ones a
 customer actually reads — a salon's hours and phone number, a listing's materials, a sale
 price. Each is treated the way why-agent treats a work item: sources make claims, one
 deterministic reconciler groups them by aspect and returns <b>CORROBORATED</b>,
@@ -385,9 +444,68 @@ below is likewise NOT RUN. The page does not quote a lane verdict that does not 
                + "; ".join(f"{e(c['case_id'])} ({e(c['verdict'])})"
                            for c in rigor["case_lab_cases"]) + ".</p>")
 
+    # ---- Section 4: the Tavily live-evidence ablation -------------------
+    if tavily is not None:
+        def _chip(v: str) -> str:
+            cls = "NO" if v == "NO EVIDENCE" else v
+            return f'<span class="chip {cls}">{e(v)}</span>'
+
+        out.append('<h2 class="sec">4 · Live-evidence check — Tavily '
+                   '(measured 2026-10-30)</h2>')
+        out.append(f"<p><b>Tavily is our evidence-expansion layer, not an answer "
+                   f"layer.</b> <span class=\"badge recorded\">RECORDED</span> On "
+                   f"{len(tavily['items'])} claims / {tavily['pages_total']} pages it "
+                   f"widened the evidence surface the reconciler could test — and the "
+                   f"open web disagreed with itself on all four: PARTIAL → CONFLICTED "
+                   f"is the system becoming safer, because a conflict that exists in "
+                   f"the wild was invisible in the static corpus. The "
+                   f"{tavily['pages_verbatim']}/{tavily['pages_total']} verbatim rate "
+                   f"is a property of the web, and it is exactly why raw search output "
+                   f"must pass a verbatim gate before it can corroborate anything. We "
+                   f"use Search → Extract, never the generated answer as evidence.</p>")
+        w = tavily["worked"]
+        hits = sum(1 for p in w["pages"] if p["matched"])
+        out.append(f"<div class=\"flip\"><b>One claim, end to end.</b> Our own "
+                   f"planning claim: the Nebius deadline, <code>{e(w['claimed_value'])}"
+                   f"</code>. Query: “{e(w['query'])}”. Tavily returned "
+                   f"{len(w['pages'])} pages — "
+                   + "; ".join(f"<a href=\"{e(p['locator'])}\">{e(p['locator'])}</a>"
+                               for p in w["pages"])
+                   + f". Pages containing the claimed value verbatim: <b>{hits} of "
+                   f"{len(w['pages'])}</b>. Without web rows the reconciler returned "
+                   f"{_chip(w['without'])}; with them, {_chip(w['verbatim'])}.</div>")
+        out.append("<table><tr><th>Claimed value</th><th>Without web</th>"
+                   "<th>With web — verbatim</th><th>Pages credited</th>"
+                   "<th>With web — normalization v1</th><th>Pages credited</th></tr>")
+        for it in tavily["items"]:
+            out.append(
+                f"<tr><td><code>{e(it['claimed_value'])}</code></td>"
+                f"<td>{_chip(it['without'])}</td><td>{_chip(it['verbatim'])}</td>"
+                f"<td>{it['pages_verbatim']}/{it['pages']}</td>"
+                f"<td>{_chip(it['normalized'])}</td>"
+                f"<td>{it['pages_normalized']}/{it['pages']}</td></tr>")
+        out.append("</table>")
+        out.append(f"<p class=\"note\"><b>Normalization v1</b> is a second, labelled "
+                   f"matching mode (dates, numbers and phones canonicalised at ingest; "
+                   f"every hit is labelled <code>normalized:&lt;rule&gt;</code> on its "
+                   f"row). Over the same receipts it credits <b>{tavily['pages_normalized']} "
+                   f"of {tavily['pages_total']} pages</b>, and the “1,000 credits” claim "
+                   f"improves to PARTIAL — all five of its pages credited by the number "
+                   f"rule. The other three claims stay CONFLICTED. “Oct 30” stays "
+                   f"CONFLICTED even with 3 of its 4 pages matched by the date rule: the "
+                   f"fourth page states no date, and a recorded miss counts as "
+                   f"disagreement — an open design question, deliberately not changed "
+                   f"here. Reconciliation itself stayed exact.</p>")
+        out.append(f"<p class=\"note\">Receipts — the raw Tavily responses and both "
+                   f"ablation result files: <a href=\"{e(tavily['receipts_url'])}\">"
+                   f"docs/tavily-live-2026-10-30/</a> in the repo. Harness: "
+                   f"<code>ablation.py</code>; lane: <code>tavily_lane.py</code>; "
+                   f"matching rules: <code>normalize.py</code>.</p>")
+
     out.append(f"""<p>Generated by <code>claimcourt_lab/build.py</code> from
-<code>claimcourt/cases.jsonl</code>, <code>court/debate-replay.json</code> and
-<code>benchmark/</code>. The builder makes no network request; the only external call on
+<code>claimcourt/cases.jsonl</code>, <code>court/debate-replay.json</code>,
+<code>benchmark/</code> and the recorded Tavily ablation receipts in
+<code>docs/tavily-live-2026-10-30/</code>. The builder makes no network request; the only external call on
 this page is the optional ECharts CDN chart, and the table above carries the same numbers
 without it.</p>
 <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
@@ -434,7 +552,8 @@ def generate() -> list[tuple[Path, str]]:
     debate = (json.loads(DEBATE.read_text(encoding="utf-8"))
               if DEBATE.exists() else None)
     rigor = build_rigor()
-    page = render_html(cases, debate, rigor)
+    tavily = build_tavily()
+    page = render_html(cases, debate, rigor, tavily)
 
     written = []
     for case in cases:

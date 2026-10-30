@@ -1,8 +1,10 @@
 # SUBMISSION — Nebius × NVIDIA Global AI Hackathon
 
+Update 2026-10-30: today's submission is the Claim Court entry (demo: https://snedz.github.io/why-agent/demo_lab/claimcourt/); the Claim Court video is published on YouTube and the Devpost draft has been re-pointed to Claim Court. This packet documents the earlier incumbent staging and is kept for the record.
+
 **Event:** https://nebiusglobalaihackathon.devpost.com/
 **Track:** Best Apps and Agents
-**Submissions close:** **Friday 2026-10-30, 10:00 AM PT** (13:00 ET / 10:00 Toronto).
+**Submissions close:** **Friday 2026-10-30, 10:00 AM PT** (13:00 ET / 13:00 Toronto).
 The rules as read on 2026-10-29 are in `docs/NEBIUS_RULES_2026-10-29.md`.
 
 Everything below is ready to paste. **Three things need the founder** — see
