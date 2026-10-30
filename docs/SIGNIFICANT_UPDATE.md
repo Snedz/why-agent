@@ -35,12 +35,18 @@ zero-false-approvals gate), the run output
 
 **2026-10-28 — the tier ledger (`6116ae6`), the README's Nebius section
 (`919ee6c`), the Case Lab (`b02d61a`, six labelled cases) and its Pages
-publish (`92ca93c`).**
+publish (`92ca93c`), and two more lanes from the same day: the Zetaris
+live-evidence lane (`a86175d`) and a Tavily on/off ablation harness
+(`30e4b44`).**
 
 **2026-10-29 — the gaps the queue named.** The offline test gaps and the
 flaky-suite fix (`aa1c882`), the MCP surface (`9d998c9`), the tier ledger's
-generator (`5111bec`), the benchmark test (`208fffb`) and the smoke receipt
-(`04aa4d8`).
+generator (`5111bec`), the benchmark test (`208fffb`), the smoke receipt
+(`04aa4d8`), and the significant-update document itself.
+
+**On the commit list.** This document names the *work*, with the dates it
+happened. The exact list of commits is `git log 5bafca2..HEAD` — it changes
+with every commit, and a stale list is worse than a pointer.
 
 ## The honest limits
 
