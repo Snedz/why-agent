@@ -30,6 +30,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: install the test tooling
+        # MEASURED 2026-10-30: the first run of this workflow failed on its
+        # first step because a hosted runner has no pytest and no Pillow.
+        # The suite needs both, and so does the thumbnail generator.
+        run: python3 -m pip install --quiet pytest pillow
       - name: the suite, offline, with no key
         run: python3 -m pytest -q
       - name: the landing page is what the generator writes
