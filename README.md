@@ -8,51 +8,44 @@ tells you what happened, with the citation attached to each line.
 
 It does not pick a winner when the sources disagree. That is the whole point.
 
-```
-$ python3 demo.py
-```
-
 ---
 
-## Nebius × NVIDIA build (submission period, Oct 2026)
+## Nebius × NVIDIA Global AI Hackathon — Best Apps and Agents track
 
-The reconciler above is deterministic and calls no model. Everything in
-this section is new: the same kernel, now fed by model, image, and live-web
-lanes running on **Nebius Token Factory** — with every lane output entering
-as a *claim*, never a verdict, because any integration can be poisoned.
+This is the entry. It runs on **Nebius Token Factory**
+(`https://api.tokenfactory.nebius.com/v1/`) and uses **NVIDIA Nemotron 3**
+open-source models — Super, Nano and Ultra — plus a Tavily live-evidence lane
+and a Nemotron Super VL receipt lane.
 
-| Lane | Model (pinned from the account) | What it contributes |
-|---|---|---|
-| Narration | `nvidia/nemotron-3-super-120b-a12b` | The explanation — then machine-checked twice; a value not literally in the evidence **fails the check** |
-| Reviewer, fast | `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` | An independent verdict, appended as a cited evidence row |
-| Reviewer, deep | `nvidia/Nemotron-3-Ultra-550b-a55b` | Same, deeper — disagreements with the fast lane are preserved, never averaged |
-| Vision | `nvidia/Nemotron-3.5-Super-VL` | Receipt/screenshot fields (amount, date, counterparty, status) as checkable claims |
-| Live evidence | Tavily (via `tavily_lane.py`) | Web pages as claims — a page counts only if the claimed value literally appears in it; the generated answer is never evidence |
-| MCP surface | none — it calls no model | The verdict, the claims grouped by aspect and the lane disagreements, over MCP. A submission carrying a verdict is **refused at the boundary**: integrations contribute claims, never verdicts |
+| | |
+|---|---|
+| **Demo** | https://snedz.github.io/why-agent/ |
+| **Case Lab** (the four verdict states, with every receipt) | https://snedz.github.io/why-agent/demo_lab/ |
+| **Video** (under three minutes) | https://snedz.github.io/why-agent/why-agent-nebius-demo.mp4 |
+| **Repository** | https://github.com/Snedz/why-agent |
+| **Licence** | Apache-2.0 |
 
-**Measured, 2026-10-28** (receipts in `docs/`): on a 14-case adversarial
-corpus the deterministic gate scored **14/14 with zero false approvals**;
-the Ultra lane scored 9/14 (one false approval), the Nano lane 6/14 (two —
-including believing a card that claimed a failed deploy had shipped). The
-lanes advise; the gate decides. Reviewer cost for 17 judged items: Nano
-$0.0028, Ultra $0.0373. Narration checker: 17 flagged values across 13
-corpus narrations, zero invented facts on classification.
+Free of charge, unrestricted, no login and no data collection — including
+through the end of the judging period on 2026-12-23.
 
-- Full results and named misses: `docs/BENCHMARK_RESULTS_2026-10-28.md`
-- Cost/latency ledger and its gaps: `docs/TIER_LEDGER.md`
-- Every submission claim mapped to its proof: `docs/CLAIM_MAP.md`
-- Why raw checker pass rates mislead: `docs/NARRATION_CHECK_ANALYSIS_2026-10-28.md`
-- What pre-existed, what was added, and the honest limits: `docs/SIGNIFICANT_UPDATE.md`
-
-Run the lanes (keys from the environment only):
+**Try it first — three commands, no key, no network:**
 
 ```
-export NEBIUS_API_KEY=...        # Token Factory
-export TAVILY_API_KEY=...        # live-evidence lane only
+git clone https://github.com/Snedz/why-agent && cd why-agent
+python3 demo.py                                   # the five cases, as a reader sees them
+python3 benchmark/score.py --eval-results benchmark/eval-benchmark-2026-10-28.json
+python3 demo_lab/flip_check.py                    # proves the model lanes change the verdict
+```
+
+**With a Nebius Token Factory key** (the environment is the only place a key
+ever lives):
+
+```
+export NEBIUS_API_KEY=...
+export TAVILY_API_KEY=...
 python3 smoke.py --provider nebius
 python3 why_agent.py explain why-alpha --evidence evidence/items.jsonl --provider nebius --narrate
 python3 batch_eval.py --provider nebius --evidence benchmark/cases.jsonl --tiers fast,deep --narrate --budget 0.50
-python3 benchmark/score.py --eval-results benchmark/eval-benchmark-2026-10-28.json
 ```
 
 ---
@@ -72,7 +65,7 @@ So this agent reads all of them and does the one thing a single-source agent
 cannot do: **it notices that they disagree, and it says so with both sides
 cited.**
 
-## The three answers it can give
+## The answers it can give
 
 | Verdict | What happened | What the agent does |
 |---|---|---|
@@ -84,25 +77,175 @@ cited.**
 **UNKNOWN is never 0.** An aspect nobody reported is a gap in the evidence, and
 it is reported as a gap — not as a pass, and not as a plausible explanation.
 
-## Watch it
+---
 
-The demo video and the deck are published with this repository:
+## The Nebius × NVIDIA build
 
-- **Demo:** https://snedz.github.io/why-agent/
-- **Video (MP4, 2:28):** https://snedz.github.io/why-agent/why-agent-demo.mp4
-- **Deck (PDF, 13 pages):** https://snedz.github.io/why-agent/why-agent-deck.pdf
+The reconciler above is deterministic and calls no model. Everything in this
+section is new: the same kernel, now fed by model, image, and live-web lanes
+running on **Nebius Token Factory** — with every lane output entering as a
+*claim*, never a verdict, because any integration can be poisoned.
 
-No upload step and no third-party account: GitHub Pages serves it from this
-repository.
+| Lane | Model (pinned from the account) | What it contributes |
+|---|---|---|
+| Narration | `nvidia/nemotron-3-super-120b-a12b` | The explanation — then machine-checked twice; a value not literally in the evidence **fails the check** |
+| Reviewer, fast | `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` | An independent verdict, appended as a cited evidence row |
+| Reviewer, deep | `nvidia/Nemotron-3-Ultra-550b-a55b` | Same, deeper — disagreements with the fast lane are preserved, never averaged |
+| Vision | `nvidia/Nemotron-3.5-Super-VL` | Receipt/screenshot fields (amount, date, counterparty, status) as checkable claims |
+| Live evidence | Tavily (via `tavily_lane.py`) | Web pages as claims — a page counts only if the claimed value literally appears in it; the generated answer is never evidence |
+
+### What the run measured
+
+On an adversarial corpus of planted-claim fixtures, scored against a truth file
+the lanes never see:
+
+| Scorer | Correct | False approvals |
+|---|---|---|
+| **The deterministic reconciler (the gate)** | **14/14** | **0** |
+| Deep lane — Nemotron 3 Ultra | 9/14 | 1 |
+| Fast lane — Nemotron 3 Nano | 6/14 | 2 |
+
+The lanes err in **both** directions: the fast lane believed a card that claimed
+a failed deploy had shipped, and the deep lane returned one verdict that did
+not parse at all. That is the architecture working as designed, and it is why no
+lane output can raise a verdict.
+
+Reproduce it — the numbers above are what this prints:
+
+```
+python3 benchmark/score.py --eval-results benchmark/eval-benchmark-2026-10-28.json
+```
+
+```
+[deterministic] 14/14 correct
+  false approvals: 0
+corpus: 14 items, 51 claim rows
+reviewer-lane cost: $0.033 (narration unmetered), retries 0
+narration checks: 13 checked, 3 PASSED, 10 FAILED; 17 flagged value(s)
+flag classes: invented 0, locator fragment 3, quoted empty value 1, source reference 4, system vocabulary 8, verdict variant 1
+unparseable verdicts: 1
+[lane:deep] 9/14 correct
+[lane:fast] 6/14 correct
+```
+
+The corpus is **14 items, 51 claim rows**, and the run cost **$0.033** of
+reviewer-lane time with **zero** retries. One item carries no claims at all,
+which is why it cannot be lane-run and why the lanes score it MISSING.
+
+### The receipts, and where each claim points
+
+| Claim | Proof |
+|---|---|
+| Every lane above runs on Token Factory | `providers.py` — the profile, the base URL and the pinned model ids |
+| The lanes disagree, and the disagreement is preserved | `eval-results-2026-10-28.json` — `why-alpha` fast=PARTIAL vs deep=CONFLICTED |
+| The gate out-ranks the lanes | `benchmark/score.py` — the lanes are scored separately from the gate |
+| Zero false approvals on the adversarial corpus | `benchmark/eval-benchmark-2026-10-28.json`, scored by `benchmark/score.py` |
+| A web page counts only on a literal match | `tavily_lane.py` — a non-match yields an empty-value row, not a dropped row |
+| A forged aspect cannot change a verdict | `evidence.reconcile()` routes an unknown aspect to `unexpected`: cited, ignored, never agreed |
+| A VL extraction becomes a claim, never a verdict | `vision_lane.py` — null fields produce no rows; a non-JSON answer raises |
+| A client can ask the agent for its verdict | `mcp_server.py` and `test_mcp_server.py` — the server calls no model, and a test forbids it |
+| Costs are measured, not estimated | `docs/TIER_LEDGER.md`, generated from the committed run outputs by `ledger.py` |
+| What pre-existed, and what was added | `docs/SIGNIFICANT_UPDATE.md` |
+
+Every row above has a command a reader can run; `docs/CLAIM_MAP.md` is the full
+map with the command for each row.
+
+## The Case Lab
+
+The **Case Lab** is the demo a judge can open: seven cases, each showing the
+claims, the lane receipts (model id, endpoint, cost, token count), the verdict,
+and what decided it. It is generated from the corpus by `demo_lab/build.py`, so
+a verdict on the page is the verdict the reconciler returns — never a number
+typed by hand.
+
+Two of the cases are **lane-dependent**, and `demo_lab/flip_check.py` proves it
+by re-reading the original rows and calling the same reconciler twice:
+
+```
+case                       with lanes       without lane rows      flips
+bm-reviewer-split          CONFLICTED       CORROBORATED           yes
+bm-web-nonmatch            CONFLICTED       PARTIAL                yes
+```
+
+`bm-reviewer-split` is the two Nemotron tiers disagreeing: remove the reviewer
+rows and a genuine conflict reads as a routine corroboration.
+`bm-web-nonmatch` is the Tavily lane recording a miss it did not drop.
+
+---
+
+## The model may write the prose. It may not add a fact.
+
+The reconciliation is code and decides what is true. The *prose* a reader
+wants is not code's best skill, so a model writes it — over any
+OpenAI-compatible endpoint, here Nemotron 3 Super on Token Factory — and then
+it is **checked**: every value the narrative states must already exist in the
+evidence.
+
+```
+$ python3 why_agent.py explain why-alpha --narrate
+## CHECK PASSED — every value the narrative stated exists in the evidence
+```
+
+The check has **two passes, because a model may forget to quote**: quoted
+spans, *and* every token that looks like a value — an identifier, a number, a
+path, a date. Ordinary prose words are not values and are not checked; this is
+not a semantic verifier, and pretending otherwise would make the check
+useless.
+
+A model that invents a fact is caught, and the invention is **reported, not
+removed** — a silent cleanup is how a hallucination becomes a footnote.
+
+On the corpus the checker is deliberately noisy: **13** narrations, **3**
+PASSED, **10** FAILED, **17** flagged values. Every flag is classified, and the
+count of invented facts is **zero** — but that review is of the flags, because
+the harness persists the flagged values and not the narration text.
+
+## The evidence model
+
+The reconciliation is code, not a prompt. The tests assert the behaviour:
+
+- a card that disagrees with a commit is a **conflict**, not a merge;
+- two sources about *different* aspects never conflict;
+- an aspect nobody covered is **UNKNOWN**, not a pass;
+- every claim in the report carries a citation;
+- an item nobody wrote about gets `NO EVIDENCE`, not a plausible explanation.
+
+A prompt cannot be tested like that. This can, and is.
+
+### The production path: DuckDB
+
+In a real system the same rows live in one DuckDB file, and the agent reads
+them from there:
+
+```
+python3 why_agent.py explain <item-id> --duckdb evidence/work.duckdb
+```
+
+The file needs two tables — `items(item_id, title, declared_status)` and
+`evidence(item_id, kind, source, locator, statement, value, observed_at,
+aspect)`. `duckdb` is imported only when this path is used, so the demo still
+runs with nothing installed.
+
+### The MCP surface
+
+`mcp_server.py` exposes the agent over MCP with three tools. The server calls
+no model — a test forbids it — and a verdict-shaped submission is refused at
+the boundary, so a client cannot push a verdict through the front door.
+
+```
+python3 -m pytest -q test_mcp_server.py
+```
+
+---
 
 ## Install and run
 
 No dependency. Python 3.10+.
 
 ```
-git clone <this repo> && cd why-agent
-python3 -m unittest test_why_agent -v      # 34 tests, no network
-python3 demo.py                             # five cases, as a reader sees them
+git clone https://github.com/Snedz/why-agent && cd why-agent
+python3 -m unittest discover -v      # the whole suite, offline
+python3 demo.py                       # five cases, as a reader sees them
 python3 why_agent.py items
 python3 why_agent.py explain why-alpha
 python3 why_agent.py explain why-alpha --json
@@ -124,110 +267,32 @@ contradict each other; two claims about different aspects never do.
 The card row is a claim too — it is the source most likely to be stale, and an
 agent that cannot notice a stale card cannot notice anything.
 
-### The production path: DuckDB
+## Other integrations
 
-In a real system the same rows live in one DuckDB file, and the agent reads
-them from there:
+The kernel is not prompt-shaped, so it also sits behind two adapters from the
+earlier build in this repository — kept here because they are evidence that the
+same reconciliation runs against something other than a model.
 
-```
-python3 why_agent.py explain <item-id> --duckdb evidence/work.duckdb
-```
-
-The file needs two tables — `items(item_id, title, declared_status)` and
-`evidence(item_id, kind, source, locator, statement, value, observed_at,
-aspect)`. `duckdb` is imported only when this path is used, so the demo still
-runs with nothing installed.
-
-## The model may write the prose. It may not add a fact.
-
-The reconciliation is code and decides what is true. The *prose* a reader
-wants is not code's best skill, so a model writes it — over any
-OpenAI-compatible endpoint — and then it is **checked**: every value the
-narrative states must already exist in the evidence.
-
-```
-$ python3 why_agent.py explain why-alpha --narrate
-## CHECK PASSED — every value the narrative stated exists in the evidence
-```
-
-The check has **two passes, because a model may forget to quote**: quoted
-spans, *and* every token that looks like a value — an identifier, a number, a
-path, a date. Ordinary prose words are not values and are not checked; this is
-not a semantic verifier, and pretending otherwise would make the check
-useless.
-
-A model that invents a fact is caught, and the invention is **reported, not
-removed** — a silent cleanup is how a hallucination becomes a footnote.
-
-## How it would use Zetaris
-
-**Zetaris** is a data harness for AI: a governed semantic layer over the
-engines you already run (DuckDB, Spark, Trino, Presto). Data reaches it as
-files. For this project that is a CSV in the stack bucket, registered as a
-filestore table, then read with a reconciliation `SELECT` in the SQL
-workspace or over JDBC. There is no MCP endpoint in that path.
-
-The cards, receipts, verdicts and commits are fragmented sources. The
-harness's job is one governed way to query them, and the semantic layer is
-where the `aspect` vocabulary belongs. The Hobby tier is free, and a Mini
-cluster is BYOC — it deploys into a cloud account — so the account is a
-founder step. See `INTEGRATION.md`.
-
-## How it would use Meterless
-
-**Meterless** (Nightshift) is an Apache-2.0 runtime that races a job across
-local models, judges the attempts, and returns a receipt for every check. Two
-ways it belongs to this project:
-
-1. **As the runtime.** The agent's model calls run as a Nightshift job, so the
-   reasoning is local, free, and reproducible — and each run comes back with
-   the receipt that the house already insists on.
-2. **As the meter.** Nightshift is how the agent's cost is accounted for, in
-   the same way this repository accounts for every model call it makes.
-
-Either way the integration is small and honest: the agent does the
-reconciliation, the runtime does the racing, and the receipt is the evidence.
-
-See `INTEGRATION.md` for the exact steps, including the path that needs no
-account at all.
-
-## Why this is not "an LLM with a prompt"
-
-The reconciliation is code, not a prompt. The tests assert the behaviour:
-
-- a card that disagrees with a commit is a **conflict**, not a merge;
-- two sources about *different* aspects never conflict;
-- an aspect nobody covered is **UNKNOWN**, not a pass;
-- every claim in the report carries a citation;
-- an item nobody wrote about gets `NO EVIDENCE`, not a plausible explanation.
-
-A prompt cannot be tested like that. This can, and is.
+- **Zetaris** — a governed semantic layer over the engines you already run.
+  The designed path is a CSV in the stack bucket, a filestore table, and a
+  reconciliation `SELECT`. See `zetaris_lane.py` and `docs/ZETARIS_LANE.md`.
+- **Meterless (Nightshift)** — an Apache-2.0 runtime that races a job across
+  local models, judges the attempts, and returns a receipt for every check.
+  The token is resolved from the runtime's own token file and is never printed.
 
 ## Security
 
 The narration check catches invented values. It does not decide whether a model
 obeyed an instruction that was hiding in the evidence. How tokens are resolved,
-what is rejected, and the poison drills are in [SECURITY.md](SECURITY.md).
+what is rejected, and the poison drills are in `SECURITY.md`.
 
 ## The data in this repository is synthetic
 
 Every card, receipt, verdict, commit and check id here is invented. There is no
 real customer, no real identifier, no real project in this repository, and
 nothing here is a credential. The production wiring reads a real work
-system; the demo reads this one.
-
-## Layout
-
-```
-why_agent.py         the CLI and the report
-evidence.py           the model: claims, aspects, reconciliation
-demo.py               the five cases
-test_why_agent.py     34 offline tests
-evidence/items.jsonl  the synthetic dataset
-INTEGRATION.md        Zetaris + Meterless, step by step
-SUBMISSION.md         what is ready, what the founder must do, and by when
-DECK.md               the slide deck
-```
+system; the demo reads this one. **No users, no revenue, no adoption** — none
+is claimed, because none exists.
 
 ## Licence
 

@@ -1,0 +1,112 @@
+{
+  "case_id": "why-beta",
+  "claims": [
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "kind": "card",
+      "lane": "",
+      "lane_row": false,
+      "locator": "synthetic/cards/beta.md:3",
+      "observed_at": "2026-10-23T11:02:00Z",
+      "receipt": "evidence/items.jsonl",
+      "source": "synthetic/cards/beta.md",
+      "statement": "the card is blocked, not open for work",
+      "value": "blocked"
+    },
+    {
+      "aspect": "state",
+      "effective_aspect": "state",
+      "kind": "check",
+      "lane": "",
+      "lane_row": false,
+      "locator": "synthetic://gate/beta",
+      "observed_at": "2026-10-23T11:05:00Z",
+      "receipt": "evidence/items.jsonl",
+      "source": "gate",
+      "statement": "the picker gate says no card is claimable",
+      "value": "blocked"
+    },
+    {
+      "aspect": "outcome",
+      "effective_aspect": "outcome",
+      "kind": "receipt",
+      "lane": "",
+      "lane_row": false,
+      "locator": "synthetic/notes/beta.md:6",
+      "observed_at": "2026-10-23T11:09:00Z",
+      "receipt": "evidence/items.jsonl",
+      "source": "synthetic/notes/beta.md",
+      "statement": "the run claimed 0 cards",
+      "value": "claimed-0"
+    },
+    {
+      "aspect": "outcome",
+      "effective_aspect": "outcome",
+      "kind": "verdict",
+      "lane": "",
+      "lane_row": false,
+      "locator": "synthetic/audit/verdicts.jsonl:12",
+      "observed_at": "2026-10-23T12:30:00Z",
+      "receipt": "evidence/items.jsonl",
+      "source": "synthetic/audit/verdicts.jsonl",
+      "statement": "the review recorded the same block",
+      "value": "claimed-0"
+    }
+  ],
+  "headline": "Both model lanes over-approved this one.",
+  "labels": {
+    "data": "SYNTHETIC",
+    "provenance": "RECORDED",
+    "run_date": "2026-10-28",
+    "run_endpoint": "https://api.tokenfactory.nebius.com/v1/"
+  },
+  "lane_dependency": {
+    "flips": false,
+    "lane_rows": [],
+    "verdict_without_lane_rows": ""
+  },
+  "lane_receipts": [
+    {
+      "agrees_with_gate": false,
+      "cost_usd": 0.000101,
+      "endpoint": "https://api.tokenfactory.nebius.com/v1/",
+      "lane": "reviewer-fast",
+      "model_id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "receipt": "eval-results-2026-10-28.json",
+      "tokens": [
+        257,
+        356
+      ],
+      "verdict": "CORROBORATED"
+    },
+    {
+      "agrees_with_gate": false,
+      "cost_usd": 0.00152,
+      "endpoint": "https://api.tokenfactory.nebius.com/v1/",
+      "lane": "reviewer-deep",
+      "model_id": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "receipt": "eval-results-2026-10-28.json",
+      "tokens": [
+        257,
+        421
+      ],
+      "verdict": "CORROBORATED"
+    }
+  ],
+  "narration": {
+    "check": "FAILED",
+    "classification": "source reference",
+    "invented_facts": 0,
+    "receipt": "eval-results-2026-10-28.json",
+    "unsupported_values": [
+      "UNKNOWN",
+      "gate/beta"
+    ]
+  },
+  "note": "The card is blocked and the gate agrees — but nobody stated a cause, so the gate says PARTIAL. Both Nemotron lanes said CORROBORATED. An unexplained outcome is not a verified one.",
+  "planted_truth": "",
+  "recorded_deterministic": "PARTIAL",
+  "title": "Fix the picker so it skips cards with no test path",
+  "verdict": "PARTIAL"
+}

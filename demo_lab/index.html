@@ -3,67 +3,144 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>why-agent — Case Lab</title>
 <style>
-body { font-family: ui-monospace, Menlo, monospace; margin: 2rem auto; max-width: 880px; padding: 0 1rem; line-height: 1.5; color: #1a1a1a; }
+body { font-family: ui-monospace, Menlo, monospace; margin: 2rem auto; max-width: 980px; padding: 0 1rem; line-height: 1.5; color: #1a1a1a; }
 h1 { font-size: 1.5rem; } .case { border: 1px solid #ccc; border-radius: 8px; padding: 1rem 1.25rem; margin: 1.25rem 0; }
-table { border-collapse: collapse; width: 100%; font-size: .85rem; } th, td { border: 1px solid #ddd; padding: .35rem .5rem; text-align: left; vertical-align: top; }
-.verdict { color: #7a3b00; } .note { color: #333; } .lanes { font-size: .9rem; } .narr.fail { color: #8b0000; } .narr.ok { color: #14532d; }
+table { border-collapse: collapse; width: 100%; font-size: .82rem; } th, td { border: 1px solid #ddd; padding: .35rem .5rem; text-align: left; vertical-align: top; }
+.verdict { color: #7a3b00; } .note { color: #333; } .lanes { font-size: .88rem; } .narr.fail { color: #8b0000; } .narr.ok { color: #14532d; }
 .labels { background: #f5f5f0; padding: .75rem 1rem; border-radius: 6px; font-size: .9rem; }
 code { background: #f0f0f0; padding: 0 .25rem; }
+.flip { background: #eef4ff; border-left: 3px solid #4477aa; padding: .5rem .75rem; font-size: .85rem; margin: .5rem 0; }
+th.receipt { width: 26%; }
 </style></head><body>
 <h1>why-agent — Case Lab</h1>
 <p><b>Every AI claim, checked against its evidence.</b> Sources — cards, commits, check runs,
 receipts, web pages, reviewer models — make <i>claims</i> about a work item. One deterministic
 reconciler groups them by aspect and returns <b>CORROBORATED</b>, <b>PARTIAL</b>,
-<b>CONFLICTED</b>, or <b>NO EVIDENCE</b>. Model lanes (NVIDIA Nemotron on Nebius Token Factory)
-and a Tavily live-evidence lane contribute claims and advisory verdicts — never the verdict.
-A model narration is machine-checked against the evidence; values that do not literally
-appear fail the check.</p>
+<b>CONFLICTED</b>, or <b>NO EVIDENCE</b>. Model lanes (NVIDIA Nemotron on Nebius Token Factory,
+https://api.tokenfactory.nebius.com/v1/) and a Tavily live-evidence lane contribute claims and advisory verdicts —
+never the verdict. A model narration is machine-checked against the evidence; values that do not
+literally appear fail the check.</p>
 <div class="labels"><b>Labels, honestly:</b> every case below is <b>RECORDED</b> — the lane
 verdicts, costs, and narration flags are from real Token Factory runs on 2026-10-28. The
 <i>claims</i> are planted fixtures (synthetic work items), built so the correct verdict is
 known in advance: an adversarial corpus with planted truth, scored in the repo's
 <code>benchmark/</code>. The deterministic gate scored 14/14 with zero false approvals;
-the lanes did not — their misses are shown on the cases where they happened.</div>
-<section class="case">
+the lanes did not — their misses are shown on the cases where they happened.
+<b>Every claim below carries its receipt</b>, and every lane receipt names the model, the
+endpoint and the cost.</div>
+<section class="case" id="bm-clean-ship">
 <h2>bm-clean-ship — <span class="verdict">CORROBORATED</span></h2>
-<p class="note"><b>The clean case — and a lane still disagreed.</b> Every source agrees and covers state, outcome and cause. The gate corroborates. The fast lane called it CONFLICTED anyway — lanes err in both directions, which is why they never decide.</p>
-<table><tr><th>Source</th><th>Kind</th><th>Aspect</th><th>Claim</th><th>Value</th></tr><tr><td>card</td><td>card</td><td>(default)</td><td>the card says the release shipped</td><td><code>shipped</code></td></tr><tr><td>git</td><td>commit</td><td>(default)</td><td>the merge commit records the release</td><td><code>shipped</code></td></tr><tr><td>ci</td><td>check</td><td>(default)</td><td>the release check passed on the shipped build</td><td><code>shipped</code></td></tr><tr><td>deploy</td><td>receipt</td><td>outcome</td><td>the deploy receipt confirms delivery</td><td><code>delivered</code></td></tr><tr><td>git</td><td>commit</td><td>cause</td><td>the merge was approved through review</td><td><code>review-approved</code></td></tr></table>
-<p class="lanes">Reviewer lanes (advisory): Nemotron 3 Nano 30B: <b>CONFLICTED</b> ($0.0001) · Nemotron 3 Ultra 550B: <b>CORROBORATED</b> ($0.0014)</p>
+<p class="note"><b>The clean case — and a lane still disagreed.</b> Every source agrees, and they cover state, outcome and cause. The gate corroborates. The fast reviewer lane called it CONFLICTED anyway. Lanes err in both directions, which is exactly why they never decide.</p>
+<p class="note">Labels: <b>RECORDED</b> · <b>SYNTHETIC</b> claims · recorded 2026-10-28 · gate verdict <b>CORROBORATED</b> · planted truth <b>CORROBORATED</b>.</p>
+<table><tr><th>Source</th><th>Kind</th><th>Aspect</th><th>Claim</th><th>Value</th><th class="receipt">Receipt</th></tr>
+<tr><td>card</td><td>card</td><td>state</td><td>the card says the release shipped</td><td><code>shipped</code></td><td><code>benchmark/cases.jsonl</code><br>bench/cards/bm-clean-ship.md:1</td></tr>
+<tr><td>git</td><td>commit</td><td>state</td><td>the merge commit records the release</td><td><code>shipped</code></td><td><code>benchmark/cases.jsonl</code><br>bench/git/1</td></tr>
+<tr><td>ci</td><td>check</td><td>state</td><td>the release check passed on the shipped build</td><td><code>shipped</code></td><td><code>benchmark/cases.jsonl</code><br>bench/ci/1</td></tr>
+<tr><td>deploy</td><td>receipt</td><td>outcome</td><td>the deploy receipt confirms delivery</td><td><code>delivered</code></td><td><code>benchmark/cases.jsonl</code><br>bench/deploy/1</td></tr>
+<tr><td>git</td><td>commit</td><td>cause</td><td>the merge was approved through review</td><td><code>review-approved</code></td><td><code>benchmark/cases.jsonl</code><br>bench/git/1c</td></tr>
+</table>
+<p class="lanes">Reviewer lanes (advisory):
+ nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B: <b>CONFLICTED</b> ($0.0001, tokens 242 in / 563 out) — <b>does not agree with the gate</b>;
+ nvidia/Nemotron-3-Ultra-550b-a55b: <b>CORROBORATED</b> ($0.0014, tokens 242 in / 395 out) — agrees with the gate;
+</p>
 <p class="narr fail">Narration check: <b>FAILED</b> — flagged values: <code>CI</code>. Classification for every flag is in the repo (docs/NARRATION_CHECK_ANALYSIS_2026-10-28.md and docs/BENCHMARK_RESULTS_2026-10-28.md): across all 2026-10-28 runs, zero flagged values were invented facts.</p>
-</section><section class="case">
+</section>
+<section class="case" id="why-beta">
 <h2>why-beta — <span class="verdict">PARTIAL</span></h2>
 <p class="note"><b>Both model lanes over-approved this one.</b> The card is blocked and the gate agrees — but nobody stated a cause, so the gate says PARTIAL. Both Nemotron lanes said CORROBORATED. An unexplained outcome is not a verified one.</p>
-<table><tr><th>Source</th><th>Kind</th><th>Aspect</th><th>Claim</th><th>Value</th></tr><tr><td>synthetic/cards/beta.md</td><td>card</td><td>state</td><td>the card is blocked, not open for work</td><td><code>blocked</code></td></tr><tr><td>gate</td><td>check</td><td>state</td><td>the picker gate says no card is claimable</td><td><code>blocked</code></td></tr><tr><td>synthetic/notes/beta.md</td><td>receipt</td><td>outcome</td><td>the run claimed 0 cards</td><td><code>claimed-0</code></td></tr><tr><td>synthetic/audit/verdicts.jsonl</td><td>verdict</td><td>outcome</td><td>the review recorded the same block</td><td><code>claimed-0</code></td></tr></table>
-<p class="lanes">Reviewer lanes (advisory): Nemotron 3 Nano 30B: <b>CORROBORATED</b> ($0.0001) · Nemotron 3 Ultra 550B: <b>CORROBORATED</b> ($0.0015)</p>
+<p class="note">Labels: <b>RECORDED</b> · <b>SYNTHETIC</b> claims · recorded 2026-10-28 · gate verdict <b>PARTIAL</b>.</p>
+<table><tr><th>Source</th><th>Kind</th><th>Aspect</th><th>Claim</th><th>Value</th><th class="receipt">Receipt</th></tr>
+<tr><td>synthetic/cards/beta.md</td><td>card</td><td>state</td><td>the card is blocked, not open for work</td><td><code>blocked</code></td><td><code>evidence/items.jsonl</code><br>synthetic/cards/beta.md:3</td></tr>
+<tr><td>gate</td><td>check</td><td>state</td><td>the picker gate says no card is claimable</td><td><code>blocked</code></td><td><code>evidence/items.jsonl</code><br>synthetic://gate/beta</td></tr>
+<tr><td>synthetic/notes/beta.md</td><td>receipt</td><td>outcome</td><td>the run claimed 0 cards</td><td><code>claimed-0</code></td><td><code>evidence/items.jsonl</code><br>synthetic/notes/beta.md:6</td></tr>
+<tr><td>synthetic/audit/verdicts.jsonl</td><td>verdict</td><td>outcome</td><td>the review recorded the same block</td><td><code>claimed-0</code></td><td><code>evidence/items.jsonl</code><br>synthetic/audit/verdicts.jsonl:12</td></tr>
+</table>
+<p class="lanes">Reviewer lanes (advisory):
+ nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B: <b>CORROBORATED</b> ($0.0001, tokens 257 in / 356 out) — <b>does not agree with the gate</b>;
+ nvidia/Nemotron-3-Ultra-550b-a55b: <b>CORROBORATED</b> ($0.0015, tokens 257 in / 421 out) — <b>does not agree with the gate</b>;
+</p>
 <p class="narr fail">Narration check: <b>FAILED</b> — flagged values: <code>UNKNOWN</code>, <code>gate/beta</code>. Classification for every flag is in the repo (docs/NARRATION_CHECK_ANALYSIS_2026-10-28.md and docs/BENCHMARK_RESULTS_2026-10-28.md): across all 2026-10-28 runs, zero flagged values were invented facts.</p>
-</section><section class="case">
-<h2>why-alpha — <span class="verdict">CONFLICTED</span></h2>
-<p class="note"><b>A real conflict, shown with both sides cited.</b> Sources disagree about the same aspect. The gate refuses to pick a winner. The deep lane matched the gate; the fast lane softened it to PARTIAL. The narration of this item also failed its check — a flagged value is listed below, classified.</p>
-<table><tr><th>Source</th><th>Kind</th><th>Aspect</th><th>Claim</th><th>Value</th></tr><tr><td>synthetic/cards/alpha.md</td><td>card</td><td>state</td><td>the card was marked DONE</td><td><code>DONE</code></td></tr><tr><td>git</td><td>commit</td><td>state</td><td>a commit merged the fix</td><td><code>merged</code></td></tr><tr><td>ci</td><td>check</td><td>state</td><td>the gate run is still red</td><td><code>failing</code></td></tr><tr><td>synthetic/notes/alpha.md</td><td>receipt</td><td>outcome</td><td>the burn-down receipt says nothing was claimed</td><td><code>not-claimed</code></td></tr></table>
-<p class="lanes">Reviewer lanes (advisory): Nemotron 3 Nano 30B: <b>PARTIAL</b> ($0.0003) · Nemotron 3 Ultra 550B: <b>CONFLICTED</b> ($0.0015)</p>
-<p class="narr fail">Narration check: <b>FAILED</b> — flagged values: <code>UNKNOWN</code>. Classification for every flag is in the repo (docs/NARRATION_CHECK_ANALYSIS_2026-10-28.md and docs/BENCHMARK_RESULTS_2026-10-28.md): across all 2026-10-28 runs, zero flagged values were invented facts.</p>
-</section><section class="case">
+</section>
+<section class="case" id="bm-reviewer-split">
+<h2>bm-reviewer-split — <span class="verdict">CONFLICTED</span></h2>
+<p class="note"><b>The two Nemotron tiers disagree — and the disagreement is the finding.</b> The fast lane and the deep lane read the same claims and returned different verdicts. The gate keeps both, cites both, and refuses to average them. Remove the two reviewer rows and this item reads as a routine CORROBORATED — the disagreement is not visible anywhere else.</p>
+<p class="note">Labels: <b>RECORDED</b> · <b>SYNTHETIC</b> claims · recorded 2026-10-28 · gate verdict <b>CONFLICTED</b> · planted truth <b>CONFLICTED</b>.</p>
+<table><tr><th>Source</th><th>Kind</th><th>Aspect</th><th>Claim</th><th>Value</th><th class="receipt">Receipt</th></tr>
+<tr><td>card</td><td>card</td><td>state</td><td>the card says released</td><td><code>released</code></td><td><code>benchmark/cases.jsonl</code><br>bench/cards/bm-reviewer-split.md:1</td></tr>
+<tr><td>git</td><td>commit</td><td>state</td><td>the commit records the release</td><td><code>released</code></td><td><code>benchmark/cases.jsonl</code><br>bench/git/6</td></tr>
+<tr><td>deploy</td><td>receipt</td><td>outcome</td><td>the deploy receipt confirms release</td><td><code>released</code></td><td><code>benchmark/cases.jsonl</code><br>bench/deploy/6</td></tr>
+<tr><td>nemotron-fast</td><td>verdict</td><td>outcome</td><td>the fast reviewer judged the outcome released <b>[lane row]</b></td><td><code>released</code></td><td><code>benchmark/cases.jsonl</code><br>nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B</td></tr>
+<tr><td>nemotron-deep</td><td>verdict</td><td>outcome</td><td>the deep reviewer judged the outcome withheld <b>[lane row]</b></td><td><code>withheld</code></td><td><code>benchmark/cases.jsonl</code><br>nvidia/Nemotron-3-Ultra-550b-a55b</td></tr>
+<tr><td>audit</td><td>verdict</td><td>cause</td><td>the audit attributes the release to the freeze exception</td><td><code>freeze-exception</code></td><td><code>benchmark/cases.jsonl</code><br>bench/audit/6</td></tr>
+</table>
+<p class="lanes">Reviewer lanes (advisory):
+ nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B: <b>CONFLICTED</b> ($0.0001, tokens 275 in / 432 out) — agrees with the gate;
+ nvidia/Nemotron-3-Ultra-550b-a55b: <b>CONFLICTED</b> ($0.0019, tokens 275 in / 530 out) — agrees with the gate;
+</p>
+<div class="flip"><b>Lane-dependent:</b> the verdict above depends on the nemotron-deep, nemotron-fast lane row(s). Remove them and the same reconciler returns <b>CORROBORATED</b> instead of <b>CONFLICTED</b>. <code>python3 demo_lab/flip_check.py</code> proves it by calling the same reconciler.</div>
+<p class="narr ok">Narration check: <b>PASSED</b> — flagged values: none. Classification for every flag is in the repo (docs/NARRATION_CHECK_ANALYSIS_2026-10-28.md and docs/BENCHMARK_RESULTS_2026-10-28.md): across all 2026-10-28 runs, zero flagged values were invented facts.</p>
+</section>
+<section class="case" id="bm-web-nonmatch">
+<h2>bm-web-nonmatch — <span class="verdict">CONFLICTED</span></h2>
+<p class="note"><b>A live-evidence miss, recorded instead of dropped.</b> The Tavily lane fetched a page that does not contain the claimed value. That becomes a claim with an empty value — an honest miss — and it conflicts with the postal receipt. Remove the web row and the spoken aspects agree, and the item reads as a quiet PARTIAL.</p>
+<p class="note">Labels: <b>RECORDED</b> · <b>SYNTHETIC</b> claims · recorded 2026-10-28 · gate verdict <b>CONFLICTED</b> · planted truth <b>CONFLICTED</b>.</p>
+<table><tr><th>Source</th><th>Kind</th><th>Aspect</th><th>Claim</th><th>Value</th><th class="receipt">Receipt</th></tr>
+<tr><td>card</td><td>card</td><td>state</td><td>the card says the notice shipped</td><td><code>shipped</code></td><td><code>benchmark/cases.jsonl</code><br>bench/cards/bm-web-nonmatch.md:1</td></tr>
+<tr><td>git</td><td>commit</td><td>state</td><td>the commit records the notice</td><td><code>shipped</code></td><td><code>benchmark/cases.jsonl</code><br>bench/git/14</td></tr>
+<tr><td>tavily</td><td>web</td><td>state</td><td>the claimed value was not found on this page <b>[lane row]</b></td><td><code></code></td><td><code>benchmark/cases.jsonl</code><br>https://example.com/other</td></tr>
+<tr><td>post</td><td>receipt</td><td>outcome</td><td>the postal receipt confirms the notice shipped</td><td><code>shipped</code></td><td><code>benchmark/cases.jsonl</code><br>bench/post/14</td></tr>
+</table>
+<p class="lanes">Reviewer lanes (advisory):
+ nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B: <b>CONFLICTED</b> ($0.0001, tokens 224 in / 477 out) — agrees with the gate;
+ nvidia/Nemotron-3-Ultra-550b-a55b: <b>CONFLICTED</b> ($0.0012, tokens 224 in / 337 out) — agrees with the gate;
+ Tavily live-evidence fetched <code>https://example.com/other</code> → <code>(no literal match)</code>;
+</p>
+<div class="flip"><b>Lane-dependent:</b> the verdict above depends on the tavily lane row(s). Remove them and the same reconciler returns <b>PARTIAL</b> instead of <b>CONFLICTED</b>. <code>python3 demo_lab/flip_check.py</code> proves it by calling the same reconciler.</div>
+<p class="narr fail">Narration check: <b>FAILED</b> — flagged values: <code>&quot;&quot;</code>, <code>example.com/other</code>, <code>UNKNOWN</code>. Classification for every flag is in the repo (docs/NARRATION_CHECK_ANALYSIS_2026-10-28.md and docs/BENCHMARK_RESULTS_2026-10-28.md): across all 2026-10-28 runs, zero flagged values were invented facts.</p>
+</section>
+<section class="case" id="bm-card-lies">
 <h2>bm-card-lies — <span class="verdict">CONFLICTED</span></h2>
 <p class="note"><b>The trap: a card that claims a failed deploy shipped.</b> The card says shipped; the check and the deploy receipt say failed and rolled back. The fast lane believed the card — a false approval. The gate and the deep lane held CONFLICTED.</p>
-<table><tr><th>Source</th><th>Kind</th><th>Aspect</th><th>Claim</th><th>Value</th></tr><tr><td>card</td><td>card</td><td>(default)</td><td>the card says it shipped</td><td><code>shipped</code></td></tr><tr><td>ci</td><td>check</td><td>(default)</td><td>the release check failed</td><td><code>failed</code></td></tr><tr><td>deploy</td><td>receipt</td><td>outcome</td><td>the deploy rolled back</td><td><code>failed</code></td></tr></table>
-<p class="lanes">Reviewer lanes (advisory): Nemotron 3 Nano 30B: <b>CORROBORATED</b> ($0.0002) · Nemotron 3 Ultra 550B: <b>CONFLICTED</b> ($0.0018)</p>
+<p class="note">Labels: <b>RECORDED</b> · <b>SYNTHETIC</b> claims · recorded 2026-10-28 · gate verdict <b>CONFLICTED</b> · planted truth <b>CONFLICTED</b>.</p>
+<table><tr><th>Source</th><th>Kind</th><th>Aspect</th><th>Claim</th><th>Value</th><th class="receipt">Receipt</th></tr>
+<tr><td>card</td><td>card</td><td>state</td><td>the card says it shipped</td><td><code>shipped</code></td><td><code>benchmark/cases.jsonl</code><br>bench/cards/bm-card-lies.md:1</td></tr>
+<tr><td>ci</td><td>check</td><td>state</td><td>the release check failed</td><td><code>failed</code></td><td><code>benchmark/cases.jsonl</code><br>bench/ci/2</td></tr>
+<tr><td>deploy</td><td>receipt</td><td>outcome</td><td>the deploy rolled back</td><td><code>failed</code></td><td><code>benchmark/cases.jsonl</code><br>bench/deploy/2</td></tr>
+</table>
+<p class="lanes">Reviewer lanes (advisory):
+ nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B: <b>CORROBORATED</b> ($0.0002, tokens 196 in / 861 out) — <b>does not agree with the gate</b>;
+ nvidia/Nemotron-3-Ultra-550b-a55b: <b>CONFLICTED</b> ($0.0018, tokens 196 in / 524 out) — agrees with the gate;
+</p>
 <p class="narr fail">Narration check: <b>FAILED</b> — flagged values: <code>UNKNOWN</code>, <code>CI</code>. Classification for every flag is in the repo (docs/NARRATION_CHECK_ANALYSIS_2026-10-28.md and docs/BENCHMARK_RESULTS_2026-10-28.md): across all 2026-10-28 runs, zero flagged values were invented facts.</p>
-</section><section class="case">
-<h2>bm-web-nonmatch — <span class="verdict">CONFLICTED</span></h2>
-<p class="note"><b>A live-evidence miss, recorded instead of dropped.</b> The web lane found a page that does not contain the claimed value. That becomes a claim with an empty value — an honest miss — and it conflicts with the postal receipt. Without the web lane&#x27;s row, the spoken aspects agree and the item reads as a quiet PARTIAL; the recorded miss is what surfaces the conflict.</p>
-<table><tr><th>Source</th><th>Kind</th><th>Aspect</th><th>Claim</th><th>Value</th></tr><tr><td>card</td><td>card</td><td>(default)</td><td>the card says the notice shipped</td><td><code>shipped</code></td></tr><tr><td>git</td><td>commit</td><td>(default)</td><td>the commit records the notice</td><td><code>shipped</code></td></tr><tr><td>tavily</td><td>web</td><td>state</td><td>the claimed value was not found on this page</td><td><code></code></td></tr><tr><td>post</td><td>receipt</td><td>outcome</td><td>the postal receipt confirms the notice shipped</td><td><code>shipped</code></td></tr></table>
-<p class="lanes">Reviewer lanes (advisory): Nemotron 3 Nano 30B: <b>CONFLICTED</b> ($0.0001) · Nemotron 3 Ultra 550B: <b>CONFLICTED</b> ($0.0012)</p>
-<p class="narr fail">Narration check: <b>FAILED</b> — flagged values: <code>&quot;&quot;</code>, <code>example.com/other</code>, <code>UNKNOWN</code>. Classification for every flag is in the repo (docs/NARRATION_CHECK_ANALYSIS_2026-10-28.md and docs/BENCHMARK_RESULTS_2026-10-28.md): across all 2026-10-28 runs, zero flagged values were invented facts.</p>
-</section><section class="case">
+</section>
+<section class="case" id="bm-no-evidence">
 <h2>bm-no-evidence — <span class="verdict">NO EVIDENCE</span></h2>
 <p class="note"><b>Nobody said anything.</b> This item exists in the corpus with zero claims. The gate&#x27;s answer is NO EVIDENCE — a first-class verdict, not an error. The lanes were not run: there is nothing to judge, and a model asked anyway would invent something to judge.</p>
-<p class="none">No claims recorded for this item. That absence is the case.</p>
+<p class="note">Labels: <b>RECORDED</b> · <b>SYNTHETIC</b> claims · recorded 2026-10-28 · gate verdict <b>NO EVIDENCE</b> · planted truth <b>NO EVIDENCE</b>.</p>
+<p class="note">No claims recorded for this item. That absence is the case.</p>
 <p class="lanes">Reviewer lanes: <b>not run</b> — see the case note.</p>
-
+</section>
+<section class="case" id="why-alpha">
+<h2>why-alpha — <span class="verdict">CONFLICTED</span></h2>
+<p class="note"><b>A real conflict, shown with both sides cited — and a narration that failed its check.</b> Sources disagree about the same aspect. The gate refuses to pick a winner. The deep lane matched the gate; the fast lane softened it to PARTIAL. The narration of this item also failed its check: the flagged value is listed below and classified.</p>
+<p class="note">Labels: <b>RECORDED</b> · <b>SYNTHETIC</b> claims · recorded 2026-10-28 · gate verdict <b>CONFLICTED</b>.</p>
+<table><tr><th>Source</th><th>Kind</th><th>Aspect</th><th>Claim</th><th>Value</th><th class="receipt">Receipt</th></tr>
+<tr><td>synthetic/cards/alpha.md</td><td>card</td><td>state</td><td>the card was marked DONE</td><td><code>DONE</code></td><td><code>evidence/items.jsonl</code><br>synthetic/cards/alpha.md:9</td></tr>
+<tr><td>git</td><td>commit</td><td>state</td><td>a commit merged the fix</td><td><code>merged</code></td><td><code>evidence/items.jsonl</code><br>0c4f1a9 (synthetic)</td></tr>
+<tr><td>ci</td><td>check</td><td>state</td><td>the gate run is still red</td><td><code>failing</code></td><td><code>evidence/items.jsonl</code><br>synthetic://run/alpha/42</td></tr>
+<tr><td>synthetic/notes/alpha.md</td><td>receipt</td><td>outcome</td><td>the burn-down receipt says nothing was claimed</td><td><code>not-claimed</code></td><td><code>evidence/items.jsonl</code><br>synthetic/notes/alpha.md:4</td></tr>
+</table>
+<p class="lanes">Reviewer lanes (advisory):
+ nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B: <b>PARTIAL</b> ($0.0003, tokens 234 in / 1100 out) — <b>does not agree with the gate</b>;
+ nvidia/Nemotron-3-Ultra-550b-a55b: <b>CONFLICTED</b> ($0.0015, tokens 234 in / 410 out) — agrees with the gate;
+</p>
+<p class="narr fail">Narration check: <b>FAILED</b> — flagged values: <code>UNKNOWN</code>. Classification for every flag is in the repo (docs/NARRATION_CHECK_ANALYSIS_2026-10-28.md and docs/BENCHMARK_RESULTS_2026-10-28.md): across all 2026-10-28 runs, zero flagged values were invented facts.</p>
 </section>
 <p>Full method, all 14 cases, and every miss named: the public repository —
 <code>benchmark/</code>, <code>docs/BENCHMARK_RESULTS_2026-10-28.md</code>,
 <code>docs/TIER_LEDGER.md</code>, <code>docs/CLAIM_MAP.md</code>. Honest limits: first calls
 after idle can stall on cold model load; the narration checker is literal and flags restated
-system vocabulary alongside genuine inventions, so flags are classified, never hidden.</p>
+system vocabulary alongside genuine inventions, so flags are classified, never hidden.
+This page is generated from the corpus by <code>demo_lab/build.py</code> and makes no network
+request.</p>
 </body></html>
