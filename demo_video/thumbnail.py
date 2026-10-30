@@ -28,16 +28,30 @@ WHITE = (215, 224, 234)
 DIM = (138, 151, 166)
 BLUE = (121, 192, 255)
 
-MONO = "/System/Library/Fonts/Monaco.ttf"
-MONO_BOLD = "/System/Library/Fonts/Monaco Bold.ttf"
+# MEASURED 2026-10-30: this script ran on a CI runner and failed, because
+# /System/Library/Fonts/Monaco.ttf is macOS-only. The list below is ordered by
+# preference, so the same command draws the thumbnail wherever it is run. The
+# rasterisation differs between platforms -- an image is an artefact, not code
+# -- so CI checks the committed thumbnail rather than redrawing it.
+FONTS = [
+    ("/System/Library/Fonts/Monaco Bold.ttf", "/System/Library/Fonts/Monaco.ttf"),
+    ("/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf",
+     "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"),
+    ("/usr/share/fonts/truetype/liberation/LiberationMono-Bold.ttf",
+     "/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf"),
+]
 
 
 def font(size: int, bold: bool = False):
-    path = MONO_BOLD if bold and Path(MONO_BOLD).exists() else MONO
-    try:
-        return ImageFont.truetype(path, size)
-    except OSError:
-        return ImageFont.truetype(MONO, size)
+    for bold_path, regular_path in FONTS:
+        path = bold_path if bold and Path(bold_path).exists() else regular_path
+        if not Path(path).exists():
+            continue
+        try:
+            return ImageFont.truetype(path, size)
+        except OSError:
+            continue
+    raise SystemExit("no usable monospace font found -- the thumbnail cannot be drawn")
 
 
 def main() -> int:
