@@ -44,6 +44,45 @@ PROFILES: dict[str, dict] = {
             "vision": "nvidia/Nemotron-3.5-Super-VL",
         },
     },
+    "minimax-gateway": {
+        "label": "MiniMax via Vercel AI Gateway",
+        # Base URL, key variable and model ids come from the GATEWAY'S OWN
+        # DOCUMENTATION, read 2026-10-29 — never from memory:
+        #   base URL  https://vercel.com/docs/ai-gateway  (the OpenAI-compatible
+        #              /v1 handlers)
+        #   key       https://vercel.com/docs/ai-gateway/sdks-and-apis/
+        #              openai-chat-completions/advanced  (AI_GATEWAY_API_KEY)
+        #   models    https://vercel.com/ai-gateway/models/providers/minimax
+        # The three MiniMax models the gateway serves with a 1M-token context,
+        # ordered by the throughput the gateway publishes, because a tier name
+        # is about speed and depth:
+        #   fast      minimax/minimax-m3.1-flash  0.3s 213tps $0.10/$0.50 per M
+        #   standard  minimax/minimax-m3           0.9s 181tps $0.30/$1.20 per M
+        #                                              (at ≤512k input; $0.60/$2.40 above)
+        #   deep      minimax/minimax-m2.5         0.8s  84tps $0.30/$1.20 per M
+        # PRICING, dated: the free MiniMax period on the gateway ENDED
+        # 2026-10-22, so a pinned gateway run bills at STANDARD RATES
+        # (https://vercel.com/changelog/minimax-m3-1-flash-now-available-on-ai-gateway-for-free).
+        # PINNING, dated 2026-10-29: the gateway routes a model across every
+        # provider that serves it — minimax/minimax-m3 is served by minimax,
+        # fireworks AND nebius — so the provider is pinned with the gateway's
+        # own routing options (providerOptions.gateway.order / only, by
+        # provider slug), not by hoping. A model id is a default, not scripture:
+        # every tier can be overridden with WHY_AGENT_MINIMAX-GATEWAY_<TIER>_MODEL
+        # (the variable name carries the profile name, so this one has a hyphen
+        # and is set with `env`, not a plain shell assignment).
+        # ACCOUNT, dated 2026-10-19: the Vercel team is PAUSED (the Pro plan
+        # expired) and every gateway key is rejected, so this profile RESOLVES
+        # but a call will not authenticate until the account is reactivated
+        # (OS/BRAIN/CHATS/2026-10-19.md). No live call was made.
+        "base_url": "https://ai-gateway.vercel.sh/v1",
+        "key_env": "AI_GATEWAY_API_KEY",
+        "models": {
+            "fast": "minimax/minimax-m3.1-flash",
+            "standard": "minimax/minimax-m3",
+            "deep": "minimax/minimax-m2.5",
+        },
+    },
 }
 
 
