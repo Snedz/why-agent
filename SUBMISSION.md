@@ -386,6 +386,11 @@ Case Lab: https://snedz.github.io/why-agent/demo_lab/
 ```
 
 6. Copy the watch URL and paste it into §1.5.
+   **Set the thumbnail** to `why-agent-nebius-thumbnail.png` (1280×720) — it is
+   in the repository root and published at
+   `https://snedz.github.io/why-agent/why-agent-nebius-thumbnail.png`. It
+   carries the same claim as the video's title card at a size that reads in a
+   gallery; YouTube's automatic frame would not.
 7. Open the YouTube URL **in a logged-out browser** (or an incognito window) and
    confirm it plays. A link that only plays for the uploader's account fails the
    rule.

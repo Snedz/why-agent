@@ -24,6 +24,11 @@ The landing page's video player uses `why-agent-nebius-poster.png` as its
 poster. **That poster is a frame of this video** — the renderer writes it while
 it paints, so it cannot show a screen the video does not show.
 
+The thumbnail is drawn, not cropped: `python3 demo_video/thumbnail.py` writes
+`why-agent-nebius-thumbnail.png` (1280×720). The video's own title card is
+sparse, and at thumbnail size a judge scrolling a gallery reads three words,
+not a line of 12 px type.
+
 ## Re-render it
 
 ```
