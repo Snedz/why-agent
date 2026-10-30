@@ -161,12 +161,15 @@ def main(argv: list[str] | None = None) -> int:
             pin, pout = _price(tier, os.environ)
             cost = (usage.get("prompt_tokens", 0) * pin
                     + usage.get("completion_tokens", 0) * pout) / 1_000_000
-            # The span carries the FACTS of the call, never its content.
-            spans.record(operation="review", model=model, provider=prof["label"],
-                         tier=tier, latency_ms=(time.time() - started) * 1000.0,
+            # The span carries the FACTS of the call. Its content is dropped
+            # unless content capture was explicitly enabled.
+            spans.record(lane="review", model=model, provider=prof["label"],
+                         tier=tier, item_id=args.item, aspect="outcome",
+                         latency_ms=(time.time() - started) * 1000.0,
                          input_tokens=usage.get("prompt_tokens", 0),
                          output_tokens=usage.get("completion_tokens", 0),
-                         cost_usd=cost, verdict=verdict, retry_count=0)
+                         cost_usd=cost, verdict=verdict, retry_count=0,
+                         prompt=prompt, completion=text)
             row = {
                 "item_id": args.item,
                 "kind": "verdict",

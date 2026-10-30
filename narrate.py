@@ -379,10 +379,13 @@ def narrate(result, base_url: str = DEFAULT_BASE_URL, model: str = DEFAULT_MODEL
     values = extract_values(text)
     unsupported = find_unsupported(values, allowed_terms(result))
     # The narration lane records its own span, with the checker's outcome. The
-    # narrative TEXT and the values it stated are content, and stay out.
-    spans.record(operation="narration", model=model, provider=base_url,
-                 tier="narration", latency_ms=(time.time() - started) * 1000.0,
-                 verdict="PASSED" if not unsupported else "FAILED")
+    # narrative TEXT and the facts it was given are content: both are dropped
+    # unless content capture was explicitly enabled.
+    spans.record(lane="narration", model=model, provider=endpoint_host(base_url),
+                 tier="narration", item_id=result.item.item_id, aspect="outcome",
+                 latency_ms=(time.time() - started) * 1000.0,
+                 verdict="PASSED" if not unsupported else "FAILED",
+                 prompt=messages, completion=text)
     return {
         "narrative": text,
         "stated_values": values,
