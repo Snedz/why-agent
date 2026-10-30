@@ -145,6 +145,7 @@ which is why it cannot be lane-run and why the lanes score it MISSING.
 | A VL extraction becomes a claim, never a verdict | `vision_lane.py` — null fields produce no rows; a non-JSON answer raises |
 | A client can ask the agent for its verdict | `mcp_server.py` and `test_mcp_server.py` — the server calls no model, and a test forbids it |
 | Costs are measured, not estimated | `docs/TIER_LEDGER.md`, generated from the committed run outputs by `tier_ledger.py` |
+| The demo URL a judge opens describes this entry, with the measured numbers on it | `demo_page.py` generates `demo.html` from the corpus, the committed run outputs and the provider profile; the answer it shows is a verbatim slice of `demo.py` |
 | What pre-existed, and what was added | `docs/SIGNIFICANT_UPDATE.md` |
 
 Every row above has a command a reader can run; `docs/CLAIM_MAP.md` is the full
