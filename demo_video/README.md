@@ -1,8 +1,9 @@
 # The submission video
 
-`why-agent-nebius-demo.mp4` at the repository root is the entry's demo video —
-87.54 seconds, measured at render time, under the three-minute limit the rules
-ask for.
+`why-agent-nebius-demo.mp4` at the repository root is the entry's demo video.
+Its length is **measured at render time**, and the renderer fails the build if
+it reaches the three minutes the rules allow — so the number is never asserted,
+it is printed.
 
 It is **generated**, not edited by hand. Every frame is real captured output
 from a real tool run:
@@ -11,9 +12,11 @@ from a real tool run:
 |---|---|
 | `python3 demo.py` | the conflicted work item — four sources, four answers, no winner picked |
 | `python3 demo_video/receipt.py` | the Token Factory receipt: endpoint, pinned model ids, token counts, USD |
-| `python3 benchmark/score.py --eval-results …` | the gate 14/14 with zero false approvals, the lanes 9/14 and 6/14 |
+| `python3 benchmark/score.py` | the gate that ships: 14/14, zero false approvals |
+| `python3 demo_video/lane_scores.py` | the lanes beside it: 9/14 and 6/14, with the items each one falsely approved |
 | `python3 demo_video/narration_check.py` | the recorded narration checks, and the checker running on two fixtures |
 | `python3 demo_lab/flip_check.py` | the two cases that demonstrably change verdict when their lane rows are removed |
+| the landing page | the URL a judge opens: the endpoint, the measured scores and the model ids |
 | the Case Lab | the published page, at the lane-dependent case, with model ids and costs |
 
 ## Re-render it

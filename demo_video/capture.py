@@ -59,6 +59,35 @@ def find_line(lines: list[str], needle: str) -> int:
     raise SystemExit(f"capture: no line containing {needle!r} — the output moved")
 
 
+def shot_html(path: Path, style: str) -> Path:
+    """A temporary copy of a page with one style rule added."""
+    source = path.read_text(encoding="utf-8")
+    out = OUT / (path.stem + "_shot.html")
+    out.write_text(source.replace("</head>", f"<style>{style}</style></head>"),
+                   encoding="utf-8")
+    return out
+
+
+def screenshot(case_shot: Path, out: Path, width: int = 1400, height: int = 1500) -> str:
+    """A screenshot of a page copy, with the empty bottom trimmed off."""
+    if not Path(CHROME).exists():
+        print("capture: Chrome not found — skipping the shot")
+        return ""
+    profile = OUT / "chrome-profile"
+    shutil.rmtree(profile, ignore_errors=True)
+    cmd = [CHROME, "--headless=new", "--no-first-run", "--disable-gpu",
+           "--hide-scrollbars", f"--user-data-dir={profile}",
+           f"--screenshot={out}", f"--window-size={width},{height}", case_shot.as_uri()]
+    proc = subprocess.run(cmd, capture_output=True, text=True)
+    shutil.rmtree(profile, ignore_errors=True)
+    if not out.exists() or out.stat().st_size < 10000:
+        print("capture: the screenshot failed —", proc.stderr[-300:])
+        return ""
+    trim_blank(out)
+    print(f"capture: {out.name} {out.stat().st_size} bytes")
+    return str(out)
+
+
 def screenshot_case_lab() -> str:
     """A screenshot of the published Case Lab, at one named case.
 
@@ -69,33 +98,25 @@ def screenshot_case_lab() -> str:
     the shot is taken of a temporary copy in which every case except the one
     being filmed is hidden. The committed page is not touched.
     """
-    out = OUT / "case_lab.png"
-    if not Path(CHROME).exists():
-        print("capture: Chrome not found — skipping the Case Lab shot")
-        return ""
-    source = (ROOT / "demo_lab" / "index.html").read_text(encoding="utf-8")
-    # Only the case being filmed is shown, so it fills the frame and can be
-    # read. The case carries its own RECORDED / SYNTHETIC labels, so the
-    # page's own header is not needed.
-    style = ("<style>body>h1,body>p,body>div.labels{display:none}"
+    style = ("body>h1,body>p,body>div.labels{display:none}"
              "section.case{display:none}"
-             "section.case#bm-reviewer-split{display:block}</style>")
-    shot_html = OUT / "case_lab_shot.html"
-    shot_html.write_text(source.replace("</head>", style + "</head>"), encoding="utf-8")
+             "section.case#bm-reviewer-split{display:block}")
+    return screenshot(shot_html(ROOT / "demo_lab" / "index.html", style),
+                      OUT / "case_lab.png")
 
-    profile = OUT / "chrome-profile"
-    shutil.rmtree(profile, ignore_errors=True)
-    cmd = [CHROME, "--headless=new", "--no-first-run", "--disable-gpu",
-           "--hide-scrollbars", f"--user-data-dir={profile}",
-           f"--screenshot={out}", "--window-size=1400,1500", shot_html.as_uri()]
-    proc = subprocess.run(cmd, capture_output=True, text=True)
-    shutil.rmtree(profile, ignore_errors=True)
-    if not out.exists() or out.stat().st_size < 10000:
-        print("capture: the screenshot failed —", proc.stderr[-300:])
-        return ""
-    trim_blank(out)
-    print("capture: case lab screenshot", out.stat().st_size, "bytes")
-    return str(out)
+
+def screenshot_landing_page() -> str:
+    """A screenshot of the page a judge lands on.
+
+    Two things are hidden for the still. The video element, because a video
+    player renders as a black rectangle in a screenshot. And the long answer
+    excerpt, because the terminal shot already shows it in full, and the
+    page's value in a still is the part that is unique to it: the endpoint,
+    the score table, and the model ids.
+    """
+    style = "video{display:none} pre.excerpt{display:none}"
+    return screenshot(shot_html(ROOT / "demo.html", style),
+                      OUT / "landing_page.png")
 
 
 def trim_blank(path: Path) -> None:
@@ -132,16 +153,20 @@ def main() -> int:
     lines = demo.splitlines()
     print("cases:", sum(1 for l in lines if l.startswith("CASE ")))
 
-    # 3. the scored benchmark — the Nebius evidence
-    score = run([PY, "benchmark/score.py", "--eval-results",
-                 "benchmark/eval-benchmark-2026-10-28.json"])
-    (OUT / "score.txt").write_text(score)
-    print("gate:", "the deterministic gate has zero false approvals; the lanes do not (that is the finding)")
+    # 3. the gate on its own — this is the thing that ships
+    gate = run([PY, "benchmark/score.py"])
+    (OUT / "gate.txt").write_text(gate)
+    print("gate:", gate.strip().splitlines()[-1] if gate.strip() else "?")
+
+    # 3b. the lanes beside it — advisory, and the reason the gate is the gate
+    lanes = run([PY, "demo_video/lane_scores.py"])
+    (OUT / "lanes.txt").write_text(lanes)
+    print("lanes:", "shown")
 
     # 4. the flip check
     flip = run([PY, "demo_lab/flip_check.py"])
     (OUT / "flip.txt").write_text(flip)
-    print("flip:", "PASS" if flip.strip().endswith("cannot disagree." ) or "PASS" in flip else "?")
+    print("flip:", "PASS" if "PASS" in flip else "?")
 
     # 5. the narration check — the thesis, with the checker running
     narration = run([PY, "demo_video/narration_check.py"])
@@ -164,7 +189,8 @@ def main() -> int:
                            "ids, tokens and USD, committed in the repo")
     print("receipt:", "LIVE" if live else "recorded")
 
-    shot = screenshot_case_lab()
+    lab = screenshot_case_lab()
+    landing = screenshot_landing_page()
 
     segments = [
         {"kind": "title",
@@ -183,13 +209,17 @@ def main() -> int:
          "ranges": [[1, 30]],
          "caption": receipt_caption,
          "hold": 0.42, "rest": 3.0},
-        {"kind": "cmd", "cmd": "$ python3 benchmark/score.py --eval-results "
-                              "benchmark/eval-benchmark-2026-10-28.json",
-         "file": str(OUT / "score.txt"),
-         "ranges": [[1, 27]],
-         "caption": "the gate: 14/14, zero false approvals. the model lanes: 9/14 and 6/14 "
-                    "— and they falsely approve, which is why they never gate",
-         "hold": 0.40, "rest": 3.6},
+        {"kind": "cmd", "cmd": "$ python3 benchmark/score.py",
+         "file": str(OUT / "gate.txt"),
+         "ranges": [[1, 3]],
+         "caption": "the gate that ships: 14/14, zero false approvals",
+         "hold": 0.45, "rest": 2.6},
+        {"kind": "cmd", "cmd": "$ python3 demo_video/lane_scores.py",
+         "file": str(OUT / "lanes.txt"),
+         "ranges": [[1, 14]],
+         "caption": "the model lanes: 9/14 and 6/14, and they falsely approve — which is "
+                    "why they advise and the reconciler decides",
+         "hold": 0.38, "rest": 3.0},
         {"kind": "cmd", "cmd": "$ python3 demo_video/narration_check.py",
          "file": str(OUT / "narration.txt"),
          "ranges": [[1, 28]],
@@ -203,9 +233,17 @@ def main() -> int:
          "hold": 0.36, "rest": 2.8},
     ]
 
-    if shot:
+    if landing:
         segments.append({
-            "kind": "image", "file": shot,
+            "kind": "image", "file": landing,
+            "caption": "the page a judge opens — the endpoint, the measured scores, and "
+                       "the model ids behind them",
+            "duration": 7.0,
+        })
+
+    if lab:
+        segments.append({
+            "kind": "image", "file": lab,
             "caption": "the Case Lab — every claim with its receipt, every lane with its model id",
             "duration": 7.0,
         })

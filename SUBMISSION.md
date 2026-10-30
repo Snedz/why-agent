@@ -25,8 +25,9 @@ it is still the right one — but read the form's wording before pasting.
    Quebec resident, do not submit.
 2. **Upload the video to YouTube** and make it **publicly visible** (the rules
    say publicly visible; unlisted is not the same thing). The file to upload
-   is `why-agent-nebius-demo.mp4` at the repository root — 87.54 seconds, under
-   the three-minute limit. Step-by-step in §6.
+   is `why-agent-nebius-demo.mp4` at the repository root — under two minutes. The
+   measured length is printed by `python3 demo_video/render.py`, which fails the
+   build if it reaches the three minutes the rules allow. Step-by-step in §6.
 3. **Paste the form** and submit. Every field answer is §1–§5. Join the
    challenge from the founder's account first, or the Submit button will not
    appear.
@@ -335,9 +336,9 @@ prose, but it may not add a fact.
 
 ## 6. Uploading the video to YouTube
 
-The file is `why-agent-nebius-demo.mp4` at the repository root, 87.54 seconds
-(measured, not estimated — `python3 demo_video/render.py` prints it and fails
-the build if it reaches three minutes).
+The file is `why-agent-nebius-demo.mp4` at the repository root. Its length is
+measured, not estimated: `python3 demo_video/render.py` prints it and fails the
+build if it reaches three minutes.
 
 1. Open the founder's YouTube Studio → **Create → Upload videos**.
 2. Drag in `why-agent-nebius-demo.mp4`.
