@@ -296,3 +296,30 @@ Hackathon (Best Apps and Agents track): it takes why-agent from reconciling
 only local artefacts to checking claims against fresh web sources, and the
 Best Use of Tavily bonus requires a functional, runtime call to the Tavily
 API, which `search_claims` is.
+
+## GenAI spans (Nebius build) — the hook is there, the collector is not
+
+`spans.py` is an **opt-in** hook: with `WHY_AGENT_SPANS` unset, `record()`
+returns immediately and every lane behaves exactly as it did before, so the
+calls can stay in the code without changing anything by default.
+
+Switched on, each model call records one span with the OpenTelemetry GenAI
+attribute names where they exist (`gen_ai.request.model`,
+`gen_ai.usage.input_tokens`, `gen_ai.usage.output_tokens`) and stays in the
+same namespace where they do not (`gen_ai.tier`, `gen_ai.cost_usd`,
+`gen_ai.response.verdict`, `gen_ai.retry_count`, `gen_ai.response.latency_ms`).
+The reviewer lane records a span per tier call — with the model, the provider,
+the tier, the latency, the token counts, the cost, the verdict and the retry
+count — and the narration lane records its own span, with the checker's outcome
+(`PASSED` or `FAILED`).
+
+**A span carries the facts of a call and never its content.** No prompt text,
+no claim content, no narrative: `record()`'s signature admits only the named
+facts, so content cannot be recorded even by accident. That matters here more
+than usual, because the evidence in this repository is exactly the thing that
+must not leak sideways into a log somebody else can read.
+
+The spans are kept **in memory**. Nothing is written to disk and nothing is
+sent anywhere — hosting a collector and shipping the spans are both out of
+scope for now. The mechanism exists so that the day somebody wants the spans,
+nothing has to be rewritten.

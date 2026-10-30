@@ -27,10 +27,13 @@ import json
 import os
 import re
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
 from typing import Any, Mapping, Sequence
+
+import spans
 
 DEFAULT_BASE_URL = "http://127.0.0.1:8088/v1"
 DEFAULT_MODEL = "meterless/auto"
@@ -370,10 +373,16 @@ def narrate(result, base_url: str = DEFAULT_BASE_URL, model: str = DEFAULT_MODEL
     unsupported value; the default is to report it loudly.
     """
     messages = build_messages(result)
+    started = time.time()
     text = call_openai_compatible(base_url, model, messages, api_key=api_key,
                                   app_id=app_id, timeout=timeout)
     values = extract_values(text)
     unsupported = find_unsupported(values, allowed_terms(result))
+    # The narration lane records its own span, with the checker's outcome. The
+    # narrative TEXT and the values it stated are content, and stay out.
+    spans.record(operation="narration", model=model, provider=base_url,
+                 tier="narration", latency_ms=(time.time() - started) * 1000.0,
+                 verdict="PASSED" if not unsupported else "FAILED")
     return {
         "narrative": text,
         "stated_values": values,
