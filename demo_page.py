@@ -145,7 +145,7 @@ def _jsonl(path: Path) -> list[dict]:
 
 
 def workbench_payload() -> dict:
-    """Every item in both corpora, with its claims, as data for the page."""
+    """Every item in every corpus, with its claims, as data for the page."""
     notes, lanes = _case_lab()
     paths = {"benchmark": tier_ledger.CASES,
              "demo": HERE / "evidence" / "items.jsonl",
@@ -269,7 +269,7 @@ WORKBENCH_HTML = """
   the Python runs, not a video of it. No key, no server, no network — the corpus and the
   reconciler are both in this page. The JavaScript is a port of
   <code>evidence.reconcile()</code>, and <code>test_demo_app.py</code> runs both over every
-  item in both corpora and fails if a verdict, a conflict, a gap or an aspect differs.</p>
+  item in every corpus and fails if a verdict, a conflict, a gap or an aspect differs.</p>
 
   <div class="wb">
     <div class="wb-panel">

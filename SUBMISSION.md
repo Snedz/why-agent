@@ -63,7 +63,7 @@ model-lane rows and shows CONFLICTED become CORROBORATED — the same flip
 The page's JavaScript is a **port** of `evidence.reconcile()`, and the
 repository proves that rather than asserting it: `test_demo_app.py` runs
 `demo_lab/reconciler.js` under node and the Python under CPython over every
-item in both corpora plus edge cases built to break a careless translation, and
+item in every corpus plus edge cases built to break a careless translation, and
 fails if a verdict, conflict, agreement, gap or aspect order differs.
 
 The **Case Lab** — seven cases with every claim, lane receipt, model id, token
