@@ -296,3 +296,75 @@ Hackathon (Best Apps and Agents track): it takes why-agent from reconciling
 only local artefacts to checking claims against fresh web sources, and the
 Best Use of Tavily bonus requires a functional, runtime call to the Tavily
 API, which `search_claims` is.
+
+## GenAI spans (Nebius build) — emits OTLP, nothing more
+
+`spans.py` records one span per model call and **emits OTLP**. It is not a
+platform, a dashboard, a collector or a backend, and this section claims none
+of those: it is a payload format and a set of attribute names. Where the
+payload goes is the operator's business.
+
+### The conventions it follows, and the version
+
+The attribute names follow the OpenTelemetry **GenAI semantic conventions,
+version `1.41.0`** — the last released version of
+`open-telemetry/semantic-conventions` that still published the GenAI
+conventions in-tree. From `v1.42.0` that page says "Moved", and the
+conventions now live in `open-telemetry/semantic-conventions-genai`, which has
+no release yet. Pinning a released version is therefore the honest choice, and
+the version travels on every span as `why.genai_conventions_version`, so a
+reader never has to guess which conventions a payload followed.
+
+The `gen_ai.*` names used are the ones the conventions define:
+
+| attribute | what it carries |
+|---|---|
+| `gen_ai.operation.name` | `chat` — every lane here makes a chat completion |
+| `gen_ai.request.model` | the model that was called |
+| `gen_ai.provider.name` | the provider that served it |
+| `gen_ai.system` | the same provider under the older name — deprecated at `1.41.0` in favour of `gen_ai.provider.name`, and emitted anyway so a collector that knows only the old name can still read it |
+| `gen_ai.usage.input_tokens`, `gen_ai.usage.output_tokens` | the token counts |
+
+No other `gen_ai.*` name is invented. This repository's own facts live in the
+`why.` namespace, which is ours to extend and theirs to leave alone:
+`why.item_id`, `why.aspect`, `why.verdict`, `why.lane`, `why.tier`,
+`why.cost_usd`, `why.retry_count`, `why.latency_ms` and
+`why.genai_conventions_version`.
+
+The reviewer lane records a span per tier call — the item, the aspect, the
+verdict, the model, the provider, the tier, the latency, the token counts, the
+cost and the retry count — and the narration lane records its own span, with
+the checker's outcome (`PASSED` or `FAILED`).
+
+### Two gates, both closed by default
+
+**No exporter, no span.** `record()` returns `None` before it does any work
+unless an exporter has been installed, so the lanes can call it unconditionally
+and write exactly the bytes they wrote before. With nothing configured the
+export path is byte-for-byte the old behaviour, and the test proves it by
+running the reviewer lane twice and comparing the rows it wrote.
+
+**Content is off by default.** Prompt and completion text is never captured
+unless content capture is separately and explicitly enabled
+(`spans.set_content_capture(True)`, or `WHY_AGENT_SPAN_CONTENT=1`). The reason
+is the requirement's own parenthetical: **the claims leave this machine only
+by explicit configuration.** The evidence in this repository is the product's
+own evidence, and a span is the kind of artefact that ends up in a log
+somebody else can read. Collecting the *facts* of a call and collecting its
+*content* are two different decisions, so they are two different switches: an
+operator who wants to read a narration that failed its check has to say so out
+loud.
+
+### Configuring the export
+
+The exporter is any callable that takes the payload:
+
+```python
+import spans
+
+spans.set_exporter(my_exporter)      # a callable that takes the payload
+```
+
+Or, without touching the code, `WHY_AGENT_SPAN_EXPORTER=module.path:callable`
+names one. There is no built-in endpoint and no built-in client: this
+repository ships the payload format, not a place to send it.

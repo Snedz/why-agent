@@ -31,6 +31,7 @@ import time
 import urllib.error
 
 import evidence as ev
+import spans
 import providers
 import review
 from narrate import narrate
@@ -96,6 +97,7 @@ def main(argv: list[str] | None = None) -> int:
             model = prof["models"][tier]
             prompt = review.PROMPT.format(title=title, item_id=item_id,
                                           claims=claims_text)
+            started = time.time()
             try:
                 (text, usage), used = _with_retries(
                     lambda: review._chat(prof["base_url"], prof["api_key"],
@@ -108,6 +110,15 @@ def main(argv: list[str] | None = None) -> int:
             pin, pout = review._price(tier, os.environ)
             cost = (usage.get("prompt_tokens", 0) * pin
                     + usage.get("completion_tokens", 0) * pout) / 1_000_000
+            # The span carries the FACTS of the call. Its content is dropped
+            # unless content capture was explicitly enabled.
+            spans.record(lane="review", model=model, provider=prof["label"],
+                         tier=tier, item_id=item_id, aspect="outcome",
+                         latency_ms=(time.time() - started) * 1000.0,
+                         input_tokens=usage.get("prompt_tokens", 0),
+                         output_tokens=usage.get("completion_tokens", 0),
+                         cost_usd=cost, verdict=verdict, retry_count=used,
+                         prompt=prompt, completion=text)
             spent += cost
             entry["tiers"][tier] = {
                 "verdict": verdict,

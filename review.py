@@ -26,8 +26,11 @@ import datetime
 import json
 import os
 import sys
+import time
 import urllib.error
 import urllib.request
+
+import spans
 from typing import Mapping
 
 import providers
@@ -147,6 +150,7 @@ def main(argv: list[str] | None = None) -> int:
     with open(args.out, "a", encoding="utf-8") as out:
         for tier in [t.strip() for t in args.tiers.split(",") if t.strip()]:
             model = prof["models"][tier]
+            started = time.time()
             try:
                 text, usage = _chat(prof["base_url"], prof["api_key"], model, prompt)
             except (urllib.error.HTTPError, urllib.error.URLError, OSError,
@@ -154,6 +158,18 @@ def main(argv: list[str] | None = None) -> int:
                 print(f"FAIL {tier} ({model}): {exc}", file=sys.stderr)
                 return 1
             verdict, reason = _parse_verdict(text)
+            pin, pout = _price(tier, os.environ)
+            cost = (usage.get("prompt_tokens", 0) * pin
+                    + usage.get("completion_tokens", 0) * pout) / 1_000_000
+            # The span carries the FACTS of the call. Its content is dropped
+            # unless content capture was explicitly enabled.
+            spans.record(lane="review", model=model, provider=prof["label"],
+                         tier=tier, item_id=args.item, aspect="outcome",
+                         latency_ms=(time.time() - started) * 1000.0,
+                         input_tokens=usage.get("prompt_tokens", 0),
+                         output_tokens=usage.get("completion_tokens", 0),
+                         cost_usd=cost, verdict=verdict, retry_count=0,
+                         prompt=prompt, completion=text)
             row = {
                 "item_id": args.item,
                 "kind": "verdict",
@@ -165,9 +181,6 @@ def main(argv: list[str] | None = None) -> int:
                 "aspect": "outcome",
             }
             out.write(json.dumps(row) + "\n")
-            pin, pout = _price(tier, os.environ)
-            cost = (usage.get("prompt_tokens", 0) * pin
-                    + usage.get("completion_tokens", 0) * pout) / 1_000_000
             total_cost += cost
             print(f"{tier:8s} {model}: {verdict} — {reason} "
                   f"[{usage.get('prompt_tokens')}/{usage.get('completion_tokens')} tok, ~${cost:.4f}]")
