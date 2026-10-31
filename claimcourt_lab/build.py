@@ -50,6 +50,11 @@ TAVILY_RECEIPTS_URL = ("https://github.com/Snedz/why-agent/tree/main/"
 OUT_DIR = HERE / "cases"
 COURT_OUT = HERE / "court.json"
 INDEX = HERE / "index.html"
+# `pages.yml` publishes `demo_lab/` recursively, so the copy a judge can
+# actually reach lives here. Two hand-kept copies had already drifted apart and
+# the published one carried a link to demo_lab/demo_lab/index.html; both are
+# written from one body now, so they cannot disagree.
+PUBLISHED_DIR = ROOT / "demo_lab" / "claimcourt"
 
 
 def _load_score_module():
@@ -208,7 +213,10 @@ def build_rigor() -> dict:
             "receipt": "benchmark/eval-benchmark-2026-10-28.json",
         },
         "case_lab_cases": lab_cases,
-        "case_lab_url": "../demo_lab/index.html",
+        # The lab is written to demo_lab/claimcourt/index.html, so the Case Lab
+        # is one level up. It used to read "../demo_lab/index.html", which
+        # resolves to demo_lab/demo_lab/index.html — a 404 that no test caught.
+        "case_lab_url": "../index.html",
     }
 
 
@@ -440,7 +448,7 @@ below is likewise NOT RUN. The page does not quote a lane verdict that does not 
     out.append("</table>")
     out.append("<p class=\"note\">The original agent-work cases, with lane receipts and "
                "narration checks, are in the first Case Lab: "
-               f"<a href=\"{e(rigor['case_lab_url'])}\">demo_lab/index.html</a> — "
+               f"<a href=\"{e(rigor['case_lab_url'])}\">the Case Lab</a> — "
                + "; ".join(f"{e(c['case_id'])} ({e(c['verdict'])})"
                            for c in rigor["case_lab_cases"]) + ".</p>")
 
@@ -564,7 +572,9 @@ def generate() -> list[tuple[Path, str]]:
         body = json.dumps(debate, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
         written.append((COURT_OUT, body))
     written.append((INDEX, page))
-    return written
+    # The same bytes, at the path the site serves.
+    return written + [(PUBLISHED_DIR / path.relative_to(HERE), body)
+                      for path, body in written]
 
 
 def main(argv: list[str] | None = None) -> int:

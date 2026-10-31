@@ -118,8 +118,20 @@ class PageTests(unittest.TestCase):
         self.assertEqual(Image.open(thumb).size, (1280, 720))
 
     def test_the_page_makes_no_network_request(self):
-        self.assertNotIn("<script", self.page)
+        """Nothing on the page is loaded from anywhere else.
+
+        This used to assert `"<script" not in page`, which was a proxy for the
+        real rule and is no longer true: the workbench runs the reconciler in
+        the reader's tab, so it needs a script. An INLINE script fetches
+        nothing, so the guarantee is unchanged — a judge can save the page and
+        open it on a plane, and nothing is collected from them. What must not
+        appear is a resource the browser has to go and get.
+        """
+        self.assertNotIn("<script src", self.page)
         self.assertNotIn('src="http', self.page)
+        self.assertNotIn("<link", self.page)
+        self.assertNotIn("@import", self.page)
+        self.assertNotIn("url(http", self.page)
 
 
 if __name__ == "__main__":

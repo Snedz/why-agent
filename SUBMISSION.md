@@ -53,10 +53,21 @@ why-agent
 https://snedz.github.io/why-agent/
 ```
 
-This is a working demo, not a screenshot: the agent, the adversarial benchmark
-and the Case Lab all run. The **Case Lab** — seven cases with every claim, lane
-receipt, model id, token count and cost — is at
-`https://snedz.github.io/why-agent/demo_lab/`.
+This is a working demo, not a screenshot, and that is now literally true of the
+landing page: it runs the reconciler in the browser. Pick a case, untick a
+source, or type a different value into a claim, and the verdict is recomputed
+from the rows on screen. On the two lane-dependent cases one button removes the
+model-lane rows and shows CONFLICTED become CORROBORATED — the same flip
+`demo_lab/flip_check.py` proves in Python. No key, no server, no network.
+
+The page's JavaScript is a **port** of `evidence.reconcile()`, and the
+repository proves that rather than asserting it: `test_demo_app.py` runs
+`demo_lab/reconciler.js` under node and the Python under CPython over every
+item in both corpora plus edge cases built to break a careless translation, and
+fails if a verdict, conflict, agreement, gap or aspect order differs.
+
+The **Case Lab** — seven cases with every claim, lane receipt, model id, token
+count and cost — is at `https://snedz.github.io/why-agent/demo_lab/`.
 
 ### 1.3 Text description explaining features and functionality
 
@@ -114,6 +125,13 @@ It is a product rather than a notebook: the demo URL is a working app, the
 Case Lab is a second surface, the agent is exposed over MCP so a client can ask
 it for a verdict (and a verdict-shaped submission is refused at the boundary),
 and the production path reads its evidence from a DuckDB file.
+
+The demo page itself runs the reconciler in the browser: edit a claim and the
+verdict is recomputed from what is on screen, and on a lane-dependent case one
+button removes the model-lane rows to show CONFLICTED become CORROBORATED. The
+JavaScript is a port of the Python, and a test runs both over every corpus item
+and compares the answers, so the page cannot show a verdict the repository does
+not return.
 
 No dependency. Python 3.10+. Three commands run it with no key and no network:
 python3 demo.py, python3 benchmark/score.py --eval-results
@@ -190,6 +208,7 @@ about all four. This table is for the founder's own use, not for pasting.
 
 ```
 Case Lab:      https://snedz.github.io/why-agent/demo_lab/
+Claim Court:   https://snedz.github.io/why-agent/demo_lab/claimcourt/
 Claim map:     https://github.com/Snedz/why-agent/blob/main/docs/CLAIM_MAP.md
 Benchmark:     https://github.com/Snedz/why-agent/blob/main/docs/BENCHMARK_RESULTS_2026-10-28.md
 Significant update: https://github.com/Snedz/why-agent/blob/main/docs/SIGNIFICANT_UPDATE.md
@@ -457,15 +476,25 @@ The video is regenerated from the same tools, not edited by hand:
   `python3 demo_video/capture.py && python3 demo_video/render.py`, the receipt
   shot becomes a **live** call and the caption changes to match. That is the
   only difference between the two videos.
-- **"GATE: FAIL" appears at the end of the benchmark output.** It is not the
-  deterministic gate failing — that line has zero false approvals. The scorer's
-  combined verdict counts the *lanes*' false approvals too, because the run
-  fails the criterion "no lane may falsely approve". The video shows the whole
-  output and the caption says what the line means.
-- **The work items are synthetic.** Every card, receipt, commit and check id is
-  invented. The lanes ran against real models; the claims did not come from a
-  real customer system. The README says so, and the Case Lab labels every case
-  `RECORDED` (the run) and `SYNTHETIC` (the claims).
+- **The scorer prints two lines at the end, and they mean different things.**
+  `GATE: PASS — zero false approvals` is the deterministic reconciler: that is
+  the product's claim, and it is the only thing that gates. `LANES: FAIL — 3
+  false approval(s) in the advisory lanes` is the model tiers: three of the
+  items were falsely approved by a lane somewhere. Nothing is hidden — every
+  one is named line by line above that summary, and it is the published
+  evidence for keeping the lanes advisory. The exit code follows the gate;
+  `--strict-lanes` makes a lane false approval exit non-zero too, if that is
+  the criterion you want.
+- **The work items are synthetic; the commerce claims are not all.** In the
+  benchmark corpus every card, receipt, commit and check id is invented — the
+  lanes ran against real models, but the claims did not come from a real
+  customer system. The **Claim Court** corpus is different and says so on its
+  own page: part of it was fetched from the public pages of a real pilot
+  business and the directories that list it, and those conflicts are real;
+  the rest is labelled synthetic fixture in every case file. The Case Lab
+  labels each case `RECORDED` (the run) and `SYNTHETIC` (the claims), and the
+  Claim Court labels provenance per case rather than for the corpus as a whole.
+  Do not describe the commerce corpus as synthetic — it is not.
 - **The project is new, not an update.** Answer §4 honestly; do not claim an
   update that did not happen.
 - **The "financial or preferential support" clause.** The Sponsor is Nebius
