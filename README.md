@@ -175,7 +175,7 @@ which is why it cannot be lane-run and why the lanes score it MISSING.
 | A client can ask the agent for its verdict | `mcp_server.py` and `test_mcp_server.py` — the server calls no model, and a test forbids it |
 | Costs are measured, not estimated | `docs/TIER_LEDGER.md`, generated from the committed run outputs by `tier_ledger.py` |
 | The demo URL a judge opens describes this entry, with the measured numbers on it | `demo_page.py` generates `demo.html` from the corpus, the committed run outputs and the provider profile; the answer it shows is a verbatim slice of `demo.py` |
-| The page's JavaScript is this reconciler, not a lookalike | `demo_lab/reconciler.js` and `test_demo_app.py` — the port is run under node and `evidence.reconcile()` under Python over every item in both corpora; any difference in verdict, conflict, agreement, gap or aspect order fails the test |
+| The page's JavaScript is this reconciler, not a lookalike | `demo_lab/reconciler.js` and `test_demo_app.py` — the port is run under node and `evidence.reconcile()` under Python over every item in every corpus; any difference in verdict, conflict, agreement, gap or aspect order fails the test |
 | The page cannot drift from the corpus | `demo_page.py --check`, and `test_demo_app.py` compares the blob embedded in the page against the rows on disk |
 | What pre-existed, and what was added | `docs/SIGNIFICANT_UPDATE.md` |
 
@@ -228,7 +228,7 @@ provenance per case — it is the first link on this page.
 
 A port with no parity test is a second implementation that will drift, so
 `test_demo_app.py` runs that file under node and the Python under CPython over
-every item in both corpora, plus edge cases built to break a careless
+every item in every corpus, plus edge cases built to break a careless
 translation — a forged aspect alongside complete coverage, an empty string as a
 value, `DONE` against `done`, an unknown kind with no aspect. The two answers
 must be identical: verdict, conflicts, agreements, gaps, unexpected aspects,

@@ -2,7 +2,7 @@
  *
  * This is a PORT, not a reimplementation. It is kept honest by
  * test_demo_app.py, which runs this file under node and evidence.reconcile()
- * under Python over every item in both corpora and fails if any verdict,
+ * under Python over every item in every corpus and fails if any verdict,
  * conflict, agreement, gap or unexpected aspect differs. A port with no
  * parity test is a second implementation that will drift; the test is the
  * only thing that makes the word "port" mean anything.
