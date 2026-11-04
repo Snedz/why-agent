@@ -334,13 +334,10 @@ agent that cannot notice a stale card cannot notice anything.
 
 ## Other integrations
 
-The kernel is not prompt-shaped, so it also sits behind two adapters from the
-earlier build in this repository — kept here because they are evidence that the
+The kernel is not prompt-shaped, so it also sits behind an adapter from the
+earlier build in this repository — kept here because it is evidence that the
 same reconciliation runs against something other than a model.
 
-- **Zetaris** — a governed semantic layer over the engines you already run.
-  The designed path is a CSV in the stack bucket, a filestore table, and a
-  reconciliation `SELECT`. See `zetaris_lane.py` and `docs/ZETARIS_LANE.md`.
 - **Meterless (Nightshift)** — an Apache-2.0 runtime that races a job across
   local models, judges the attempts, and returns a receipt for every check.
   The token is resolved from the runtime's own token file and is never printed.
